@@ -1,0 +1,43 @@
+package com.bridgeIt.user.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
+
+import com.bridgeIt.user.BaseResponse;
+import com.bridgeIt.user.dao.UserDao;
+import com.bridgeIt.user.model.User;
+
+@Component
+public class UserService {
+
+	@Autowired
+	UserDao dao;
+
+	 private final String sharedKey = "SHARED_KEY";
+	 private static final String SUCCESS_STATUS = "success";
+	 private static final String ERROR_STATUS = "error";
+	 private static final int CODE_SUCCESS = 100;
+	 private static final int AUTH_FAILURE = 102;
+	
+	public ResponseEntity<User> userReg (User user) {
+		
+		boolean out = dao.insert(user);
+		ResponseEntity<User> respond;
+		if(out) {
+			BaseResponse response = new BaseResponse();
+			response.setCode(200);
+			response.setStatus(SUCCESS_STATUS);
+		respond = new ResponseEntity<User>(HttpStatus.CREATED);
+		return respond;
+
+		}else {
+			respond = new ResponseEntity<User>(HttpStatus.BAD_REQUEST);
+			return respond;
+		}
+		
+	}
+	
+	
+}

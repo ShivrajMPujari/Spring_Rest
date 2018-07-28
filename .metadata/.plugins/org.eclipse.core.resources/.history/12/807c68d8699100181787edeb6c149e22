@@ -1,0 +1,10 @@
+package com.bridgeIt.restDemo.model;
+
+public class BaseResponse {
+
+	private String status ;
+	private int code;
+	
+	
+	
+}

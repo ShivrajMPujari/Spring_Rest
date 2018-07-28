@@ -1,0 +1,14 @@
+package com.bridgeIt.user.service;
+
+import com.bridgeIt.user.BaseResponse;
+
+public class UserService {
+
+	public BaseResponse userReg () {
+		
+		
+		return null;
+	}
+	
+	
+}

@@ -1,0 +1,10 @@
+INDEX VERSION 1.4+/home/bridgelabz/Documents/workspace-sts-3.9.5.RELEASE/.metadata/.plugins/org.eclipse.wst.jsdt.core/indexes
+3403900496.index
+1466995364.index
+137135560.index
+2858118480.index
+1879590994.index
+1589834787.index
+3032808206.index
+3380584178.index
+2736543943.index

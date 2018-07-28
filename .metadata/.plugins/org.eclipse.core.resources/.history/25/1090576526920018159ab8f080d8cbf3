@@ -1,0 +1,42 @@
+package com.bridgeIt.user.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
+
+import com.bridgeIt.user.BaseResponse;
+import com.bridgeIt.user.dao.UserDao;
+import com.bridgeIt.user.model.User;
+
+@Component
+public class UserService {
+
+	@Autowired
+	UserDao dao;
+
+	@Autowired
+	BaseResponse response;
+	public ResponseEntity<BaseResponse> userReg (User user) {
+		
+		
+		boolean outcome=dao.existence(user);
+		boolean out = dao.insert(user);
+		ResponseEntity<BaseResponse> respond;
+		if(out) {
+			response.setCode(HttpStatus.OK);
+			response.setStatus("your are registered");
+		respond = new ResponseEntity<BaseResponse>(response,HttpStatus.OK);
+			return respond;
+
+		}else {
+			response.setCode(HttpStatus.BAD_REQUEST);
+			response.setStatus("something went wrong");
+			respond = new ResponseEntity<BaseResponse>(response,HttpStatus.BAD_REQUEST);
+			return respond;
+		}
+		
+	}
+	
+	
+}

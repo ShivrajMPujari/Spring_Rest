@@ -1,0 +1,9 @@
+package com.bridgeIt.mvcDemo.exceptionHandler;
+
+public class Error404 extends Exception{
+
+	public Error404(int id) {
+		
+		System.out.println("Error with id:- "+id);
+	}
+}

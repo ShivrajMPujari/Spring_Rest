@@ -1,0 +1,116 @@
+
+Jul 25, 2018 15:17:19.90 NEW SESSION
+Jul 25, 2018 15:17:19.90 Created new window in existing browser session.
+Jul 25, 2018 15:18:32.67 Created new window in existing browser session.
+Jul 25, 2018 15:39:20.16 Created new window in existing browser session.
+Jul 25, 2018 16:46:25.96 Created new window in existing browser session.
+Jul 25, 2018 16:57:48.40 Created new window in existing browser session.
+Jul 25, 2018 17:00:39.63 Created new window in existing browser session.
+Jul 25, 2018 17:07:32.57 Created new window in existing browser session.
+Jul 25, 2018 17:53:32.66 Created new window in existing browser session.
+Jul 25, 2018 17:54:26.46 Created new window in existing browser session.
+Jul 25, 2018 17:59:24.16 Created new window in existing browser session.
+
+Jul 26, 2018 09:26:43.83 NEW SESSION
+Jul 26, 2018 09:26:43.83 Created new window in existing browser session.
+Jul 26, 2018 09:31:10.45 Created new window in existing browser session.
+Jul 26, 2018 09:36:53.68 Created new window in existing browser session.
+Jul 26, 2018 09:48:30.98 Created new window in existing browser session.
+Jul 26, 2018 10:00:01.64 Created new window in existing browser session.
+Jul 26, 2018 10:02:00.36 Created new window in existing browser session.
+Jul 26, 2018 10:21:08.97 Created new window in existing browser session.
+Jul 26, 2018 10:25:26.65 Created new window in existing browser session.
+Jul 26, 2018 10:26:00.79 Created new window in existing browser session.
+Jul 26, 2018 10:26:45.91 Created new window in existing browser session.
+Jul 26, 2018 10:28:05.61 Created new window in existing browser session.
+
+Jul 26, 2018 10:30:14.00 NEW SESSION
+Jul 26, 2018 10:30:14.00 Created new window in existing browser session.
+Jul 26, 2018 11:53:13.86 Created new window in existing browser session.
+Jul 26, 2018 11:58:28.21 Created new window in existing browser session.
+
+Jul 26, 2018 12:04:56.57 NEW SESSION
+Jul 26, 2018 12:04:56.57 [1:17:0726/120456.575469:ERROR:adm_helpers.cc(73)] Failed to query stereo recording.
+Jul 26, 2018 12:04:59.56 [1:17:0726/120459.561024:ERROR:adm_helpers.cc(73)] Failed to query stereo recording.
+Jul 26, 2018 12:05:03.84 [1:17:0726/120503.844592:ERROR:adm_helpers.cc(73)] Failed to query stereo recording.
+Jul 26, 2018 12:05:04.74 [1:21:0726/120504.738556:ERROR:adm_helpers.cc(73)] Failed to query stereo recording.
+Jul 26, 2018 12:49:25.17 [2484:2484:0726/124925.174870:ERROR:latency_info.cc(164)] Surface::TakeLatencyInfoFromFrame, LatencyInfo vector size 102 is too big.
+Jul 26, 2018 12:49:26.02 [2484:2484:0726/124926.026348:ERROR:latency_info.cc(164)] Surface::TakeLatencyInfoFromFrame, LatencyInfo vector size 102 is too big.
+Jul 26, 2018 12:49:26.87 [2484:2484:0726/124926.879280:ERROR:latency_info.cc(164)] Surface::TakeLatencyInfoFromFrame, LatencyInfo vector size 102 is too big.
+Jul 26, 2018 15:41:21.97 [2526:2526:0726/154121.977221:ERROR:buffer_manager.cc(461)] [.DisplayCompositor-0x2e158fe8800]GL ERROR :GL_INVALID_OPERATION : glBufferData: <- error from previous GL command
+Jul 26, 2018 15:41:24.99 [2526:2526:0726/154124.994080:ERROR:buffer_manager.cc(461)] [.DisplayCompositor-0x2e158fe8800]GL ERROR :GL_INVALID_OPERATION : glBufferData: <- error from previous GL command
+Jul 26, 2018 16:05:16.06 Created new window in existing browser session.
+Jul 26, 2018 16:09:21.17 Created new window in existing browser session.
+Jul 26, 2018 16:11:02.57 Created new window in existing browser session.
+Jul 26, 2018 16:11:23.81 Created new window in existing browser session.
+Jul 26, 2018 16:29:23.46 [2526:2526:0726/162923.467716:ERROR:buffer_manager.cc(461)] [.DisplayCompositor-0x2e158d13000]GL ERROR :GL_INVALID_OPERATION : glBufferData: <- error from previous GL command
+Jul 26, 2018 17:18:37.69 [1:17:0726/171837.695991:ERROR:adm_helpers.cc(73)] Failed to query stereo recording.
+Jul 26, 2018 17:42:53.73 Created new window in existing browser session.
+Jul 26, 2018 17:44:18.03 Created new window in existing browser session.
+Jul 26, 2018 17:45:21.86 Created new window in existing browser session.
+Jul 26, 2018 17:46:47.59 Created new window in existing browser session.
+
+Jul 26, 2018 18:27:25.49 NEW SESSION
+Jul 26, 2018 18:27:25.49 Created new window in existing browser session.
+
+Jul 27, 2018 11:54:17.85 NEW SESSION
+Jul 27, 2018 11:54:17.85 Created new window in existing browser session.
+Jul 27, 2018 11:58:33.62 Created new window in existing browser session.
+Jul 27, 2018 11:58:51.20 Created new window in existing browser session.
+Jul 27, 2018 12:02:27.69 Created new window in existing browser session.
+Jul 27, 2018 12:15:28.22 Created new window in existing browser session.
+Jul 27, 2018 12:15:40.93 Created new window in existing browser session.
+Jul 27, 2018 12:46:26.94 Created new window in existing browser session.
+Jul 27, 2018 12:59:00.25 Created new window in existing browser session.
+Jul 27, 2018 14:38:45.25 Created new window in existing browser session.
+Jul 27, 2018 14:40:07.33 Created new window in existing browser session.
+Jul 27, 2018 14:42:03.20 Created new window in existing browser session.
+Jul 27, 2018 14:44:23.46 Created new window in existing browser session.
+Jul 27, 2018 14:52:42.35 Created new window in existing browser session.
+Jul 27, 2018 15:27:28.29 Created new window in existing browser session.
+Jul 27, 2018 15:34:14.30 Created new window in existing browser session.
+Jul 27, 2018 15:40:51.69 Created new window in existing browser session.
+Jul 27, 2018 15:42:02.51 Created new window in existing browser session.
+Jul 27, 2018 15:44:09.57 Created new window in existing browser session.
+Jul 27, 2018 15:45:40.38 Created new window in existing browser session.
+Jul 27, 2018 16:28:10.38 Created new window in existing browser session.
+Jul 27, 2018 16:29:56.22 Created new window in existing browser session.
+Jul 27, 2018 16:31:20.36 Created new window in existing browser session.
+Jul 27, 2018 16:32:18.37 Created new window in existing browser session.
+Jul 27, 2018 16:38:26.89 Created new window in existing browser session.
+Jul 27, 2018 16:41:16.44 Created new window in existing browser session.
+Jul 27, 2018 16:44:29.39 Created new window in existing browser session.
+
+Jul 27, 2018 17:17:28.02 NEW SESSION
+Jul 27, 2018 17:17:28.02 Created new window in existing browser session.
+Jul 27, 2018 17:17:38.61 [1:17:0727/171738.612894:ERROR:adm_helpers.cc(73)] Failed to query stereo recording.
+Jul 27, 2018 17:19:27.98 Created new window in existing browser session.
+Jul 27, 2018 17:24:24.42 Created new window in existing browser session.
+Jul 27, 2018 17:27:51.27 Created new window in existing browser session.
+Jul 27, 2018 17:28:59.07 Created new window in existing browser session.
+Jul 27, 2018 17:29:39.74 Created new window in existing browser session.
+Jul 27, 2018 17:33:32.06 Created new window in existing browser session.
+Jul 27, 2018 17:37:28.45 Created new window in existing browser session.
+Jul 27, 2018 17:43:44.35 Created new window in existing browser session.
+Jul 27, 2018 18:02:51.26 [2556:2556:0727/180251.269695:ERROR:latency_info.cc(164)] Surface::TakeLatencyInfoFromFrame, LatencyInfo vector size 101 is too big.
+Jul 27, 2018 18:02:56.55 [2556:2556:0727/180256.555544:ERROR:latency_info.cc(164)] Surface::TakeLatencyInfoFromFrame, LatencyInfo vector size 101 is too big.
+Jul 27, 2018 18:03:01.69 [2556:2556:0727/180301.690291:ERROR:latency_info.cc(164)] Surface::TakeLatencyInfoFromFrame, LatencyInfo vector size 102 is too big.
+Jul 27, 2018 18:03:08.61 [2556:2556:0727/180308.613966:ERROR:latency_info.cc(164)] Surface::TakeLatencyInfoFromFrame, LatencyInfo vector size 101 is too big.
+Jul 27, 2018 18:03:13.88 [2556:2556:0727/180313.881684:ERROR:latency_info.cc(164)] Surface::TakeLatencyInfoFromFrame, LatencyInfo vector size 101 is too big.
+Jul 27, 2018 18:03:19.00 [2556:2556:0727/180319.000422:ERROR:latency_info.cc(164)] Surface::TakeLatencyInfoFromFrame, LatencyInfo vector size 101 is too big.
+Jul 27, 2018 18:03:25.92 [2556:2556:0727/180325.924560:ERROR:latency_info.cc(164)] Surface::TakeLatencyInfoFromFrame, LatencyInfo vector size 101 is too big.
+
+Jul 28, 2018 09:56:53.15 NEW SESSION
+Jul 28, 2018 09:56:53.15 Created new window in existing browser session.
+Jul 28, 2018 09:57:44.08 Created new window in existing browser session.
+Jul 28, 2018 10:00:30.24 Created new window in existing browser session.
+Jul 28, 2018 10:23:45.38 Created new window in existing browser session.
+Jul 28, 2018 10:27:49.58 Created new window in existing browser session.
+Jul 28, 2018 10:55:44.47 Created new window in existing browser session.
+Jul 28, 2018 10:59:47.91 Created new window in existing browser session.
+Jul 28, 2018 11:01:27.15 Created new window in existing browser session.
+Jul 28, 2018 11:03:38.58 Created new window in existing browser session.
+Jul 28, 2018 11:08:57.42 Created new window in existing browser session.
+
+Jul 28, 2018 11:41:32.76 NEW SESSION
+Jul 28, 2018 11:41:32.76 Created new window in existing browser session.

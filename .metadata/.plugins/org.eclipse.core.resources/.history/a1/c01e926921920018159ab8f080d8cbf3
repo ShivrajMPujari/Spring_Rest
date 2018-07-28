@@ -1,0 +1,34 @@
+package com.bridgeIt.user.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
+
+import com.bridgeIt.user.dao.UserDao;
+import com.bridgeIt.user.model.User;
+
+@Component
+public class UserService {
+
+	@Autowired
+	UserDao dao;
+
+	
+	public ResponseEntity<User> userReg (User user) {
+		
+		boolean out = dao.insert(user);
+		ResponseEntity<User> respond;
+		if(out) {
+		respond = new ResponseEntity<User>(HttpStatus.CREATED);
+			return respond;
+
+		}else {
+			respond = new ResponseEntity<User>(HttpStatus.BAD_REQUEST);
+			return respond;
+		}
+		
+	}
+	
+	
+}
