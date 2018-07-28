@@ -4,11 +4,14 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -47,17 +50,17 @@ public class HomeController {
 	
 
 	@RequestMapping(value="/register", method = RequestMethod.POST ,consumes="application/json", produces="application/json" )
-	public ResponseEntity<BaseResponse> responser ( @RequestBody User user){
+	public ResponseEntity<BaseResponse> responser (@Valid @RequestBody User user,BindingResult result){
 	
-		 ResponseEntity<BaseResponse> respond = service.userReg(user);
+		 ResponseEntity<BaseResponse> respond = service.userReg(user,result);
 		
 		System.out.println("agfiagfiga");
 		return respond;
 	}
 	
 	@RequestMapping(value="/login",method = RequestMethod.GET, produces="application/json")
-	public ResponseEntity<BaseResponse> login(@RequestParam(value="email") String email,@RequestParam(value="password") String password ){
-		
+	public ResponseEntity<BaseResponse> login(@RequestParam("email") String email,@RequestParam("password") String password ){
+		System.out.println( email+" "+password);
 		 ResponseEntity<BaseResponse> respond =service.login(email, password);
 
 		return respond;

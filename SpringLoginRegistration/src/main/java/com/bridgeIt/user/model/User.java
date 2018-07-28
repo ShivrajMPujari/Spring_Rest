@@ -1,11 +1,24 @@
 package com.bridgeIt.user.model;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class User {
 
+	@NotEmpty(message="name is required")
 	private String name;
+	
+	@NotEmpty(message="role is needed to be filled")
 	private String role;
+	
+	@NotEmpty(message="email is required")
+	@Email(message="email is invalid")
 	private String email;
+	
+	@NotEmpty(message="city is required")
 	private String city;
+	
+	@NotEmpty(message="mobile no. is required")
 	private String mobileNo;
 	private String password;
 	

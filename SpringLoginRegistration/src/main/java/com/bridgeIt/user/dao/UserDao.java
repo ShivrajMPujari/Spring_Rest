@@ -43,29 +43,41 @@ public class UserDao {
 		template = new JdbcTemplate(dataSource);
 		System.out.println(user);
 		Object [] args = {user.getEmail()};
+		String sql = "select name from UserLogin where email = ?";
 		
 		try {
-			template.queryForObject("select * from UserLogin where email=?", User.class, args);
-			System.out.println("template not excuted..");
+		//	user =template.queryForObject("select * from UserLogin where email=?", User.class, args);
+//			System.out.println("template not excuted..");
+//			user= template.queryForObject("select * from UserLogin where email = ?", new UserMapper());
 			
+			String name = (String)template.queryForObject(
+					sql, new Object[] { user.getEmail()}, String.class);
+			
+			System.out.println(name);
+			System.out.println("abcd");
 			return false;
-		} catch (DataAccessException e) {
-
-			
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(user);
 			return true;
 		}
 		
 	}
 
 	public boolean checkUser(String email, String password ) {
-		
+		System.out.println(email+"---"+password);
 		Object [] args = {email,password};
+		template = new JdbcTemplate(dataSource);
+		User user= null;
 		try {
-		template.queryForObject("select * from UserLogin where email=? and password=?", User.class,args );
-			
+		// user=template.queryForObject("select * from UserLogin where email=? and password=?", User.class,args );
+		String userName= template.queryForObject("select name from UserLogin where email=? and password=?",String.class,args);
+		 //int a = template.queryForInt("select * from UserLogin where email=? and password=?",args);
+			System.out.println(userName+"----u");
 			return true;
-		} catch (DataAccessException e) {
-			
+		} catch (Exception e) {
+			System.out.println(user);
+			e.printStackTrace();
 			return false;
 		}
 		

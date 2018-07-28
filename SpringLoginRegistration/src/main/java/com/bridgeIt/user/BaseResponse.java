@@ -1,5 +1,7 @@
 package com.bridgeIt.user;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
@@ -8,7 +10,14 @@ public class BaseResponse {
 
 	private HttpStatus code;
 	private String status;
+	private List errors;
 	
+	public List getErrors() {
+		return errors;
+	}
+	public void setErrors(List errors) {
+		this.errors = errors;
+	}
 	public HttpStatus getCode() {
 		return code;
 	}

@@ -1,4 +1,4 @@
 #Tomcat publish data
-#Sat Jul 28 11:43:05 IST 2018
+#Sat Jul 28 18:20:55 IST 2018
 org.eclipse.jst.jee.server\:/binary\:/home/bridgelabz/.m2/repository/org/springframework/spring-web/4.3.0.RELEASE/spring-web-4.3.0.RELEASE.jar=/home/bridgelabz/Downloads/sts-bundle/pivotal-tc-server/instances/base-instance/wtpwebapps/SpringLoginRegistration/WEB-INF/lib/spring-web-4.3.0.RELEASE.jar
 org.eclipse.jst.jee.server\:SpringLoginRegistration=/home/bridgelabz/Downloads/sts-bundle/pivotal-tc-server/instances/base-instance/wtpwebapps/SpringLoginRegistration
