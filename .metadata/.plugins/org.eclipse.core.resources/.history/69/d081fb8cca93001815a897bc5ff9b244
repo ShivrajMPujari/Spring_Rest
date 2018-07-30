@@ -1,0 +1,8 @@
+package com.bridgeIt.user.service;
+
+public interface UserService {
+
+	public boolean userReg();
+	
+	
+}

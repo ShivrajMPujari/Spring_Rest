@@ -128,3 +128,38 @@ Jul 28, 2018 13:59:14.41 Created new window in existing browser session.
 
 Jul 28, 2018 18:22:26.80 NEW SESSION
 Jul 28, 2018 18:22:26.80 [1:17:0728/182226.799126:ERROR:adm_helpers.cc(73)] Failed to query stereo recording.
+
+Jul 30, 2018 10:10:17.76 NEW SESSION
+Jul 30, 2018 10:10:17.76 Created new window in existing browser session.
+Jul 30, 2018 11:31:31.01 Created new window in existing browser session.
+
+Jul 30, 2018 12:10:39.47 NEW SESSION
+Jul 30, 2018 12:10:39.47 [1:17:0730/121039.469544:ERROR:adm_helpers.cc(73)] Failed to query stereo recording.
+Jul 30, 2018 12:10:44.26 [1:17:0730/121044.265386:ERROR:adm_helpers.cc(73)] Failed to query stereo recording.
+
+Jul 30, 2018 12:34:04.04 NEW SESSION
+Jul 30, 2018 12:34:04.04 [2471:2471:0730/123404.047333:ERROR:in_progress_cache_impl.cc(188)] Cache is not initialized, cannot RetrieveEntry.
+Jul 30, 2018 12:34:04.34 [2471:2471:0730/123404.047426:ERROR:in_progress_cache_impl.cc(188)] Cache is not initialized, cannot RetrieveEntry.
+Jul 30, 2018 12:34:04.34 [2471:2471:0730/123404.047454:ERROR:in_progress_cache_impl.cc(188)] Cache is not initialized, cannot RetrieveEntry.
+Jul 30, 2018 12:34:04.34 [2471:2471:0730/123404.047476:ERROR:in_progress_cache_impl.cc(188)] Cache is not initialized, cannot RetrieveEntry.
+Jul 30, 2018 12:34:04.34 [2471:2471:0730/123404.047497:ERROR:in_progress_cache_impl.cc(188)] Cache is not initialized, cannot RetrieveEntry.
+Jul 30, 2018 12:34:04.34 [2471:2471:0730/123404.047515:ERROR:in_progress_cache_impl.cc(188)] Cache is not initialized, cannot RetrieveEntry.
+Jul 30, 2018 12:34:04.34 [2471:2471:0730/123404.047534:ERROR:in_progress_cache_impl.cc(188)] Cache is not initialized, cannot RetrieveEntry.
+Jul 30, 2018 13:01:43.49 [1:16:0730/130143.494769:ERROR:adm_helpers.cc(73)] Failed to query stereo recording.
+Jul 30, 2018 13:01:45.85 [1:16:0730/130145.855466:ERROR:adm_helpers.cc(73)] Failed to query stereo recording.
+Jul 30, 2018 13:02:39.72 [1:19:0730/130239.726267:ERROR:adm_helpers.cc(73)] Failed to query stereo recording.
+
+Jul 30, 2018 15:38:51.80 NEW SESSION
+Jul 30, 2018 15:38:51.80 [1:17:0730/153851.800856:ERROR:adm_helpers.cc(73)] Failed to query stereo recording.
+Jul 30, 2018 15:38:59.76 [1:18:0730/153859.760760:ERROR:adm_helpers.cc(73)] Failed to query stereo recording.
+Jul 30, 2018 15:39:13.61 Created new window in existing browser session.
+Jul 30, 2018 15:47:35.31 Created new window in existing browser session.
+Jul 30, 2018 16:13:14.75 Created new window in existing browser session.
+Jul 30, 2018 16:13:57.68 Created new window in existing browser session.
+Jul 30, 2018 16:18:02.21 Created new window in existing browser session.
+
+Jul 30, 2018 18:10:06.73 NEW SESSION
+Jul 30, 2018 18:10:06.73 Created new window in existing browser session.
+Jul 30, 2018 18:22:10.79 Created new window in existing browser session.
+Jul 30, 2018 18:22:42.55 Created new window in existing browser session.
+Jul 30, 2018 18:28:43.79 Created new window in existing browser session.

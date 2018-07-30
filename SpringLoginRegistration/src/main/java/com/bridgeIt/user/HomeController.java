@@ -1,4 +1,4 @@
-package com.bridgeIt.user;
+/*package com.bridgeIt.user;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -18,22 +18,22 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.bridgeIt.user.model.User;
-import com.bridgeIt.user.service.UserService;
+import com.bridgeIt.user.service.UserServiceClass;
 
-/**
+*//**
  * Handles requests for the application home page.
- */
+ *//*
 @RestController
 public class HomeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	@Autowired
-	UserService service;
+	UserServiceClass service;
 	
-	/**
+	*//**
 	 * Simply selects the home view to render by returning its name.
-	 */
+	 *//*
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
@@ -58,7 +58,7 @@ public class HomeController {
 		return respond;
 	}
 	
-	@RequestMapping(value="/login",method = RequestMethod.GET, produces="application/json")
+	@RequestMapping(value="/login",method = RequestMethod.POST, produces="application/json")
 	public ResponseEntity<BaseResponse> login(@RequestParam("email") String email,@RequestParam("password") String password ){
 		System.out.println( email+" "+password);
 		 ResponseEntity<BaseResponse> respond =service.login(email, password);
@@ -68,3 +68,4 @@ public class HomeController {
 	}
 		
 }
+*/

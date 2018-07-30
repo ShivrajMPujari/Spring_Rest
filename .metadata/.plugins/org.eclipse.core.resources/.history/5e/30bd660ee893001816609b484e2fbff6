@@ -1,0 +1,20 @@
+package com.bridgeIt.user.service;
+
+import com.bridgeIt.user.model.User;
+
+public class UserServiceImp implements UserService {
+
+	@Override
+	public boolean userReg(User user) {
+	
+		return false;
+	}
+
+	@Override
+	public boolean login(User user) {
+
+		
+		return false;
+	}
+
+}

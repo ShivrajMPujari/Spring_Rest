@@ -1,0 +1,37 @@
+package com.bridgeIt.user.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.bridgeIt.user.BaseResponse;
+import com.bridgeIt.user.dao.UserDao;
+import com.bridgeIt.user.model.User;
+
+public class UserServiceImp implements UserService {
+
+	
+	@Autowired
+	UserDao dao;
+	
+	@Autowired
+	BaseResponse response;
+	
+	@Override
+	public boolean userReg(User user) {
+	
+		boolean outcome=dao.existence(user);
+		if(outcome!=true) {
+			dao.insert(user);
+			
+		}
+		
+		return false;
+	}
+
+	@Override
+	public boolean login(User user) {
+
+		
+		return false;
+	}
+
+}

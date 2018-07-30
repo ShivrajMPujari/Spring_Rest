@@ -5,7 +5,269 @@
   <link rel="self" href="https://spring.io/blog.atom" />
   <id>http://spring.io/blog.atom</id>
   <icon>https://spring.io/favicon.ico</icon>
-  <updated>2018-07-27T14:31:37Z</updated>
+  <updated>2018-07-30T12:44:28Z</updated>
+  <entry>
+    <title>Spring Security 5.1.0.M2 Released</title>
+    <link rel="alternate" href="https://spring.io/blog/2018/07/30/spring-security-5-1-0-m2-released" />
+    <category term="releases" label="Releases" />
+    <author>
+      <name>Rob Winch</name>
+    </author>
+    <id>tag:spring.io,2018-07-27:3342</id>
+    <updated>2018-07-30T12:44:28Z</updated>
+    <content type="html">&lt;div class="paragraph"&gt;
+&lt;p&gt;On behalf of the community I am pleased to announce the release of Spring Security 5.1.0.M2. This release comes with &lt;a href="https://github.com/spring-projects/spring-security/milestone/106"&gt;100+ tickets&lt;/a&gt; closed.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;As always we look forward to hearing your &lt;a href="https://github.com/spring-projects/spring-security/issues"&gt;feedback&lt;/a&gt;! You can find the highlights below:&lt;/p&gt;
+&lt;/div&gt;
+&lt;h1 id="oauth2" class="sect0"&gt;&lt;a class="anchor" href="#oauth2"&gt;&lt;/a&gt;OAuth2&lt;/h1&gt;
+&lt;div class="sect1"&gt;
+&lt;h2 id="oauth2-resource-server"&gt;&lt;a class="anchor" href="#oauth2-resource-server"&gt;&lt;/a&gt;OAuth2 Resource Server&lt;/h2&gt;
+&lt;div class="sectionbody"&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;Basic support for OAuth2 Resource Servers has been added.
+See &lt;a href="https://github.com/spring-projects/spring-security/tree/5.1.0.M2/samples/boot/oauth2resourceserver"&gt;oauth2resourceserver&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="sect1"&gt;
+&lt;h2 id="authorization-code-flow"&gt;&lt;a class="anchor" href="#authorization-code-flow"&gt;&lt;/a&gt;Authorization Code Flow&lt;/h2&gt;
+&lt;div class="sectionbody"&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;User&amp;#8217;s can now obtain an access token using the authorization code flow even if they didn&amp;#8217;t authenticate with the authorization server.
+See the &lt;a href="https://github.com/spring-projects/spring-security/tree/5.1.0.M2/samples/boot/authcodegrant"&gt;authcodegrant&lt;/a&gt; sample.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="sect1"&gt;
+&lt;h2 id="webclient-and-oauth2-support"&gt;&lt;a class="anchor" href="#webclient-and-oauth2-support"&gt;&lt;/a&gt;WebClient and OAuth2 Support&lt;/h2&gt;
+&lt;div class="sectionbody"&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;There is now built in support for OAuth2 and WebClient support.
+The support allows:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="ulist"&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Adding the access token to the request&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Automatic refreshing of the access token when it expires&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Resolving the access token to use&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;For example, in a Servlet environment you can configure a Bean like this:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="listingblock"&gt;
+&lt;div class="content"&gt;
+&lt;pre class="prettyprint highlight"&gt;&lt;code class="language-java" data-lang="java"&gt;@Bean
+WebClient webClient(OAuth2AuthorizedClientRepository repository) {
+    ServletOAuth2AuthorizedClientExchangeFilterFunction filter =
+        new ServletOAuth2AuthorizedClientExchangeFilterFunction(repository);
+    return WebClient.builder()
+        .filter(new OAuth2AuthorizedClientExchangeFilterFunction())
+        .apply(filter.oauth2Configuration())
+        .build();
+ }&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;Now you can add the OAuth token in a number of different ways.
+If you want you can resolve the &lt;code&gt;OAuth2AuthorizedClient&lt;/code&gt; using the Spring MVC support.
+If the authorization server returned a refresh token and the access token is about to expire, Spring Security will transparently update the access token and submit the updated access token instead.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="listingblock"&gt;
+&lt;div class="content"&gt;
+&lt;pre class="prettyprint highlight"&gt;&lt;code class="language-java" data-lang="java"&gt;@GetMapping("/users")
+Mono&amp;lt;String&amp;gt; users(@RegisteredOAuth2AuthorizedClient("client-id")
+        OAuth2AuthorizedClient authorizedClient) {
+    return this.webClient.get()
+        .uri("https://api.example.com/user")
+        .attributes(oauth2AuthorizedClient(authorizedClient))
+        .retrieve()
+        .bodyToMono(String.class);
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;You can also resolve the access token through the &lt;code&gt;WebClient&lt;/code&gt;.
+Fore example:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="listingblock"&gt;
+&lt;div class="content"&gt;
+&lt;pre class="prettyprint highlight"&gt;&lt;code class="language-java" data-lang="java"&gt;Mono&amp;lt;String&amp;gt; users() {
+    return this.webClient.get()
+        .uri("https://api.example.com/user")
+        .attributes(clientRegistrationId("client-id"))
+        .retrieve()
+        .bodyToMono(String.class);
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;If you authenticated using OAuth2 Log In or OIDC, then a default access token can be applied with no user interaction.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="listingblock"&gt;
+&lt;div class="content"&gt;
+&lt;pre class="prettyprint highlight"&gt;&lt;code class="language-java" data-lang="java"&gt;Mono&amp;lt;String&amp;gt; users() {
+    // if Authenticated with OIDC
+    // OAuth2 Log In use the access token associated to log in
+    return this.webClient.get()
+        .uri("https://api.example.com/user")
+        .retrieve()
+        .bodyToMono(String.class);
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="sect1"&gt;
+&lt;h2 id="webflux-oauth2-log-in-supports-oidc"&gt;&lt;a class="anchor" href="#webflux-oauth2-log-in-supports-oidc"&gt;&lt;/a&gt;WebFlux OAuth2 Log In Supports OIDC&lt;/h2&gt;
+&lt;div class="sectionbody"&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;WebFlux applications can now authenticate with both OAuth2 and OIDC.
+See &lt;a href="https://github.com/spring-projects/spring-security/tree/master/samples/boot/oauth2login-webflux"&gt;oauth2login-webflux&lt;/a&gt; for a sample.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="sect1"&gt;
+&lt;h2 id="ability-to-create-clientregistration-from-oidc-discovery"&gt;&lt;a class="anchor" href="#ability-to-create-clientregistration-from-oidc-discovery"&gt;&lt;/a&gt;Ability to Create ClientRegistration from OIDC Discovery&lt;/h2&gt;
+&lt;div class="sectionbody"&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;Previously users wanting to integrate with an OIDC provider needed to configure all of the endpoints. For example, in Spring Boot it looked like:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="listingblock"&gt;
+&lt;div class="content"&gt;
+&lt;pre class="prettyprint highlight"&gt;&lt;code class="language-yml" data-lang="yml"&gt;spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          okta:
+            client-id: okta-client-id
+            client-secret: okta-client-secret
+        provider:
+          okta:
+            authorization-uri: https://foo.oktapreview.com/oauth2/v1/authorize
+            token-uri: https://foo.oktapreview.com/oauth2/v1/token
+            user-info-uri: https://foo.oktapreview.com/oauth2/v1/userinfo
+            user-name-attribute: sub
+            jwk-set-uri: https://foo.oktapreview.com/oauth2/v1/keys&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;Now users can just configure the issuer uri. For example:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="listingblock"&gt;
+&lt;div class="content"&gt;
+&lt;pre class="prettyprint highlight"&gt;&lt;code class="language-yml" data-lang="yml"&gt;spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          okta:
+            client-id: okta-client-id
+            client-secret: okta-client-secret
+        provider:
+          okta:
+            issuer-uri: https://foo.oktapreview.com/oauth2/default/&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="sect1"&gt;
+&lt;h2 id="support-custom-authorization-requests"&gt;&lt;a class="anchor" href="#support-custom-authorization-requests"&gt;&lt;/a&gt;Support Custom Authorization Requests&lt;/h2&gt;
+&lt;div class="sectionbody"&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;Support for custom authorization requests has been added with the addition of &lt;code&gt;OAuth2AuthorizationRequestResolver&lt;/code&gt;.
+For example, if a user wants to add/remove scopes from the request they can easily do so now.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="sect1"&gt;
+&lt;h2 id="single-clientregistration-now-redirects-on-log-in"&gt;&lt;a class="anchor" href="#single-clientregistration-now-redirects-on-log-in"&gt;&lt;/a&gt;Single ClientRegistration Now Redirects on Log In&lt;/h2&gt;
+&lt;div class="sectionbody"&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;When OAuth2 / OIDC log in is configured with a single provider, rather than displaying only one provider the default has been changed to redirect to the provider immediately.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h1 id="configuration-improvements" class="sect0"&gt;&lt;a class="anchor" href="#configuration-improvements"&gt;&lt;/a&gt;Configuration Improvements&lt;/h1&gt;
+&lt;div class="sect1"&gt;
+&lt;h2 id="modernize-the-default-log-in-page"&gt;&lt;a class="anchor" href="#modernize-the-default-log-in-page"&gt;&lt;/a&gt;Modernize the Default Log In Page&lt;/h2&gt;
+&lt;div class="sectionbody"&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;The default log in page has been modernized to html5 and look more visually appealing.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="sect1"&gt;
+&lt;h2 id="default-log-out-page"&gt;&lt;a class="anchor" href="#default-log-out-page"&gt;&lt;/a&gt;Default Log Out Page&lt;/h2&gt;
+&lt;div class="sectionbody"&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;Since the addition of CSRF log out protection, the default application has no way to log out.
+Now if the default log in page is being used (i.e. no log in page has been configured), then there is also a default log out page that presents a log out form.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="sect1"&gt;
+&lt;h2 id="simplify-requestcache-configuration"&gt;&lt;a class="anchor" href="#simplify-requestcache-configuration"&gt;&lt;/a&gt;Simplify RequestCache Configuration&lt;/h2&gt;
+&lt;div class="sectionbody"&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;User&amp;#8217;s can now configure the default RequestCache that is used by exposing it as a &lt;code&gt;@Bean&lt;/code&gt;.
+The &lt;code&gt;HttpSessionRequestCache&lt;/code&gt; has been updated to no longer require the value be a &lt;code&gt;DefaultRequestCache&lt;/code&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h1 id="hardening-your-application" class="sect0"&gt;&lt;a class="anchor" href="#hardening-your-application"&gt;&lt;/a&gt;Hardening Your Application&lt;/h1&gt;
+&lt;div class="sect1"&gt;
+&lt;h2 id="cross-site-tracing-http-verb-tampering-protection"&gt;&lt;a class="anchor" href="#cross-site-tracing-http-verb-tampering-protection"&gt;&lt;/a&gt;Cross Site Tracing &amp;amp; HTTP Verb Tampering Protection&lt;/h2&gt;
+&lt;div class="sectionbody"&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;Spring Security 5.1 adds &lt;a href="https://www.owasp.org/index.php/Cross_Site_Tracing"&gt;cross site tracing&lt;/a&gt; and &lt;a href="https://www.owasp.org/index.php/Testing_for_HTTP_Verb_Tampering_(OTG-INPVAL-003)"&gt;HTTP Verb Tampering&lt;/a&gt; protection to Spring Security.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="sect1"&gt;
+&lt;h2 id="password-encoding-upgrades"&gt;&lt;a class="anchor" href="#password-encoding-upgrades"&gt;&lt;/a&gt;Password Encoding Upgrades&lt;/h2&gt;
+&lt;div class="sectionbody"&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;User&amp;#8217;s can implement &lt;a href="https://docs.spring.io/spring-security/site/docs/5.1.0.M2/api/org/springframework/security/core/userdetails/UserDetailsPasswordService.html"&gt;UserDetailsPasswordService&lt;/a&gt; and expose it as a &lt;code&gt;@Bean&lt;/code&gt; and on authentication success Spring Security&amp;#8217;s &lt;code&gt;DaoAuthenticationProvider&lt;/code&gt; will:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="ulist"&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Check to see if the password storage mechanism needs updated using the new &lt;a href="https://docs.spring.io/spring-security/site/docs/5.1.0.M2/api/org/springframework/security/crypto/password/PasswordEncoder.html#upgradeEncoding-java.lang.String-"&gt;PasswordEncoder.upgradeEncoding&lt;/a&gt; method. For example, if it is encoded in sha256, then by default Spring Security would advise it is upgraded to BCrypt.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;If the password encoding needs to be upgraded, it will encode the password using the current &lt;code&gt;PasswordEncoder&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;The &lt;code&gt;UserDetails&lt;/code&gt; and new password will be passed to the &lt;code&gt;UserDetailsPasswordService&lt;/code&gt; so it can be saved with the upgraded password encoding.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="sect1"&gt;
+&lt;h2 id="dependency-updates"&gt;&lt;a class="anchor" href="#dependency-updates"&gt;&lt;/a&gt;Dependency Updates&lt;/h2&gt;
+&lt;div class="sectionbody"&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;We have updated our dependencies to be on the latest and greatest to ensure our transitive dependencies are up to date.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;&lt;a href="http://projects.spring.io/spring-security/"&gt;Project Site&lt;/a&gt; |
+&lt;a href="http://docs.spring.io/spring-security/site/docs/5.1.0.M2/reference/htmlsingle/"&gt;Reference&lt;/a&gt;
+| &lt;a href="http://stackoverflow.com/questions/tagged/spring-security"&gt;Help&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;</content>
+  </entry>
   <entry>
     <title>Spring Data Ingalls SR14 and Kay SR9 released</title>
     <link rel="alternate" href="https://spring.io/blog/2018/07/27/spring-data-ingalls-sr14-and-kay-sr9-released" />
@@ -779,169 +1041,5 @@ public class RemotePartitioningAppConfig {&#xD;
   &lt;li&gt;Don&amp;rsquo;t miss &lt;a href="https://springoneplatform.io/2018/training"&gt;the training&lt;/a&gt; for Spring Boot and Spring Cloud at &lt;a href="https://springoneplatform.io/"&gt;this year&amp;rsquo;s SpringOne Platform 2018&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;Check out this upcoming Cloud Foundry webinar on July 18, &lt;a href="https://www.brighttalk.com/webcast/16813/327047"&gt;&lt;em&gt;Bring Your Own Code vs. Bring Your Own Container&lt;/em&gt;&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;</content>
-  </entry>
-  <entry>
-    <title>Spring Cloud Edgware.SR4 Has Been Released</title>
-    <link rel="alternate" href="https://spring.io/blog/2018/07/02/spring-cloud-edgware-sr4-has-been-released" />
-    <category term="releases" label="Releases" />
-    <author>
-      <name>Ryan Baxter</name>
-    </author>
-    <id>tag:spring.io,2018-07-02:3323</id>
-    <updated>2018-07-02T18:34:57Z</updated>
-    <content type="html">&lt;p&gt;On behalf of the community, I am pleased to announce that the Service Release 4 (SR4) of the &lt;a href="https://cloud.spring.io"&gt;Spring Cloud Edgware&lt;/a&gt; Release Train is available today. You can find the release in &lt;a href="http://repo1.maven.org/maven2/org/springframework/cloud/spring-cloud-dependencies/Edgware.SR4/"&gt;Maven Central&lt;/a&gt;. You can also check out the Edgware &lt;a href="https://github.com/spring-projects/spring-cloud/wiki/Spring-Cloud-Edgware-Release-Notes"&gt;release notes for more information&lt;/a&gt;.&lt;/p&gt;&lt;h2&gt;&lt;a href="#notable-changes-in-the-edgware-release-train" class="anchor" name="notable-changes-in-the-edgware-release-train"&gt;&lt;/a&gt;Notable Changes in the Edgware Release Train&lt;/h2&gt;&lt;h3&gt;&lt;a href="#spring-boot-autoconfigure-processor" class="anchor" name="spring-boot-autoconfigure-processor"&gt;&lt;/a&gt;spring-boot-autoconfigure-processor&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;All of the projects have a new optional dependency, &lt;code&gt;spring-boot-autoconfigure-processor&lt;/code&gt;. See Spring Cloud Commons issue &lt;a href="https://github.com/spring-cloud/spring-cloud-commons/issues/377"&gt;#377&lt;/a&gt;.&lt;/li&gt;
-&lt;/ul&gt;&lt;h3&gt;&lt;a href="#spring-cloud-commons" class="anchor" name="spring-cloud-commons"&gt;&lt;/a&gt;Spring Cloud Commons&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href="https://github.com/spring-cloud/spring-cloud-commons/issues?q=is%3Aclosed+milestone%3A1.3.4.RELEASE"&gt;Documentation and bug fixes&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;h3&gt;&lt;a href="#spring-cloud-aws" class="anchor" name="spring-cloud-aws"&gt;&lt;/a&gt;Spring Cloud AWS&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href="https://github.com/spring-cloud/spring-cloud-aws/milestone/23?closed=1"&gt;Bug fixes&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;h3&gt;&lt;a href="#spring-cloud-config" class="anchor" name="spring-cloud-config"&gt;&lt;/a&gt;Spring Cloud Config&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;Added the ability to configure a proxy host and port for ssh git repo connections&lt;/li&gt;
-  &lt;li&gt;Added refresh rate to GIT repositories&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://github.com/spring-cloud/spring-cloud-config/issues?q=is%3Aclosed+milestone%3A1.4.4.RELEASE"&gt;Bug fixes&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;h3&gt;&lt;a href="#spring-cloud-contract" class="anchor" name="spring-cloud-contract"&gt;&lt;/a&gt;Spring Cloud Contract&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;Made the stub-runner fat jar executable (you can do &lt;code&gt;./stub-runner.jar&lt;/code&gt;)&lt;/li&gt;
-  &lt;li&gt;Added cookie support for Contract DSL&lt;/li&gt;
-  &lt;li&gt;Upgraded WireMock to 2.16.0&lt;/li&gt;
-  &lt;li&gt;Added basic support for XML and Rest Docs&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://github.com/spring-cloud/spring-cloud-contract/issues?q=is%3Aclosed+milestone%3A1.2.5.RELEASE"&gt;Bug fixes&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;h3&gt;&lt;a href="#spring-cloud-sleuth" class="anchor" name="spring-cloud-sleuth"&gt;&lt;/a&gt;Spring Cloud Sleuth&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href="https://github.com/spring-cloud/spring-cloud-sleuth/issues?q=is%3Aclosed+milestone%3A1.3.4.RELEASE"&gt;Bug fixes&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;h3&gt;&lt;a href="#spring-cloud-task" class="anchor" name="spring-cloud-task"&gt;&lt;/a&gt;Spring Cloud Task&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href="https://spring.io/blog/2018/07/02/spring-cloud-task-1-2-3-release-is-now-available"&gt;Blog Post&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;h3&gt;&lt;a href="#spring-cloud-netflix" class="anchor" name="spring-cloud-netflix"&gt;&lt;/a&gt;Spring Cloud Netflix&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;Servo is now disabled by default&lt;/li&gt;
-  &lt;li&gt;Added support cluster query param in TurbineStream&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://github.com/spring-cloud/spring-cloud-netflix/issues?q=is%3Aclosed+milestone%3A1.4.5.RELEASE"&gt;Bug fixes&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;h3&gt;&lt;a href="#spring-cloud-vault" class="anchor" name="spring-cloud-vault"&gt;&lt;/a&gt;Spring Cloud Vault&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href="https://github.com/spring-cloud/spring-cloud-vault/issues?q=is%3Aclosed+milestone%3A1.1.1"&gt;Dependency upgrades&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;h3&gt;&lt;a href="#spring-cloud-function" class="anchor" name="spring-cloud-function"&gt;&lt;/a&gt;Spring Cloud Function&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;First Edgware release that includes Spring Cloud Function&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;The following modules were updated as part of Edgware.SR4:&lt;/p&gt;
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;Module &lt;/th&gt;
-      &lt;th&gt;Version &lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Spring Cloud AWS &lt;/td&gt;
-      &lt;td&gt;1.2.3.RELEASE &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Spring Cloud Contract &lt;/td&gt;
-      &lt;td&gt;1.2.5.RELEASE &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Spring Cloud Consul &lt;/td&gt;
-      &lt;td&gt;1.3.4.RELEASE &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Spring Cloud Zookeeper &lt;/td&gt;
-      &lt;td&gt;1.2.2.RELEASE &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Spring Cloud Sleuth &lt;/td&gt;
-      &lt;td&gt;1.3.4.RELEASE &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Spring Cloud Config &lt;/td&gt;
-      &lt;td&gt;1.4.4.RELEASE &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Spring Cloud Netflix &lt;/td&gt;
-      &lt;td&gt;1.4.5.RELEASE &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Spring Cloud Commons &lt;/td&gt;
-      &lt;td&gt;1.3.4.RELEASE &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Spring Cloud Bus &lt;/td&gt;
-      &lt;td&gt;1.3.4.RELEASE &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Spring Cloud Security &lt;/td&gt;
-      &lt;td&gt;1.2.3.RELEASE &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Spring Cloud Cloudfoundry &lt;/td&gt;
-      &lt;td&gt;1.1.2.RELEASE &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Spring Cloud Function &lt;/td&gt;
-      &lt;td&gt;1.0.0.RELEASE &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Spring Cloud Vault &lt;/td&gt;
-      &lt;td&gt;1.1.1.RELEASE &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Spring Cloud Gateway &lt;/td&gt;
-      &lt;td&gt;1.0.2.RELEASE &lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;As always, we welcome feedback on &lt;a href="https://github.com/spring-cloud/"&gt;GitHub&lt;/a&gt;, on &lt;a href="https://gitter.im/spring-cloud/spring-cloud"&gt;Gitter&lt;/a&gt;, on &lt;a href="http://stackoverflow.com/questions/tagged/spring-cloud"&gt;Stack Overflow&lt;/a&gt;, or on &lt;a href="https://twitter.com/SpringCloud"&gt;Twitter&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;To get started with Maven with a BOM (dependency management only):&lt;/p&gt;
-&lt;pre&gt;&lt;code class="prettyprint"&gt;&lt;br/&gt;&amp;lt;dependencyManagement&amp;gt;&#xD;
-    &amp;lt;dependencies&amp;gt;&#xD;
-        &amp;lt;dependency&amp;gt;&#xD;
-            &amp;lt;groupId&amp;gt;org.springframework.cloud&amp;lt;/groupId&amp;gt;&#xD;
-            &amp;lt;artifactId&amp;gt;spring-cloud-dependencies&amp;lt;/artifactId&amp;gt;&#xD;
-            &amp;lt;version&amp;gt;Edgware.SR4&amp;lt;/version&amp;gt;&#xD;
-            &amp;lt;type&amp;gt;pom&amp;lt;/type&amp;gt;&#xD;
-            &amp;lt;scope&amp;gt;import&amp;lt;/scope&amp;gt;&#xD;
-        &amp;lt;/dependency&amp;gt;&#xD;
-    &amp;lt;/dependencies&amp;gt;&#xD;
-&amp;lt;/dependencyManagement&amp;gt;&#xD;
-&amp;lt;dependencies&amp;gt;&#xD;
-    &amp;lt;dependency&amp;gt;&#xD;
-        &amp;lt;groupId&amp;gt;org.springframework.cloud&amp;lt;/groupId&amp;gt;&#xD;
-        &amp;lt;artifactId&amp;gt;spring-cloud-starter-config&amp;lt;/artifactId&amp;gt;&#xD;
-    &amp;lt;/dependency&amp;gt;&#xD;
-    &amp;lt;dependency&amp;gt;&#xD;
-        &amp;lt;groupId&amp;gt;org.springframework.cloud&amp;lt;/groupId&amp;gt;&#xD;
-        &amp;lt;artifactId&amp;gt;spring-cloud-starter-netflix-eureka-client&amp;lt;/artifactId&amp;gt;&#xD;
-    &amp;lt;/dependency&amp;gt;&#xD;
-    ...&#xD;
-&amp;lt;/dependencies&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Or, with Gradle:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="prettyprint"&gt;buildscript {&#xD;
-    dependencies {&#xD;
-        classpath &amp;quot;io.spring.gradle:dependency-management-plugin:1.0.2.RELEASE&amp;quot;&#xD;
-    }&#xD;
-}&#xD;
-&#xD;
-&#xD;
-&#xD;
-apply plugin: &amp;quot;io.spring.dependency-management&amp;quot;&#xD;
-&#xD;
-dependencyManagement {&#xD;
-    imports {&#xD;
-        mavenBom &amp;#39;org.springframework.cloud:spring-cloud-dependencies:Edgware.SR4&amp;#39;&#xD;
-    }&#xD;
-}&#xD;
-&#xD;
-dependencies {&#xD;
-    compile &amp;#39;org.springframework.cloud:spring-cloud-starter-config&amp;#39;&#xD;
-    compile &amp;#39;org.springframework.cloud:spring-cloud-starter-netflix-eureka-client&amp;#39;&#xD;
-    ...&#xD;
-}
-&lt;/code&gt;&lt;/pre&gt;</content>
   </entry>
 </feed>

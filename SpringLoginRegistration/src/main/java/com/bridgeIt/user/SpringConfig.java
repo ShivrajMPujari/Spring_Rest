@@ -49,11 +49,4 @@ public class SpringConfig extends WebMvcConfigurerAdapter {
 		return cpds;
 	}
 	
-	@Override
-	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
-		
-		configurer.enable();
-	}
-	
-	
 }
