@@ -7,10 +7,11 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Component;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.stereotype.Repository;
 
 import com.bridgeIt.user.model.User;
-@Component
+@Repository
 public class UserDao {
 
 	@Autowired
@@ -24,17 +25,22 @@ public class UserDao {
 	
 	public boolean insert(User user) {
 		
-		Object [] args = {user.getEmail(),user.getName(),user.getMobileNo(),user.getCity(),user.getRole()};
+		
 		template = new JdbcTemplate(dataSource);
+		
+		String hashPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
+		Object [] args = {user.getEmail(),user.getName(),hashPassword,user.getMobileNo(),user.getCity(),user.getRole(),user.isVerified()};
 		System.out.println(dataSource);
+		System.out.println(hashPassword);
 		int out=0;
 		try {
-			out = template.update("insert into UserLogin(email,name,mobileNo,city,role) values (?,?,?,?,?)", args);
+			System.out.println(user);
+			out = template.update("insert into UserLogin(email,name,password,mobileNo,city,role,verified) values (?,?,?,?,?,?,?)", args);
 			System.out.println("number rows affected "+out);
 			return true;
 		} catch (DataAccessException e) {
-
-			System.out.println("template not excuted..");
+			e.printStackTrace();
+			System.out.println("insert template not excuted..");
 			return false;
 		}
 
@@ -56,7 +62,7 @@ public class UserDao {
 			System.out.println(name);
 			System.out.println("abcd");
 			return false;
-		} catch (Exception e) {
+		} catch (DataAccessException e) {
 			e.printStackTrace();
 			System.out.println(user);
 			return true;
@@ -66,45 +72,44 @@ public class UserDao {
 	
 	
 	public boolean presence (User user) {
-		
 
 		template = new JdbcTemplate(dataSource);
 		System.out.println(user);
 		Object [] args = {user.getEmail()};
-		String sql = "select name from UserLogin where email = ?";
+		String sql="select * from UserLogin where email=?";
 		
-		try {
-			
-			String name = (String)template.queryForObject(
-					sql, new Object[] { user.getEmail()}, String.class);
-			
-			System.out.println(name);
-			System.out.println("abcd");
+		List<User> users=template.query(sql, args, new UserMapper());
+		if(users.isEmpty()!=true) {
+			System.out.println(" presence returning true");
 			return true;
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println(user);
-			return false;
 		}
+		return false;
 		
 	}
 	
 
-	public boolean checkUser(String email, String password ) {	System.out.println(email+"---"+password);
-	Object [] args = {email,password};
+	public boolean checkUser(String email, String password ) {
+	System.out.println(email+"---"+password);
+	Object [] args = {email};
 	template = new JdbcTemplate(dataSource);
-	User user= null;
-	try {
-	// user=template.queryForObject("select * from UserLogin where email=? and password=?", User.class,args );
-	String userName= template.queryForObject("select name from UserLogin where email=? and password=?",String.class,args);
-	 //int a = template.queryForInt("select * from UserLogin where email=? and password=?",args);
-		System.out.println(userName+"----u");
-		return true;
-	} catch (Exception e) {
-		System.out.println(user);
-		e.printStackTrace();
+	String sql="select * from UserLogin where email=?";
+	
+	List<User> user=template.query(sql, args, new UserMapper());
+	
+	if(user.isEmpty()!=true ) {
+		User user1=user.get(0);
+		if(BCrypt.checkpw(password, user1.getPassword())) {
+			System.out.println(true);
+			return true;
+		}
 		return false;
-	}}
+	}else {
+		return false;
+	}
+
+	
+	
+	}
 	
 	
 }

@@ -6,8 +6,11 @@ import java.util.Locale;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,10 +19,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bridgeIt.restDemo.model.BaseResponse;
 import com.bridgeIt.restDemo.model.PaymentRequest;
+import com.bridgeIt.restDemo.model.Runner;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 /**
  * Handles requests for the application home page.
  */
+@JsonFormat
 @RestController
 public class HomeController {
 	
@@ -32,6 +38,8 @@ public class HomeController {
 	
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	@Autowired
+	RabbitTemplate rabbitTemplate;
 	
 	/**
 	 * Simply selects the home view to render by returning its name.
@@ -68,6 +76,10 @@ public class HomeController {
 		
 	}
 	
-	
+	@RequestMapping(value="rabbit/{key}", method = RequestMethod.POST , produces="application/json" )
+	public void rabbit(@PathVariable("key") String key) {
+		rabbitTemplate.convertAndSend(key);
+		
+	}
 	
 }

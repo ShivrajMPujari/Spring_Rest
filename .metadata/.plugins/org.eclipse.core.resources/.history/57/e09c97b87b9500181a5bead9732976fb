@@ -1,0 +1,20 @@
+package com.bridgeIt.restDemo.model;
+
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+
+public class Runner {
+
+	
+	private RabbitTemplate template;
+	private Receiver receiver;
+	
+	
+	
+	public void run() {
+		
+		
+	}
+	
+	
+	
+}

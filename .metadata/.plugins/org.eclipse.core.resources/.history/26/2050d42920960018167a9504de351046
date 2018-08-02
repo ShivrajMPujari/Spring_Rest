@@ -1,0 +1,15 @@
+package com.bridgeIt.javaConfig;
+
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
+
+public class Consumer {
+
+	@RabbitListener(queues="myQueue1",containerFactory="rabbitListenerFactory")
+	void consumed(String message) {
+		
+		
+		System.out.println(message);
+	}
+	
+	
+}

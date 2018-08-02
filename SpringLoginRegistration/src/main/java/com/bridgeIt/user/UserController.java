@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bridgeIt.user.model.User;
 import com.bridgeIt.user.service.UserServiceImp;
+import com.bridgeIt.user.service.utility.RabbitMsgSender;
 
 @RestController
 public class UserController {
@@ -100,5 +102,24 @@ public class UserController {
 		}
 		
 	}
+	@Autowired
+	RabbitMsgSender producer;
+	
+	@RequestMapping(value="rabbit", method = RequestMethod.POST , produces="application/json" )
+	public void rabbit(@RequestParam("key") String key) {
+		System.out.println(key);
+		producer.sendMsg(key);
+	
+		
+	}
+	
+	@RequestMapping(value="verify/{key}", method = RequestMethod.GET )
+	public void verify(@PathVariable("key")String key) {
+		
+		System.out.println(key);
+		
+		
+	}
+	
 
 }

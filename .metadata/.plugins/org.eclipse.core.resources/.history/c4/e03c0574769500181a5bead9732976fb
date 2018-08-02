@@ -1,0 +1,10 @@
+package com.bridgeIt.restDemo.model;
+
+import java.util.concurrent.CountDownLatch;
+
+public class Receiver {
+
+	CountDownLatch latch = new CountDownLatch(1);
+	
+	
+}

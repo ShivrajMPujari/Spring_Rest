@@ -116,6 +116,20 @@
 		</dependency>
 		
 		
+				<!-- https://mvnrepository.com/artifact/org.springframework.amqp/spring-amqp -->
+		<dependency>
+		    <groupId>org.springframework.amqp</groupId>
+		    <artifactId>spring-amqp</artifactId>
+		    <version>1.7.5.RELEASE</version>
+		</dependency>
+				
+			<!-- https://mvnrepository.com/artifact/org.springframework.amqp/spring-rabbit -->
+		<dependency>
+		    <groupId>org.springframework.amqp</groupId>
+		    <artifactId>spring-rabbit</artifactId>
+		    <version>1.7.5.RELEASE</version>
+		</dependency>
+		
 		
 		<dependency>
 			<groupId>javax.servlet.jsp</groupId>
@@ -123,6 +137,7 @@
 			<version>2.1</version>
 			<scope>provided</scope>
 		</dependency>
+		
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
@@ -178,9 +193,6 @@
                   </configuration>
               </plugin>
             
-            
-            
-
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>

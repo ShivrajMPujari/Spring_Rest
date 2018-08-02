@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;com.bridgeIt.user.service.utility.GenerateToken&apos; to &apos;JwtToken&apos;&#x0A;- Original project: &apos;SpringLoginRegistration&apos;&#x0A;- Original element: &apos;com.bridgeIt.user.service.utility.GenerateToken&apos;&#x0A;- Renamed element: &apos;com.bridgeIt.user.service.utility.JwtToken&apos;&#x0A;- Update references to refactored element&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;GenerateToken&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src\/main\/java&lt;com.bridgeIt.user.service.utility{GenerateToken.java[GenerateToken" matchStrategy="1" name="JwtToken" qualified="false" references="true" similarDeclarations="false" stamp="1533213045202" textual="false" version="1.0"/>
+</session>

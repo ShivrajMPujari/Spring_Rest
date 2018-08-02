@@ -1,0 +1,15 @@
+package com.bridgeIt.javaConfig;
+
+import org.springframework.stereotype.Component;
+@Component
+public class Consumer {
+
+	
+	void consumed(String message) {
+		
+		
+		System.out.println(message);
+	}
+	
+	
+}

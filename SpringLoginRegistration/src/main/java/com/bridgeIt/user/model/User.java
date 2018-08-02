@@ -5,6 +5,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 public class User {
 
+	private int id;
+	
 	@NotEmpty(message="name is required")
 	private String name;
 	
@@ -22,7 +24,8 @@ public class User {
 	private String mobileNo;
 	private String password;
 	
-	
+	private boolean verified;
+
 	public String getName() {
 		return name;
 	}
@@ -60,12 +63,26 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-	
+	public boolean isVerified() {
+		return verified;
+	}
+	public void setVerified(boolean verified) {
+		this.verified = verified;
+	}
+
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	@Override
 	public String toString() {
-		return "User [name=" + name + ", role=" + role + ", email=" + email + ", city=" + city + ", mobileNo="
-				+ mobileNo + ", password=" + password + "]";
+		return "User [id=" + id + ", name=" + name + ", role=" + role + ", email=" + email + ", city=" + city
+				+ ", mobileNo=" + mobileNo + ", password=" + password + ", verified=" + verified + "]";
 	}
+
+	
+
 
 }

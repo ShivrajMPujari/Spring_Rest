@@ -1,0 +1,5 @@
+package com.bridgeIt.user.service.utility;
+
+public class RabbitMsgSender {
+
+}

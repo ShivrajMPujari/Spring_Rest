@@ -7,6 +7,6 @@ public interface UserService {
 
 	BaseResponse userReg(User user);
 	boolean login(String mail, String password);
-	
+	void verify(String token);
 	
 }

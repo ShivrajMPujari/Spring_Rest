@@ -1,0 +1,16 @@
+package com.bridgeIt.restDemo;
+
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
+
+public class ConsumerService {
+
+	@RabbitListener()
+	public void consumerMessage(byte[] data) {
+	    String consumedMessage = new String(data);
+	    System.out.println(" [x] Consumed  '" + consumedMessage + "'");
+	}
+
+	
+	
+	
+}
