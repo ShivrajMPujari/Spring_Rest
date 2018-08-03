@@ -18,6 +18,7 @@ public class JwtToken {
 	SignatureAlgorithm  signatureAlgorithm = SignatureAlgorithm.HS256;
 	long currentTime=System.currentTimeMillis();
 	Date now = new Date(currentTime);
+	System.out.println(id+"--id and subject--"+subject);
 	JwtBuilder builder =    Jwts.builder().setId(id)
 					.setIssuedAt(now)
 					.setSubject(subject)
@@ -28,6 +29,8 @@ public class JwtToken {
 	builder.setExpiration(exp);
 	return	 builder.compact();			
 	}
+	
+	
 	
 	public Claims parseJwt(String jwt) {
 		

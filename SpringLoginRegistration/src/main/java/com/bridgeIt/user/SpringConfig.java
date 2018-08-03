@@ -152,9 +152,10 @@ public class SpringConfig extends WebMvcConfigurerAdapter {
 			@Override
 			public void onMessage(Message message) {
 				String string = new String(message.getBody());
-				
-			System.out.println(string);
-			sender.consumed(string);
+			
+//			System.out.println(string);
+//			sender.consumed(string);
+			
 				
 			}
 		});

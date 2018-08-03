@@ -69,8 +69,9 @@ public class UserController {
 				allErrorMsg.add(objError.getDefaultMessage());
 				System.out.println(objError.getDefaultMessage());
 			}
-			response.setCode(HttpStatus.BAD_REQUEST);
-			response.setStatus("please enter proper input");
+		
+			response.setStatus(HttpStatus.BAD_REQUEST);
+			response.setMessage("please enter proper inputs");
 			response.setErrors(allErrorMsg);
 			respond = new ResponseEntity<BaseResponse>(response,HttpStatus.BAD_REQUEST);
 			return respond;
@@ -78,7 +79,7 @@ public class UserController {
 		}
 	
 		 response=service.userReg(user);
-		if(response.getCode()==HttpStatus.BAD_REQUEST) {
+		if(response.getStatus()==HttpStatus.BAD_REQUEST) {
 			respond = new ResponseEntity<BaseResponse>(response,HttpStatus.BAD_REQUEST);
 			return respond;
 		}
@@ -95,6 +96,7 @@ public class UserController {
 		System.out.println( email+" "+password);
 		System.out.println("-in /login");
 		if(service.login(email, password)) {
+			
 			return new ResponseEntity<BaseResponse>(HttpStatus.OK);
 		}	
 		else {
@@ -108,18 +110,23 @@ public class UserController {
 	@RequestMapping(value="rabbit", method = RequestMethod.POST , produces="application/json" )
 	public void rabbit(@RequestParam("key") String key) {
 		System.out.println(key);
-		producer.sendMsg(key);
+		//producer.sendMsg(key);
 	
 		
 	}
 	
-	@RequestMapping(value="verify/{key}", method = RequestMethod.GET )
-	public void verify(@PathVariable("key")String key) {
+	@RequestMapping(value="verify/{key:.+}", method = RequestMethod.GET )
+	public void verify(@PathVariable String key) {
 		
 		System.out.println(key);
-		
+		boolean result= service.verify(key);
+		System.out.println("is verification got completed? "+result);
 		
 	}
 	
+	
 
+	
+	
+	
 }

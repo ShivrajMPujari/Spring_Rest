@@ -25,6 +25,16 @@ public class User {
 	private String password;
 	
 	private boolean verified;
+	
+	private String authenticatedUserKey;
+	
+	public String getAuthenticatedUserKey() {
+		return authenticatedUserKey;
+	}
+	public void setAuthenticatedUserKey(String authenticatedUserKey) {
+		this.authenticatedUserKey = authenticatedUserKey;
+	}
+	
 
 	public String getName() {
 		return name;
@@ -76,13 +86,6 @@ public class User {
 	public void setId(int id) {
 		this.id = id;
 	}
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", name=" + name + ", role=" + role + ", email=" + email + ", city=" + city
-				+ ", mobileNo=" + mobileNo + ", password=" + password + ", verified=" + verified + "]";
-	}
-
-	
 
 
 }

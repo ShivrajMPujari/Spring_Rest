@@ -1,5 +1,7 @@
 package com.bridgeIt.user.service;
 
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -9,7 +11,7 @@ import com.bridgeIt.user.dao.UserDao;
 import com.bridgeIt.user.model.User;
 import com.bridgeIt.user.service.utility.JwtToken;
 import com.bridgeIt.user.service.utility.RabbitMsgSender;
-
+import com.bridgeIt.user.service.utility.UserMail;
 
 @Service
 public class UserServiceImp implements UserService {
@@ -29,6 +31,8 @@ public class UserServiceImp implements UserService {
 	@Autowired
 	RabbitMsgSender sender;
 	
+	@Autowired
+	UserMail mail;
 	
 	@Override
 	public BaseResponse userReg(User user) {
@@ -36,23 +40,25 @@ public class UserServiceImp implements UserService {
 		boolean outcome=dao.presence(user);
 		if(outcome!=true) {
 			System.out.println("after presence");
+			String uuid=UUID.randomUUID().toString();
+			user.setAuthenticatedUserKey(uuid);
 			dao.insert(user);
-			long expTime=72000;
-			int id=user.getId();
-			String tokenId=Integer.toString(id);
-			String jwtToken = token.createJwt(tokenId, user.getEmail(),expTime);
-			String url="http://192.168.0.68:8080/user/verify/";
-			String verificationUrl=url+jwtToken;
-			sender.sendMsg(verificationUrl);
-			response.setCode(HttpStatus.OK);
-			response.setStatus("your are registered");
+			
+			String url="http://localhost:8080/user/verify/";
+			String verificationUrl=url+uuid;
+			mail.setTo(user.getEmail());
+			mail.setMessage(verificationUrl);
+			sender.sendMsg(mail);
+			
+			response.setStatus(HttpStatus.OK);
+			response.setMessage("Your are registered");
 			response.setErrors(null);
 			return response;
 			
 		}
 		
-		response.setCode(HttpStatus.BAD_REQUEST);
-		response.setStatus("user already exist");
+		response.setStatus(HttpStatus.BAD_REQUEST);
+		response.setMessage("User already exist");
 		response.setErrors(null);
 		
 		
@@ -71,10 +77,16 @@ public class UserServiceImp implements UserService {
 	}
 
 	@Override
-	public void verify(String token) {
-	
+	public boolean verify(String uniqueId) {
 		
+		boolean result = dao.getVerified(uniqueId);
+		
+		
+		return result;
 		
 	}
 
+	
+	
+	
 }

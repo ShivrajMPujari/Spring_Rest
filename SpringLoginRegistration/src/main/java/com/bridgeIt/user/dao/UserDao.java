@@ -29,13 +29,14 @@ public class UserDao {
 		template = new JdbcTemplate(dataSource);
 		
 		String hashPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
-		Object [] args = {user.getEmail(),user.getName(),hashPassword,user.getMobileNo(),user.getCity(),user.getRole(),user.isVerified()};
+		
+		Object [] args = {user.getEmail(),user.getName(),hashPassword,user.getMobileNo(),user.getCity(),user.getRole(),user.isVerified(),user.getAuthenticatedUserKey()};
 		System.out.println(dataSource);
 		System.out.println(hashPassword);
 		int out=0;
 		try {
 			System.out.println(user);
-			out = template.update("insert into UserLogin(email,name,password,mobileNo,city,role,verified) values (?,?,?,?,?,?,?)", args);
+			out = template.update("insert into UserLogin(email,name,password,mobileNo,city,role,verified,authenticated_user_key) values (?,?,?,?,?,?,?,?)", args);
 			System.out.println("number rows affected "+out);
 			return true;
 		} catch (DataAccessException e) {
@@ -105,11 +106,54 @@ public class UserDao {
 		return false;
 	}else {
 		return false;
-	}
-
-	
+	} 
 	
 	}
+	
+	
+/*	public boolean getVerified(String email ) {
+		
+		template =new JdbcTemplate(dataSource);
+		boolean verified=true;
+		Object [] args = {verified,email};
+		System.out.println(email+"--------id");
+		String sql="update UserLogin set verified = ? where email = ?";
+		try {
+		int res=template.update(sql, args);
+		System.out.println(res);
+		} catch (Exception e) {		
+			e.printStackTrace();
+			return false;
+		}
+		
+		return true;
+	}*/
+	
+	public boolean getVerified(String uniqueId) {
+		
+		template = new JdbcTemplate(dataSource);
+		boolean verified = true;
+		Object [] args= {verified,uniqueId};
+		
+		String sql = "update UserLogin set verified = ? where authenticated_user_key = ?";
+		try {
+			int res=template.update(sql, args);
+			System.out.println(res);
+			
+			if(res==1) {
+				return true;
+			}else {
+				return false;
+			}
+			} catch (Exception e) {		
+				e.printStackTrace();
+				return false;
+			}
+	}
+	
+	
+	
+	
 	
 	
 }

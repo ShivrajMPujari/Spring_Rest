@@ -1,8 +1,0 @@
-package com.bridgeIt.user;
-
-public class BaseResponse {
-
-	private int code;
-	private String status;
-	
-}

@@ -11,9 +11,9 @@ public class RabbitMsgSender {
 	@Autowired
 	AmqpTemplate template;
 	
-	public	void sendMsg(String message ) {
+	public	void sendMsg(UserMail mail ) {
 		
-		template.convertAndSend("myTopic", "myBindingKey", message);;
+		template.convertAndSend("myTopic", "myBindingKey", mail);;
 		
 	}
 	
