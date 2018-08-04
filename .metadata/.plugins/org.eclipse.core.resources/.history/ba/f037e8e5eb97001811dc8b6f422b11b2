@@ -215,10 +215,10 @@ public class UserDao {
 		
 		Object[] args = {uuid,email,sqlTimestamp,sqlTimestamp1};
 		
-		String sql ="insert into resetPassword (authenticated_user_key,email,starting_interval,ending_interval) values (?,?,?,?) ";
+		String sql ="insert into UserLogin(authenticated_user_key,email,starting_interval,ending_interval) values (?,?,?,?) ";
 		
-		int rows=template.update(sql, args);
-		System.out.println(rows);
+		
+		
 		
 		
 	}

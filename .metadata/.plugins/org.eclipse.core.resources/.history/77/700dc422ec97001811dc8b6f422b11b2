@@ -122,7 +122,8 @@ public class UserServiceImp implements UserService {
 			
 			return false;
 		}
-		dao.insertForgotPassword(uuid, email);
+		
+		
 		mail.setFrom("tradefinancebridgelabz@gmail.com");
 		mail.setTo(email);
 		String url="http://localhost:8080/user/reset-password/";

@@ -208,17 +208,19 @@ public class UserDao {
 		java.util.Date date = new java.util.Date();
         long t = date.getTime();
         long t1 = t+720000;
-        template= new JdbcTemplate(dataSource);
         System.out.println(t);
+     /*   java.sql.Date sqlDate = new java.sql.Date(t);
+        java.sql.Time sqlTime = new java.sql.Time(t);*/
         java.sql.Timestamp sqlTimestamp = new java.sql.Timestamp(t);
         java.sql.Timestamp sqlTimestamp1 = new java.sql.Timestamp(t1);
 		
+		
 		Object[] args = {uuid,email,sqlTimestamp,sqlTimestamp1};
 		
-		String sql ="insert into resetPassword (authenticated_user_key,email,starting_interval,ending_interval) values (?,?,?,?) ";
+		String sql ="insert into UserLogin(authenticated_user_key,email,starting_interval,ending_interval) values (?,?,?,?) ";
 		
-		int rows=template.update(sql, args);
-		System.out.println(rows);
+		
+		
 		
 		
 	}
