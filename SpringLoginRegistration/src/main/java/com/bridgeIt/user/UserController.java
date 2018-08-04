@@ -24,6 +24,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bridgeIt.user.model.User;
 import com.bridgeIt.user.service.UserServiceImp;
 import com.bridgeIt.user.service.utility.RabbitMsgSender;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreType;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 
 @RestController
 public class UserController {
@@ -62,7 +66,7 @@ public class UserController {
 		ResponseEntity<BaseResponse> respond;
 		if(result.hasErrors()) {
 			
-			List errs=result.getFieldErrors();
+			List<?> errs=result.getFieldErrors();
 			List <String>allErrorMsg = new ArrayList<String>();
 			for (Object object : errs) {
 				ObjectError objError=(ObjectError) object;
@@ -96,26 +100,35 @@ public class UserController {
 		System.out.println( email+" "+password);
 		System.out.println("-in /login");
 		if(service.login(email, password)) {
+			response.setStatus(HttpStatus.OK);
+			response.setMessage("you are logged in sucessfully");
+			User user =service.getUser(email);
+			String token = service.getToken(user);
+			response.setToken(token);
+			response.setUser(user);
 			
-			return new ResponseEntity<BaseResponse>(HttpStatus.OK);
+			return new ResponseEntity<BaseResponse>(response,HttpStatus.OK);
 		}	
 		else {
-			return new ResponseEntity<BaseResponse>(HttpStatus.BAD_REQUEST);
+			response.setMessage("Login failed... email or password is incorrect");
+			response.setStatus(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<BaseResponse>(response,HttpStatus.BAD_REQUEST);
 		}
 		
 	}
+	
 	@Autowired
 	RabbitMsgSender producer;
 	
-	@RequestMapping(value="rabbit", method = RequestMethod.POST , produces="application/json" )
+/*	@RequestMapping(value="rabbit", method = RequestMethod.POST , produces="application/json" )
 	public void rabbit(@RequestParam("key") String key) {
 		System.out.println(key);
 		//producer.sendMsg(key);
 	
 		
-	}
+	}*/
 	
-	@RequestMapping(value="verify/{key:.+}", method = RequestMethod.GET )
+	@RequestMapping(value="verify/{key}", method = RequestMethod.GET )
 	public void verify(@PathVariable String key) {
 		
 		System.out.println(key);
@@ -124,9 +137,45 @@ public class UserController {
 		
 	}
 	
+	@RequestMapping(value="resetPassword", method = RequestMethod.POST )
+	public void resetPassword(@RequestParam("password")String password,@RequestParam("uuid")String uuid) {
+		
+	
+			boolean result = service.changePassword(uuid, password);
+			if(result) {
+				response.setMessage("your password is saved sucessfully");
+			}
+		
+	}
+		
+		
+	@RequestMapping(value="forgotPassword", method = RequestMethod.POST ,produces="application/json" )
+	public ResponseEntity<BaseResponse> conformationMail(@RequestParam("email")String email) {
+		System.out.println("in conformation");
+		boolean result =service.sendConformationMail(email);
+		
+		if(result==true) {
+			response.setMessage("message sent");
+			return new ResponseEntity<BaseResponse>(response,HttpStatus.OK);
+			
+		}else {
+			
+			response.setStatus(HttpStatus.BAD_REQUEST);
+			response.setMessage("please check your mail id properly");
+			return new ResponseEntity<BaseResponse>(response,HttpStatus.BAD_REQUEST);
+		}
+
+	}
+	
+	@RequestMapping(value="changing/{key}", method = RequestMethod.GET ,produces="application/json" )
+	public ResponseEntity<BaseResponse> restPassword(@PathVariable String key) {
+		
+		System.out.println(key);
+		
+		return null;
+
+	}
 	
 
-	
-	
 	
 }

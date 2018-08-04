@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
 import com.bridgeIt.user.BaseResponse;
@@ -46,6 +47,7 @@ public class UserServiceImp implements UserService {
 			
 			String url="http://localhost:8080/user/verify/";
 			String verificationUrl=url+uuid;
+			mail.setFrom("tradefinancebridgelabz@gmail.com");
 			mail.setTo(user.getEmail());
 			mail.setMessage(verificationUrl);
 			sender.sendMsg(mail);
@@ -84,6 +86,53 @@ public class UserServiceImp implements UserService {
 		
 		return result;
 		
+	}
+
+	@Override
+	public User getUser(String email) {
+
+		User user=dao.fetchUserByEmail(email);
+		return user;
+	}
+
+	@Override
+	public String getToken(User user) {
+		
+		int userId=user.getId();
+		String id = Integer.toString(userId);
+		String jwtToken =token.createJwt(id, user.getEmail(), 720000);
+		
+		return jwtToken;
+	}
+
+	@Override
+	public boolean changePassword(String uuid, String password) {
+		
+		String newPassword = BCrypt.hashpw(password, BCrypt.gensalt());
+		boolean result = dao.resetPassword(uuid, newPassword);
+		
+		return result;
+	}
+
+	@Override
+	public boolean sendConformationMail(String email) {
+		
+		String uuid = dao.getUUid(email);
+		if (uuid==null) {
+			
+			return false;
+		}
+		
+		
+		mail.setFrom("tradefinancebridgelabz@gmail.com");
+		mail.setTo(email);
+		String url="http://localhost:8080/user/reset-password/";
+		String verificationUrl=url+uuid;
+		mail.setMessage(verificationUrl);
+		sender.sendMsg(mail);
+		
+		
+		return true;
 	}
 
 	

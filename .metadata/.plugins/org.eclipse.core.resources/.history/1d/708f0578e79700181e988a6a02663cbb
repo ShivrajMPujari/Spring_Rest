@@ -1,0 +1,14 @@
+package com.bridgeIt.user.model;
+
+import java.sql.Date;
+
+public class TempUser {
+
+	private String uuid;
+	private String email;
+	private Date startingInterval;
+	private Date endingInterval;
+	
+	
+	
+}

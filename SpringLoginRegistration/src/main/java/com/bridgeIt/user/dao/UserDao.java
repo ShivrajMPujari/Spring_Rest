@@ -152,8 +152,63 @@ public class UserDao {
 	}
 	
 	
+	public User fetchUserByEmail(String email) {
+	
+		Object [] args = {email};
+		template = new JdbcTemplate(dataSource);
+		String sql="select * from UserLogin where email=?";
+		List<User> user=template.query(sql, args, new UserMapper());
+		User user1=user.get(0);
+		return user1;
+	}
+	
+	public boolean resetPassword(String uuid , String newPassword) {
+		Object[] args = {uuid,newPassword};
+		
+		String sql="update UserLogin set password = ? where uuid=?";
+		template= new JdbcTemplate(dataSource);
+		try {
+			int res=template.update(sql, args);
+			System.out.println(res);
+			
+			if(res==1) {
+				return true;
+			}else {
+				return false;
+			}
+			} catch (Exception e) {		
+				e.printStackTrace();
+				return false;
+			}
+	}
 	
 	
+	public String getUUid(String email) {
+		
+		Object[] args = {email};
+		
+		String sql = "select authenticated_user_key from UserLogin where email = ?";
+		template= new JdbcTemplate(dataSource);
+		
+		List<String> userIds = null;
+		userIds = template.queryForList(sql, String.class, args);
+		System.out.println(userIds);
+		
+		if(userIds.isEmpty()) {
+			System.out.println(true);
+			return null;
+		}
+		String uuid=userIds.get(0);
+		System.out.println(uuid);
+		return uuid;
+	}
+	
+	public void insertForgotPassword(String uuid,String email) {
+		Object[] args = {uuid,email};
+		
+		String sql ="insert into UserLogin(authenticated_user_key,email) values (?,?,?,?) ";
+		
+	}
 	
 	
 }

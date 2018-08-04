@@ -15,8 +15,10 @@ public class BaseResponse {
 	
 	private HttpStatus status;
 	private String message;
-	private List errors;
+	private List<?> errors;
 	private User user;
+	private String token;
+	private boolean flag;
 	
 	public HttpStatus getStatus() {
 		return status;
@@ -30,10 +32,10 @@ public class BaseResponse {
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	public List getErrors() {
+	public List<?> getErrors() {
 		return errors;
 	}
-	public void setErrors(List errors) {
+	public void setErrors(List<?> errors) {
 		this.errors = errors;
 	}
 	public User getUser() {
@@ -41,6 +43,18 @@ public class BaseResponse {
 	}
 	public void setUser(User user) {
 		this.user = user;
+	}
+	public String getToken() {
+		return token;
+	}
+	public void setToken(String token) {
+		this.token = token;
+	}
+	public boolean isFlag() {
+		return flag;
+	}
+	public void setFlag(boolean flag) {
+		this.flag = flag;
 	}
 	
 	

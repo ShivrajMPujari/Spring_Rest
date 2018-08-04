@@ -10,6 +10,7 @@ public class UserMapper implements RowMapper<User>{
 	@Override
 	public User mapRow(ResultSet rs, int rowNum) throws SQLException {
 		User user = new User();
+		user.setId(rs.getInt("id"));
 		user.setName(rs.getString("name"));
 		user.setCity(rs.getString("city"));
 		user.setEmail(rs.getString("email"));
@@ -17,6 +18,7 @@ public class UserMapper implements RowMapper<User>{
 		user.setRole(rs.getString("role"));
 		user.setPassword(rs.getString("password"));
 		user.setVerified(rs.getBoolean("verified"));
+		user.setAuthenticatedUserKey(rs.getString("authenticated_user_key"));
 		return user;
 	}
 

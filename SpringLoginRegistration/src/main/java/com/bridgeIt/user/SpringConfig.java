@@ -1,10 +1,14 @@
 package com.bridgeIt.user;
 
 import java.beans.PropertyVetoException;
+import java.io.IOException;
 import java.util.Properties;
 
 import javax.sql.DataSource;
 
+import org.codehaus.jackson.JsonParseException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
@@ -18,19 +22,21 @@ import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
+import org.springframework.amqp.support.converter.JsonMessageConverter;
+import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
-import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
 import com.bridgeIt.user.service.utility.MailSender;
+import com.bridgeIt.user.service.utility.UserMail;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 @EnableWebMvc
@@ -49,6 +55,7 @@ public class SpringConfig extends WebMvcConfigurerAdapter {
 	
 	static final String queueName="myQueue1";
 	static final String topicName="myTopic";
+	static final String queueName2="myQueue2";
 	
 	@Bean
 	ConnectionFactory factory(){
@@ -87,8 +94,7 @@ public class SpringConfig extends WebMvcConfigurerAdapter {
 	
 	@Bean
 	Queue queue() {
-		
-		
+		                                      
 	 return new Queue(queueName, true);
 	}
 	
@@ -111,11 +117,19 @@ public class SpringConfig extends WebMvcConfigurerAdapter {
 //        return new MessageListenerAdapter(receiver, "receiveMessage");
 //    }
 	
+	  @Bean
+	    public MessageConverter jsonMessageConverter(){
+	        return new JsonMessageConverter();
+	    }
+	
+	
+	
 	@Bean 
 	AmqpTemplate getTemplate () {
 
 		 RabbitTemplate r = new RabbitTemplate();
 		 r.setConnectionFactory(factory());
+		 r.setMessageConverter(jsonMessageConverter());
 		return r;
 	}
 	
@@ -141,10 +155,15 @@ public class SpringConfig extends WebMvcConfigurerAdapter {
 	@Autowired
 	MailSender sender;
 
+	
 	@Bean
 	SimpleMessageListenerContainer getSimpleMessageListenerContainer(ConnectionFactory connectionFactory) {
 		SimpleMessageListenerContainer simpleMessageListenerContainer = new SimpleMessageListenerContainer(connectionFactory);
 		simpleMessageListenerContainer.setQueueNames(queueName);
+		simpleMessageListenerContainer.setMessageConverter(jsonMessageConverter());
+		
+		//simpleMessageListenerContainer.setMessageListener(new MailSender());
+		
 		simpleMessageListenerContainer.setMessageListener(new MessageListener() {
 		
 			
@@ -152,10 +171,18 @@ public class SpringConfig extends WebMvcConfigurerAdapter {
 			@Override
 			public void onMessage(Message message) {
 				String string = new String(message.getBody());
-			
-//			System.out.println(string);
-//			sender.consumed(string);
-			
+				ObjectMapper mapper = new ObjectMapper();
+				try {
+					UserMail userMail = mapper.readValue(string, UserMail.class);
+					sender.consumed(userMail);
+				} catch (JsonParseException e) {
+					e.printStackTrace();
+				} catch (JsonMappingException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				System.out.println(string);
 				
 			}
 		});
