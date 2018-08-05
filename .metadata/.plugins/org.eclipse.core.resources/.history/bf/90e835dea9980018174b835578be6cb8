@@ -1,0 +1,23 @@
+package com.bridgeIt.user;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+
+@ControllerAdvice
+public class GlobalExceptionHandler {
+
+	
+	@ExceptionHandler(value=Exception.class)
+	public ResponseEntity<BaseResponse> handleException(){
+		
+		BaseResponse response = new BaseResponse();
+		response.setStatus(HttpStatus.BAD_REQUEST);
+		response.setMessage("Something went wrong....");
+		return new ResponseEntity<BaseResponse>(response,HttpStatus.BAD_REQUEST);
+	}
+	
+	
+	
+}

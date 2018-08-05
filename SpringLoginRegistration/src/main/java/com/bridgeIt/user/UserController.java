@@ -20,13 +20,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.bridgeIt.user.model.User;
-import com.bridgeIt.user.service.UserServiceImp;
+import com.bridgeIt.user.service.UserService;
 import com.bridgeIt.user.service.utility.RabbitMsgSender;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnoreType;
-import com.fasterxml.jackson.annotation.JsonInclude;
+
 
 
 @RestController
@@ -36,10 +33,9 @@ public class UserController {
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 	
 	@Autowired
-	UserServiceImp service;
+	UserService  service;
 	
-	@Autowired
-	BaseResponse response;
+	
 	
 	/**
 	 * Simply selects the home view to render by returning its name.
@@ -62,7 +58,7 @@ public class UserController {
 	@RequestMapping(value="/register", method = RequestMethod.POST ,consumes="application/json", produces="application/json" )
 	public ResponseEntity<BaseResponse> responser (@Valid @RequestBody User user,BindingResult result){
 	System.out.println(" in / register");
-		
+		BaseResponse response = new BaseResponse();
 		ResponseEntity<BaseResponse> respond;
 		if(result.hasErrors()) {
 			
@@ -97,6 +93,7 @@ public class UserController {
 	
 	@RequestMapping(value="/login" , method = RequestMethod.POST, produces="application/json")
 	public ResponseEntity<BaseResponse> login(@RequestParam("email") String email,@RequestParam("password") String password ){
+		BaseResponse response = new BaseResponse();
 		System.out.println( email+" "+password);
 		System.out.println("-in /login");
 		if(service.login(email, password)) {
@@ -110,7 +107,7 @@ public class UserController {
 			return new ResponseEntity<BaseResponse>(response,HttpStatus.OK);
 		}	
 		else {
-			response.setMessage("Login failed... email or password is incorrect");
+			response.setMessage("Login failed...you are not a valid user");
 			response.setStatus(HttpStatus.BAD_REQUEST);
 			return new ResponseEntity<BaseResponse>(response,HttpStatus.BAD_REQUEST);
 		}
@@ -128,22 +125,65 @@ public class UserController {
 		
 	}*/
 	
-	@RequestMapping(value="verify/{key}", method = RequestMethod.GET )
-	public void verify(@PathVariable String key) {
+	@RequestMapping(value="verification/{flag}/{key}", method = RequestMethod.GET )
+	public ResponseEntity<BaseResponse> verify(@PathVariable("key") String key ,  @PathVariable("flag") String flag) {
+		BaseResponse response = new BaseResponse();
+		if(flag.equals("getVerified")) {
+			System.out.println(key);
+			boolean result= service.verify(key);
+			System.out.println("is verification got completed? "+result);
+			
+			if(result==true) {
+				response.setStatus(HttpStatus.ACCEPTED);
+				response.setMessage("you are verified");
+				return new ResponseEntity<BaseResponse>(response,HttpStatus.ACCEPTED);
+			}else {
+				response.setStatus(HttpStatus.BAD_REQUEST);
+				response.setMessage("some thing went wrong!..");
+				return new ResponseEntity<BaseResponse>(response,HttpStatus.BAD_REQUEST);
+				
+			}
+			
+			
+			
+		}
+		else if(flag.equals("reset_password")) {
+			
+			System.out.println(key+" from resetPassword");
+			boolean result = service.checkSessionPassword(key);
+			
+			if(result==true) {
+				response.setStatus(HttpStatus.ACCEPTED);
+				response.setMessage("session is alive");
+				return new ResponseEntity<BaseResponse>(response,HttpStatus.ACCEPTED);
+			}else if (result==false) {
+				response.setStatus(HttpStatus.NOT_ACCEPTABLE);
+				response.setMessage("your session is no longer alive..");
+				return new ResponseEntity<BaseResponse>(response,HttpStatus.NOT_ACCEPTABLE);
+			}
 		
-		System.out.println(key);
-		boolean result= service.verify(key);
-		System.out.println("is verification got completed? "+result);
+			return new ResponseEntity<BaseResponse>(response,HttpStatus.BAD_REQUEST);
+
+		}
+		return null;
+
 		
 	}
 	
 	@RequestMapping(value="resetPassword", method = RequestMethod.POST )
-	public void resetPassword(@RequestParam("password")String password,@RequestParam("uuid")String uuid) {
-		
+	public ResponseEntity<BaseResponse> resetPassword(@RequestParam("password")String password,@RequestParam("uuid")String uuid) {
+		BaseResponse response = new BaseResponse();
 	
 			boolean result = service.changePassword(uuid, password);
 			if(result) {
 				response.setMessage("your password is saved sucessfully");
+				response.setStatus(HttpStatus.OK);
+				return new ResponseEntity<BaseResponse>(response,HttpStatus.OK);
+			}else {
+				response.setMessage("some thing went wrong");
+				response.setStatus(HttpStatus.BAD_REQUEST);
+				return new ResponseEntity<BaseResponse>(response,HttpStatus.BAD_REQUEST);
+				
 			}
 		
 	}
@@ -153,9 +193,10 @@ public class UserController {
 	public ResponseEntity<BaseResponse> conformationMail(@RequestParam("email")String email) {
 		System.out.println("in conformation");
 		boolean result =service.sendConformationMail(email);
-		
+		BaseResponse response = new BaseResponse();
 		if(result==true) {
 			response.setMessage("message sent");
+			response.setStatus(HttpStatus.OK);
 			return new ResponseEntity<BaseResponse>(response,HttpStatus.OK);
 			
 		}else {
@@ -167,15 +208,26 @@ public class UserController {
 
 	}
 	
-	@RequestMapping(value="changing/{key}", method = RequestMethod.GET ,produces="application/json" )
-	public ResponseEntity<BaseResponse> restPassword(@PathVariable String key) {
+	/*@RequestMapping(value="reset-password/{key}", method = RequestMethod.GET ,produces="application/json" )
+	public ResponseEntity<BaseResponse> resetPassword(@PathVariable String key) {
 		
-		System.out.println(key);
+		System.out.println(key+" from resetPassword");
+		boolean result = service.checkSessionPassword(key);
 		
-		return null;
+		if(result==true) {
+			response.setStatus(HttpStatus.ACCEPTED);
+			response.setMessage("session is alive");
+			return new ResponseEntity<BaseResponse>(response,HttpStatus.ACCEPTED);
+		}else if (result==false) {
+			response.setStatus(HttpStatus.NOT_ACCEPTABLE);
+			response.setMessage("your session is no longer alive..");
+			return new ResponseEntity<BaseResponse>(response,HttpStatus.NOT_ACCEPTABLE);
+		}
+	
+		return new ResponseEntity<BaseResponse>(response,HttpStatus.BAD_REQUEST);
 
 	}
-	
+	*/
 
 	
 }

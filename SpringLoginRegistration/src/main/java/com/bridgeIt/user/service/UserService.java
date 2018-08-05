@@ -12,5 +12,7 @@ public interface UserService {
 	String getToken (User user);
 	boolean changePassword(String uuid, String password) ;
 	boolean sendConformationMail(String email);
+	boolean checkSessionPassword(String uuid);
+	
 	
 }

@@ -6,8 +6,9 @@ public class TempUser {
 
 	private String uuid;
 	private String email;
-	private Date startingInterval;
-	private Date endingInterval;
+
+	private java.sql.Timestamp startingInterval;
+	private java.sql.Timestamp endingInterval;
 	
 	public String getUuid() {
 		return uuid;
@@ -21,18 +22,19 @@ public class TempUser {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public Date getStartingInterval() {
+	public java.sql.Timestamp getStartingInterval() {
 		return startingInterval;
 	}
-	public void setStartingInterval(Date startingInterval) {
+	public void setStartingInterval(java.sql.Timestamp startingInterval) {
 		this.startingInterval = startingInterval;
 	}
-	public Date getEndingInterval() {
+	public java.sql.Timestamp getEndingInterval() {
 		return endingInterval;
 	}
-	public void setEndingInterval(Date endingInterval) {
+	public void setEndingInterval(java.sql.Timestamp endingInterval) {
 		this.endingInterval = endingInterval;
 	}
+
 	
 	
 	

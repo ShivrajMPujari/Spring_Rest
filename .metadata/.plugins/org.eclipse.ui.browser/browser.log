@@ -275,3 +275,46 @@ Aug 04, 2018 19:13:29.85 [4422:4443:0804/191329.663092:ERROR:service_manager_con
 Aug 04, 2018 19:13:29.85 [4422:4443:0804/191329.663247:ERROR:service_manager_context.cc(250)] Attempting to run unsupported native service: /opt/google/chrome/chrome_renderer.service
 Aug 04, 2018 19:13:29.86 [4422:4443:0804/191329.663367:ERROR:service_manager_context.cc(250)] Attempting to run unsupported native service: /opt/google/chrome/chrome_renderer.service
 Aug 04, 2018 19:13:40.49 [1:17:0804/191340.457439:ERROR:adm_helpers.cc(73)] Failed to query stereo recording.
+
+Aug 05, 2018 12:42:21.15 NEW SESSION
+Aug 05, 2018 12:42:21.15 [3733:3754:0805/124221.150268:ERROR:service_manager_context.cc(250)] Attempting to run unsupported native service: /opt/google/chrome/chrome_renderer.service
+Aug 05, 2018 12:42:21.34 [3733:3754:0805/124221.150349:ERROR:service_manager_context.cc(250)] Attempting to run unsupported native service: /opt/google/chrome/chrome_renderer.service
+Aug 05, 2018 12:42:21.34 [3733:3754:0805/124221.150396:ERROR:service_manager_context.cc(250)] Attempting to run unsupported native service: /opt/google/chrome/chrome_renderer.service
+Aug 05, 2018 12:42:21.34 [3733:3754:0805/124221.150450:ERROR:service_manager_context.cc(250)] Attempting to run unsupported native service: /opt/google/chrome/chrome_renderer.service
+Aug 05, 2018 12:42:21.34 [3733:3754:0805/124221.150495:ERROR:service_manager_context.cc(250)] Attempting to run unsupported native service: /opt/google/chrome/chrome_renderer.service
+Aug 05, 2018 12:42:21.34 [3733:3754:0805/124221.150540:ERROR:service_manager_context.cc(250)] Attempting to run unsupported native service: /opt/google/chrome/chrome_renderer.service
+Aug 05, 2018 12:42:21.34 [3733:3754:0805/124221.157062:ERROR:service_manager_context.cc(250)] Attempting to run unsupported native service: /opt/google/chrome/chrome_renderer.service
+Aug 05, 2018 12:42:21.34 [3733:3754:0805/124221.157137:ERROR:service_manager_context.cc(250)] Attempting to run unsupported native service: /opt/google/chrome/chrome_renderer.service
+Aug 05, 2018 12:42:21.34 [3733:3754:0805/124221.157246:ERROR:service_manager_context.cc(250)] Attempting to run unsupported native service: /opt/google/chrome/chrome_renderer.service
+Aug 05, 2018 12:42:21.34 [3733:3754:0805/124221.157364:ERROR:service_manager_context.cc(250)] Attempting to run unsupported native service: /opt/google/chrome/chrome_renderer.service
+Aug 05, 2018 12:42:21.34 [3733:3754:0805/124221.157481:ERROR:service_manager_context.cc(250)] Attempting to run unsupported native service: /opt/google/chrome/chrome_renderer.service
+Aug 05, 2018 12:42:21.34 [3733:3754:0805/124221.157588:ERROR:service_manager_context.cc(250)] Attempting to run unsupported native service: /opt/google/chrome/chrome_renderer.service
+Aug 05, 2018 12:42:32.36 [1:17:0805/124232.368353:ERROR:adm_helpers.cc(73)] Failed to query stereo recording.
+Aug 05, 2018 14:09:05.12 [1:17:0805/140905.119774:ERROR:adm_helpers.cc(73)] Failed to query stereo recording.
+
+Aug 05, 2018 15:44:37.89 NEW SESSION
+Aug 05, 2018 15:44:37.89 [5898:5919:0805/154437.888876:ERROR:service_manager_context.cc(250)] Attempting to run unsupported native service: /opt/google/chrome/chrome_renderer.service
+Aug 05, 2018 15:44:37.93 [5898:5919:0805/154437.888988:ERROR:service_manager_context.cc(250)] Attempting to run unsupported native service: /opt/google/chrome/chrome_renderer.service
+Aug 05, 2018 15:44:37.93 [5898:5919:0805/154437.889054:ERROR:service_manager_context.cc(250)] Attempting to run unsupported native service: /opt/google/chrome/chrome_renderer.service
+Aug 05, 2018 15:44:37.93 [5898:5919:0805/154437.889110:ERROR:service_manager_context.cc(250)] Attempting to run unsupported native service: /opt/google/chrome/chrome_renderer.service
+Aug 05, 2018 15:44:37.93 [5898:5919:0805/154437.889343:ERROR:service_manager_context.cc(250)] Attempting to run unsupported native service: /opt/google/chrome/chrome_renderer.service
+Aug 05, 2018 15:44:37.93 [5898:5919:0805/154437.889403:ERROR:service_manager_context.cc(250)] Attempting to run unsupported native service: /opt/google/chrome/chrome_renderer.service
+Aug 05, 2018 15:44:37.93 [5898:5919:0805/154437.889476:ERROR:service_manager_context.cc(250)] Attempting to run unsupported native service: /opt/google/chrome/chrome_renderer.service
+Aug 05, 2018 15:44:37.93 [5898:5919:0805/154437.889532:ERROR:service_manager_context.cc(250)] Attempting to run unsupported native service: /opt/google/chrome/chrome_renderer.service
+Aug 05, 2018 15:44:37.93 [5898:5919:0805/154437.890059:ERROR:service_manager_context.cc(250)] Attempting to run unsupported native service: /opt/google/chrome/chrome_renderer.service
+Aug 05, 2018 15:44:37.93 [5898:5919:0805/154437.890163:ERROR:service_manager_context.cc(250)] Attempting to run unsupported native service: /opt/google/chrome/chrome_renderer.service
+Aug 05, 2018 15:44:37.93 [5898:5919:0805/154437.893532:ERROR:service_manager_context.cc(250)] Attempting to run unsupported native service: /opt/google/chrome/chrome_renderer.service
+Aug 05, 2018 15:44:37.93 [5898:5919:0805/154437.893617:ERROR:service_manager_context.cc(250)] Attempting to run unsupported native service: /opt/google/chrome/chrome_renderer.service
+Aug 05, 2018 15:44:37.93 [5898:5919:0805/154437.893679:ERROR:service_manager_context.cc(250)] Attempting to run unsupported native service: /opt/google/chrome/chrome_renderer.service
+Aug 05, 2018 15:44:37.93 [5898:5919:0805/154437.893877:ERROR:service_manager_context.cc(250)] Attempting to run unsupported native service: /opt/google/chrome/chrome_renderer.service
+Aug 05, 2018 15:44:37.93 [5898:5919:0805/154437.893954:ERROR:service_manager_context.cc(250)] Attempting to run unsupported native service: /opt/google/chrome/chrome_renderer.service
+Aug 05, 2018 15:44:37.93 [5898:5919:0805/154437.894088:ERROR:service_manager_context.cc(250)] Attempting to run unsupported native service: /opt/google/chrome/chrome_renderer.service
+Aug 05, 2018 15:44:37.93 [5898:5919:0805/154437.894243:ERROR:service_manager_context.cc(250)] Attempting to run unsupported native service: /opt/google/chrome/chrome_renderer.service
+Aug 05, 2018 15:44:37.94 [5898:5919:0805/154437.894389:ERROR:service_manager_context.cc(250)] Attempting to run unsupported native service: /opt/google/chrome/chrome_renderer.service
+Aug 05, 2018 15:44:37.94 [5898:5919:0805/154437.894476:ERROR:service_manager_context.cc(250)] Attempting to run unsupported native service: /opt/google/chrome/chrome_renderer.service
+Aug 05, 2018 15:44:37.94 [5898:5919:0805/154437.894674:ERROR:service_manager_context.cc(250)] Attempting to run unsupported native service: /opt/google/chrome/chrome_renderer.service
+Aug 05, 2018 15:45:37.38 [1:17:0805/154537.381245:ERROR:adm_helpers.cc(73)] Failed to query stereo recording.
+Aug 05, 2018 15:45:47.29 [1:17:0805/154547.294401:ERROR:adm_helpers.cc(73)] Failed to query stereo recording.
+
+Aug 05, 2018 17:45:42.88 NEW SESSION
+Aug 05, 2018 17:45:42.88 Created new window in existing browser session.

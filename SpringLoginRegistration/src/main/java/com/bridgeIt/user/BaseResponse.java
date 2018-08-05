@@ -7,7 +7,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 import com.bridgeIt.user.model.User;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
+
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Component
 @Scope(value="prototype")
 public class BaseResponse {
@@ -18,7 +22,7 @@ public class BaseResponse {
 	private List<?> errors;
 	private User user;
 	private String token;
-	private boolean flag;
+
 	
 	public HttpStatus getStatus() {
 		return status;
@@ -50,12 +54,7 @@ public class BaseResponse {
 	public void setToken(String token) {
 		this.token = token;
 	}
-	public boolean isFlag() {
-		return flag;
-	}
-	public void setFlag(boolean flag) {
-		this.flag = flag;
-	}
+
 	
 	
 }

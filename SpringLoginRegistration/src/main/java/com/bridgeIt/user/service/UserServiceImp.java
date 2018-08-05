@@ -45,7 +45,7 @@ public class UserServiceImp implements UserService {
 			user.setAuthenticatedUserKey(uuid);
 			dao.insert(user);
 			
-			String url="http://localhost:8080/user/verify/";
+			String url="http://localhost:8080/user/verification/getVerified/";
 			String verificationUrl=url+uuid;
 			mail.setFrom("tradefinancebridgelabz@gmail.com");
 			mail.setTo(user.getEmail());
@@ -53,7 +53,7 @@ public class UserServiceImp implements UserService {
 			sender.sendMsg(mail);
 			
 			response.setStatus(HttpStatus.OK);
-			response.setMessage("Your are registered");
+			response.setMessage("please check your email to get verified..");
 			response.setErrors(null);
 			return response;
 			
@@ -125,13 +125,28 @@ public class UserServiceImp implements UserService {
 		dao.insertForgotPassword(uuid, email);
 		mail.setFrom("tradefinancebridgelabz@gmail.com");
 		mail.setTo(email);
-		String url="http://localhost:8080/user/reset-password/";
+		String url="http://localhost:8080/user/verification/reset_password/";
 		String verificationUrl=url+uuid;
 		mail.setMessage(verificationUrl);
 		sender.sendMsg(mail);
 		
 		
 		return true;
+	}
+
+	@Override
+	public boolean checkSessionPassword(String uuid) {
+		int outcome = dao.checkSession(uuid);
+		dao.removeTempUser(uuid);
+		if(outcome==1) {
+			
+			return true;
+		}
+		if(outcome==-1) {
+			return false;
+		}
+		
+		return false;
 	}
 
 	

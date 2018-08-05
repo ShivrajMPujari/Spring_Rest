@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Repository;
 
+import com.bridgeIt.user.model.TempUser;
 import com.bridgeIt.user.model.User;
 @Repository
 public class UserDao {
@@ -17,6 +18,7 @@ public class UserDao {
 	@Autowired
 	private DataSource dataSource;
 	
+	@Autowired
 	private JdbcTemplate template;
 	
 	public DataSource getDataSource() {
@@ -26,7 +28,7 @@ public class UserDao {
 	public boolean insert(User user) {
 		
 		
-		template = new JdbcTemplate(dataSource);
+//		template = new JdbcTemplate(dataSource);
 		
 		String hashPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
 		
@@ -50,9 +52,9 @@ public class UserDao {
 	public boolean existence (User user) {
 		
 
-		template = new JdbcTemplate(dataSource);
+		
 		System.out.println(user);
-		Object [] args = {user.getEmail()};
+	//	Object [] args = {user.getEmail()};
 		String sql = "select name from UserLogin where email = ?";
 		
 		try {
@@ -74,7 +76,7 @@ public class UserDao {
 	
 	public boolean presence (User user) {
 
-		template = new JdbcTemplate(dataSource);
+	
 		System.out.println(user);
 		Object [] args = {user.getEmail()};
 		String sql="select * from UserLogin where email=?";
@@ -92,15 +94,15 @@ public class UserDao {
 	public boolean checkUser(String email, String password ) {
 	System.out.println(email+"---"+password);
 	Object [] args = {email};
-	template = new JdbcTemplate(dataSource);
+	
 	String sql="select * from UserLogin where email=?";
 	
 	List<User> user=template.query(sql, args, new UserMapper());
 	
 	if(user.isEmpty()!=true ) {
 		User user1=user.get(0);
-		if(BCrypt.checkpw(password, user1.getPassword())) {
-			System.out.println(true);
+		if(BCrypt.checkpw(password, user1.getPassword()) && user1.isVerified() ) {
+			
 			return true;
 		}
 		return false;
@@ -131,7 +133,7 @@ public class UserDao {
 	
 	public boolean getVerified(String uniqueId) {
 		
-		template = new JdbcTemplate(dataSource);
+		
 		boolean verified = true;
 		Object [] args= {verified,uniqueId};
 		
@@ -155,7 +157,7 @@ public class UserDao {
 	public User fetchUserByEmail(String email) {
 	
 		Object [] args = {email};
-		template = new JdbcTemplate(dataSource);
+		
 		String sql="select * from UserLogin where email=?";
 		List<User> user=template.query(sql, args, new UserMapper());
 		User user1=user.get(0);
@@ -163,15 +165,16 @@ public class UserDao {
 	}
 	
 	public boolean resetPassword(String uuid , String newPassword) {
-		Object[] args = {uuid,newPassword};
+		Object[] args = {newPassword,uuid};
 		
-		String sql="update UserLogin set password = ? where uuid=?";
-		template= new JdbcTemplate(dataSource);
+		String sql="update UserLogin set password = ? where authenticated_user_key = ?";
+		
 		try {
 			int res=template.update(sql, args);
 			System.out.println(res);
 			
 			if(res==1) {
+				System.out.println("true--password updated");
 				return true;
 			}else {
 				return false;
@@ -188,7 +191,7 @@ public class UserDao {
 		Object[] args = {email};
 		
 		String sql = "select authenticated_user_key from UserLogin where email = ?";
-		template= new JdbcTemplate(dataSource);
+		
 		
 		List<String> userIds = null;
 		userIds = template.queryForList(sql, String.class, args);
@@ -204,11 +207,11 @@ public class UserDao {
 	}
 	
 	public void insertForgotPassword(String uuid,String email) {
-		
+		System.out.println("inside insert forget password");
 		java.util.Date date = new java.util.Date();
         long t = date.getTime();
         long t1 = t+720000;
-        template= new JdbcTemplate(dataSource);
+        
         System.out.println(t);
         java.sql.Timestamp sqlTimestamp = new java.sql.Timestamp(t);
         java.sql.Timestamp sqlTimestamp1 = new java.sql.Timestamp(t1);
@@ -216,11 +219,68 @@ public class UserDao {
 		Object[] args = {uuid,email,sqlTimestamp,sqlTimestamp1};
 		
 		String sql ="insert into resetPassword (authenticated_user_key,email,starting_interval,ending_interval) values (?,?,?,?) ";
-		
-		int rows=template.update(sql, args);
+		System.out.println("before template run");
+		int rows = 0;
+		try {
+			rows = template.update(sql, args);
+		} catch (DataAccessException e) {
+			
+			e.printStackTrace();
+		}
+		System.out.println("before template run");
 		System.out.println(rows);
 		
 		
+	}
+	
+	public int  checkSession(String uuid) {
+		
+		 
+		 Object [] args = {uuid};
+		 
+		 String sql = "select * from resetPassword where authenticated_user_key = ? ";
+		 
+		 List<TempUser> users = null;
+		try {
+			users = template.query(sql, args, new TempUserMapper());
+			System.out.println(users);
+		} catch (DataAccessException e) {
+			
+			e.printStackTrace();
+		}
+		 
+		 if(users.isEmpty()) {
+			 
+			 return -1;
+			 
+		 }
+		 
+		 TempUser user = users.get(0);
+		 
+		 System.out.println(user.getStartingInterval()+"-------"+user.getEndingInterval());
+		 java.sql.Timestamp currentTime = new java.sql.Timestamp(System.currentTimeMillis());
+		 System.out.println(currentTime);
+		 
+		 
+		 return user.getEndingInterval().compareTo(currentTime);
+		 
+	}
+	
+	public int removeTempUser(String uuid) {
+			
+		Object [] args = {uuid};
+	
+		String sql ="delete from resetPassword where authenticated_user_key = ?";
+		
+		int row = 0;
+		try {
+			row = template.update(sql, args);
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+		}
+		
+		
+		return row;
 	}
 	
 	
