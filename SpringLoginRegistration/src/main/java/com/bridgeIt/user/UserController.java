@@ -1,10 +1,13 @@
 package com.bridgeIt.user;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,10 +24,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.bridgeIt.user.model.User;
+import com.bridgeIt.user.model.UserForgotPassword;
+import com.bridgeIt.user.model.UserLogin;
 import com.bridgeIt.user.service.UserService;
 import com.bridgeIt.user.service.utility.RabbitMsgSender;
-
-
 
 @RestController
 public class UserController {
@@ -34,8 +37,6 @@ public class UserController {
 	
 	@Autowired
 	UserService  service;
-	
-	
 	
 	/**
 	 * Simply selects the home view to render by returning its name.
@@ -55,7 +56,7 @@ public class UserController {
 	}
 	
 
-	@RequestMapping(value="/register", method = RequestMethod.POST ,consumes="application/json", produces="application/json" )
+	@RequestMapping(value="register", method = RequestMethod.POST ,consumes="application/json", produces="application/json" )
 	public ResponseEntity<BaseResponse> responser (@Valid @RequestBody User user,BindingResult result){
 	System.out.println(" in / register");
 		BaseResponse response = new BaseResponse();
@@ -71,6 +72,7 @@ public class UserController {
 			}
 		
 			response.setStatus(HttpStatus.BAD_REQUEST);
+			response.setCode(400);
 			response.setMessage("please enter proper inputs");
 			response.setErrors(allErrorMsg);
 			respond = new ResponseEntity<BaseResponse>(response,HttpStatus.BAD_REQUEST);
@@ -91,15 +93,16 @@ public class UserController {
 		
 	}
 	
-	@RequestMapping(value="/login" , method = RequestMethod.POST, produces="application/json")
-	public ResponseEntity<BaseResponse> login(@RequestParam("email") String email,@RequestParam("password") String password ){
+	@RequestMapping(value="login" , method = RequestMethod.POST, produces="application/json")
+	public ResponseEntity<BaseResponse> login(@RequestBody UserLogin userLogin){
 		BaseResponse response = new BaseResponse();
-		System.out.println( email+" "+password);
+		System.out.println( userLogin.getEmail()+" "+userLogin.getPassword());
 		System.out.println("-in /login");
-		if(service.login(email, password)) {
+		if(service.login(userLogin.getEmail(), userLogin.getPassword())) {
 			response.setStatus(HttpStatus.OK);
+			response.setCode(200);
 			response.setMessage("you are logged in sucessfully");
-			User user =service.getUser(email);
+			User user =service.getUser( userLogin.getEmail());
 			String token = service.getToken(user);
 			response.setToken(token);
 			response.setUser(user);
@@ -109,6 +112,7 @@ public class UserController {
 		else {
 			response.setMessage("Login failed...you are not a valid user");
 			response.setStatus(HttpStatus.BAD_REQUEST);
+			response.setCode(400);
 			return new ResponseEntity<BaseResponse>(response,HttpStatus.BAD_REQUEST);
 		}
 		
@@ -126,7 +130,7 @@ public class UserController {
 	}*/
 	
 	@RequestMapping(value="verification/{flag}/{key}", method = RequestMethod.GET )
-	public ResponseEntity<BaseResponse> verify(@PathVariable("key") String key ,  @PathVariable("flag") String flag) {
+	public ResponseEntity<BaseResponse> verify(@PathVariable("key") String key ,  @PathVariable("flag") String flag,HttpServletResponse res) {
 		BaseResponse response = new BaseResponse();
 		if(flag.equals("getVerified")) {
 			System.out.println(key);
@@ -134,12 +138,26 @@ public class UserController {
 			System.out.println("is verification got completed? "+result);
 			
 			if(result==true) {
-				response.setStatus(HttpStatus.ACCEPTED);
+				response.setCode(200);
+				response.setStatus(HttpStatus.OK);
 				response.setMessage("you are verified");
-				return new ResponseEntity<BaseResponse>(response,HttpStatus.ACCEPTED);
+				try {
+					res.sendRedirect("http://127.0.0.1:3000/#!/login");
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				return new ResponseEntity<BaseResponse>(response,HttpStatus.OK);
 			}else {
 				response.setStatus(HttpStatus.BAD_REQUEST);
+				response.setCode(400);
 				response.setMessage("some thing went wrong!..");
+				try {
+					res.sendRedirect("http://127.0.0.1:3000/#!/session-out");
+				} catch (IOException e) {
+					
+					e.printStackTrace();
+				}
+				
 				return new ResponseEntity<BaseResponse>(response,HttpStatus.BAD_REQUEST);
 				
 			}
@@ -153,13 +171,21 @@ public class UserController {
 			boolean result = service.checkSessionPassword(key);
 			
 			if(result==true) {
-				response.setStatus(HttpStatus.ACCEPTED);
+				response.setStatus(HttpStatus.OK);
+				response.setCode(200);
 				response.setMessage("session is alive");
-				return new ResponseEntity<BaseResponse>(response,HttpStatus.ACCEPTED);
+				return new ResponseEntity<BaseResponse>(response,HttpStatus.OK);
 			}else if (result==false) {
-				response.setStatus(HttpStatus.NOT_ACCEPTABLE);
+				response.setStatus(HttpStatus.BAD_REQUEST);
+				response.setCode(400);
 				response.setMessage("your session is no longer alive..");
-				return new ResponseEntity<BaseResponse>(response,HttpStatus.NOT_ACCEPTABLE);
+				try {
+					res.sendRedirect("http://127.0.0.1:3000/#!/session-out");
+				} catch (IOException e) {
+					
+					e.printStackTrace();
+				}
+				return new ResponseEntity<BaseResponse>(response,HttpStatus.BAD_REQUEST);
 			}
 		
 			return new ResponseEntity<BaseResponse>(response,HttpStatus.BAD_REQUEST);
@@ -171,63 +197,70 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="resetPassword", method = RequestMethod.POST )
-	public ResponseEntity<BaseResponse> resetPassword(@RequestParam("password")String password,@RequestParam("uuid")String uuid) {
+	public ResponseEntity<BaseResponse> resetPassword(@RequestBody UserForgotPassword userForgotPassword,HttpServletResponse res) {
+		
+		
 		BaseResponse response = new BaseResponse();
-	
-			boolean result = service.changePassword(uuid, password);
-			if(result) {
+
+		boolean result = service.checkSessionPassword(userForgotPassword.getUuid());
+		
+		if(result==true) {
+			
+			boolean changed = service.changePassword(userForgotPassword.getUuid(), userForgotPassword.getNewPassword());
+			if(changed) {
 				response.setMessage("your password is saved sucessfully");
+				response.setCode(200);
 				response.setStatus(HttpStatus.OK);
 				return new ResponseEntity<BaseResponse>(response,HttpStatus.OK);
 			}else {
 				response.setMessage("some thing went wrong");
 				response.setStatus(HttpStatus.BAD_REQUEST);
+				response.setCode(400);
 				return new ResponseEntity<BaseResponse>(response,HttpStatus.BAD_REQUEST);
 				
 			}
+			
+		}else  {
+			response.setStatus(HttpStatus.BAD_REQUEST);
+			response.setCode(400);
+			response.setMessage("your session is no longer alive..");
+			try {
+				res.sendRedirect("http://127.0.0.1:3000/#!/session-out");
+			} catch (IOException e) {
+				
+				e.printStackTrace();
+			}
+			return new ResponseEntity<BaseResponse>(response,HttpStatus.BAD_REQUEST);
+		}
+	
 		
+
 	}
 		
 		
 	@RequestMapping(value="forgotPassword", method = RequestMethod.POST ,produces="application/json" )
-	public ResponseEntity<BaseResponse> conformationMail(@RequestParam("email")String email) {
+	public ResponseEntity<BaseResponse> conformationMail(@RequestBody UserLogin UserLogin) {
 		System.out.println("in conformation");
-		boolean result =service.sendConformationMail(email);
+		boolean result =service.sendConformationMail(UserLogin.getEmail());
 		BaseResponse response = new BaseResponse();
 		if(result==true) {
-			response.setMessage("message sent");
+			response.setMessage("check your email to reset password");
 			response.setStatus(HttpStatus.OK);
+			response.setCode(200);
 			return new ResponseEntity<BaseResponse>(response,HttpStatus.OK);
 			
 		}else {
 			
 			response.setStatus(HttpStatus.BAD_REQUEST);
 			response.setMessage("please check your mail id properly");
+			response.setCode(400);
 			return new ResponseEntity<BaseResponse>(response,HttpStatus.BAD_REQUEST);
 		}
 
 	}
 	
-	/*@RequestMapping(value="reset-password/{key}", method = RequestMethod.GET ,produces="application/json" )
-	public ResponseEntity<BaseResponse> resetPassword(@PathVariable String key) {
-		
-		System.out.println(key+" from resetPassword");
-		boolean result = service.checkSessionPassword(key);
-		
-		if(result==true) {
-			response.setStatus(HttpStatus.ACCEPTED);
-			response.setMessage("session is alive");
-			return new ResponseEntity<BaseResponse>(response,HttpStatus.ACCEPTED);
-		}else if (result==false) {
-			response.setStatus(HttpStatus.NOT_ACCEPTABLE);
-			response.setMessage("your session is no longer alive..");
-			return new ResponseEntity<BaseResponse>(response,HttpStatus.NOT_ACCEPTABLE);
-		}
-	
-		return new ResponseEntity<BaseResponse>(response,HttpStatus.BAD_REQUEST);
 
-	}
-	*/
+	
 
 	
 }

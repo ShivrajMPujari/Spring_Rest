@@ -1,7 +1,5 @@
 package com.bridgeIt.user.model;
 
-import java.sql.Date;
-
 public class TempUser {
 
 	private String uuid;
@@ -35,7 +33,6 @@ public class TempUser {
 		this.endingInterval = endingInterval;
 	}
 
-	
-	
+
 	
 }

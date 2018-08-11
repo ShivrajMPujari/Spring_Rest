@@ -52,13 +52,14 @@ public class UserServiceImp implements UserService {
 			mail.setMessage(verificationUrl);
 			sender.sendMsg(mail);
 			
+			response.setCode(200);
 			response.setStatus(HttpStatus.OK);
 			response.setMessage("please check your email to get verified..");
 			response.setErrors(null);
 			return response;
 			
 		}
-		
+		response.setCode(400);
 		response.setStatus(HttpStatus.BAD_REQUEST);
 		response.setMessage("User already exist");
 		response.setErrors(null);
@@ -117,16 +118,17 @@ public class UserServiceImp implements UserService {
 	@Override
 	public boolean sendConformationMail(String email) {
 		
-		String uuid = dao.getUUid(email);
-		if (uuid==null) {
+	//	String uuid = dao.getUUid(email);
+		User user	= dao.fetchUserByEmail(email);
+		if (user==null) {
 			
 			return false;
 		}
-		dao.insertForgotPassword(uuid, email);
+		dao.insertForgotPassword(user);
 		mail.setFrom("tradefinancebridgelabz@gmail.com");
 		mail.setTo(email);
-		String url="http://localhost:8080/user/verification/reset_password/";
-		String verificationUrl=url+uuid;
+		String url="http://127.0.0.1:3000/#!/reset_password/";
+		String verificationUrl=url+user.getAuthenticatedUserKey();
 		mail.setMessage(verificationUrl);
 		sender.sendMsg(mail);
 		

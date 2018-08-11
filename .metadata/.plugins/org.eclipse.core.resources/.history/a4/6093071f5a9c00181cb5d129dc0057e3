@@ -1,0 +1,10 @@
+package com.bridgeIt.user.model;
+
+public class UserLogin {
+
+	
+	private String username;
+	private String password;
+	
+	
+}

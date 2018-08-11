@@ -57,4 +57,7 @@
 <fullyQualifiedTypeName name="org.springframework.http.HttpStatus"/>
 <fullyQualifiedTypeName name="java.lang.NullPointerException"/>
 <fullyQualifiedTypeName name="java.sql.SQLDataException"/>
+<fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestBody"/>
+<fullyQualifiedTypeName name="com.bridgeIt.user.model.UserLogin"/>
+<fullyQualifiedTypeName name="javax.servlet.http.HttpServletResponse"/>
 </qualifiedTypeNameHistroy>

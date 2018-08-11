@@ -22,7 +22,7 @@ public class BaseResponse {
 	private List<?> errors;
 	private User user;
 	private String token;
-
+	private int code;
 	
 	public HttpStatus getStatus() {
 		return status;
@@ -53,6 +53,12 @@ public class BaseResponse {
 	}
 	public void setToken(String token) {
 		this.token = token;
+	}
+	public int getCode() {
+		return code;
+	}
+	public void setCode(int code) {
+		this.code = code;
 	}
 
 	

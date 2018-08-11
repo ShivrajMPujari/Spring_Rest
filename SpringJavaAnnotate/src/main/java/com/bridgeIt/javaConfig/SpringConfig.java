@@ -9,7 +9,6 @@ import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageListener;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.TopicExchange;
-import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
@@ -58,9 +57,7 @@ public class SpringConfig extends WebMvcConfigurerAdapter {
 		
 	 }
 	
-	
-	
-	
+
 	@Bean
 	JavaMailSender getMailSender() {
 		
@@ -70,7 +67,6 @@ public class SpringConfig extends WebMvcConfigurerAdapter {
 		implementation.setUsername("tradefinancebridgelabz@gmail.com");
 		implementation.setPassword("tradefinance2018");
 		implementation.setPort(587);
-		
 		Properties props = implementation.getJavaMailProperties();
 	    props.put("mail.transport.protocol", "smtp");
 	    props.put("mail.smtp.auth", "true");
@@ -125,7 +121,7 @@ public class SpringConfig extends WebMvcConfigurerAdapter {
 		return admin;
 	}
 	
-	@Bean
+/*	@Bean
 	SimpleRabbitListenerContainerFactory rabbitListenerFactory() {
 		
 		SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
@@ -133,7 +129,7 @@ public class SpringConfig extends WebMvcConfigurerAdapter {
 		factory.setConcurrentConsumers(3);
 		factory.setMaxConcurrentConsumers(10);
 		return factory;	
-	}
+	}*/
 	
 	@Autowired
 	Consumer consumer;
@@ -146,8 +142,6 @@ public class SpringConfig extends WebMvcConfigurerAdapter {
 		simpleMessageListenerContainer.setQueueNames(queueName);
 		simpleMessageListenerContainer.setMessageListener(new MessageListener() {
 		
-			
-			
 			@Override
 			public void onMessage(Message message) {
 				String string = new String(message.getBody());

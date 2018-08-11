@@ -42,7 +42,9 @@ public class GlobalExceptionHandler {
 
 	
 	@ExceptionHandler(value = Exception.class)
-	public ResponseEntity<BaseResponse> handleException(){
+	public ResponseEntity<BaseResponse> handleException(Exception e){
+		
+		System.out.println(e.getMessage());
 		
 		BaseResponse response = new BaseResponse();
 		response.setStatus(HttpStatus.BAD_REQUEST);

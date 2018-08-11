@@ -31,6 +31,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
@@ -45,6 +46,16 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
 @Configuration
 public class SpringConfig extends WebMvcConfigurerAdapter {
 
+	
+	
+	@Override
+	public void addCorsMappings(CorsRegistry registry) {
+		
+		registry.addMapping("/**").allowedMethods("GET","POST").allowedOrigins("*").allowedHeaders("*");
+		
+	}
+	
+	
 	@Bean
 	public InternalResourceViewResolver internalViewResolver () {		
 		  InternalResourceViewResolver resolver = new InternalResourceViewResolver();

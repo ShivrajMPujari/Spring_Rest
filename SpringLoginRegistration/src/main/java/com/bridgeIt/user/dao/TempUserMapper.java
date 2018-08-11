@@ -17,6 +17,7 @@ public class TempUserMapper  implements RowMapper<TempUser>{
 		tempUser.setStartingInterval(rs.getTimestamp("starting_interval"));
 		tempUser.setEndingInterval(rs.getTimestamp("ending_interval"));
 		tempUser.setUuid(rs.getString("authenticated_user_key"));
+
 		
 		return tempUser;
 	}
