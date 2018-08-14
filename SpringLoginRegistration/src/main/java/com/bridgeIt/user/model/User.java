@@ -1,10 +1,12 @@
 package com.bridgeIt.user.model;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+@JsonIgnoreProperties({"password"})
 public class User {
 
 	private int id;

@@ -3,5 +3,6 @@
 <aop-project name="SpringJavaAnnotate"/>
 <aop-project name="RestDemo"/>
 <aop-project name="SpringLoginRegistration"/>
+<aop-project name="RedisDemo"/>
 <aop-project name="SpringMVCdemo"/>
 </aop-reference-model>

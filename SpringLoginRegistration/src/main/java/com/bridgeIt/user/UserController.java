@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.bridgeIt.user.model.User;
+import com.bridgeIt.user.model.UserEmail;
 import com.bridgeIt.user.model.UserForgotPassword;
 import com.bridgeIt.user.model.UserLogin;
 import com.bridgeIt.user.service.UserService;
@@ -239,9 +240,9 @@ public class UserController {
 		
 		
 	@RequestMapping(value="forgotPassword", method = RequestMethod.POST ,produces="application/json" )
-	public ResponseEntity<BaseResponse> conformationMail(@RequestBody UserLogin UserLogin) {
+	public ResponseEntity<BaseResponse> conformationMail(@RequestBody UserEmail userEmail) {
 		System.out.println("in conformation");
-		boolean result =service.sendConformationMail(UserLogin.getEmail());
+		boolean result =service.sendConformationMail(userEmail.getEmail());
 		BaseResponse response = new BaseResponse();
 		if(result==true) {
 			response.setMessage("check your email to reset password");
