@@ -1,4 +1,4 @@
-GitRepositoriesView.GitDirectories=/home/bridgelabz/Documents/workspace-sts-3.9.5.RELEASE/.git\:
-GitRepositoriesView.GitDirectories.relative=.git\:
+GitRepositoriesView.GitDirectories=/home/bridgelabz/Documents/workspace-sts-3.9.5.RELEASE/.git\:/home/bridgelabz/fabric-dev-servers/scratch/.git\:
+GitRepositoriesView.GitDirectories.relative=.git\:/home/bridgelabz/fabric-dev-servers/scratch/.git\:
 core_autoIgnoreDerivedResources=false
 eclipse.preferences.version=1
