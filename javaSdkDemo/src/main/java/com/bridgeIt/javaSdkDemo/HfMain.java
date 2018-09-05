@@ -8,8 +8,14 @@ import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Collection;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
+import java.util.stream.Collectors;
 
 import org.apache.log4j.Logger;
+import org.hyperledger.fabric.sdk.BlockEvent;
 import org.hyperledger.fabric.sdk.ChaincodeID;
 import org.hyperledger.fabric.sdk.Channel;
 import org.hyperledger.fabric.sdk.Enrollment;
@@ -29,11 +35,9 @@ import org.hyperledger.fabric_ca.sdk.HFCAClient;
 import org.hyperledger.fabric_ca.sdk.RegistrationRequest;
 
 
-
 public class HfMain {
 	
     private static final Logger log = Logger.getLogger(HfMain.class);
-
     
     public static void main(String[] args) throws Exception {
         // create fabric-ca client
@@ -59,6 +63,7 @@ public class HfMain {
         System.out.println("querying.....");
         // call query blockchain example
         queryBlockChain(client);
+        transactionInvokeBlockChain(client);
     }
     
     static void transactionInvokeBlockChain(HFClient client) {
@@ -69,7 +74,33 @@ public class HfMain {
         ChaincodeID tradeFinanceCCId = ChaincodeID.newBuilder().setName("tradefinancecc").build();
         tqr.setChaincodeID(tradeFinanceCCId);
         tqr.setFcn("createAccount");
-        tqr.setArgs(new String[] {""});
+        tqr.setArgs(new String[] {"102","custom","20000","SBI BANK"});
+        Collection<ProposalResponse> responses = null ;
+        try {
+        	 responses = channel.sendTransactionProposal(tqr);
+        	List<ProposalResponse> invalid = responses.stream().filter(res -> res.isInvalid()).collect(Collectors.toList());
+        	if (!invalid.isEmpty()) {
+        		
+        		invalid.forEach(response -> {
+        			System.out.println(response.getMessage());
+        		});
+        		
+        	}
+        } catch (ProposalException | InvalidArgumentException e) {
+			e.printStackTrace();
+		}
+         
+        try {
+        	 BlockEvent.TransactionEvent event = channel.sendTransaction(responses).get(60,TimeUnit.SECONDS);
+        	 if (event.isValid()) {
+        		 System.out.println(event.getTransactionID()+" transaction is valid ");
+        	 }else {
+        		 System.out.println(event.getTransactionID() + " transaction is invalid");
+        	 }
+        } catch (InterruptedException | ExecutionException | TimeoutException e) {
+			e.printStackTrace();
+		}
+        
     	
     }
 	
@@ -98,10 +129,10 @@ public class HfMain {
         // initialize channel
         // peer name and endpoint in fabcar network
         Peer peer1 = client.newPeer("peer0.importer.bridgeIt.com", "grpc://localhost:7051");
-        Peer peer2 = client.newPeer("peer0.exporter.bridgeIt.com", "grpc://localhost:8051");
-        Peer peer3 = client.newPeer("peer0.custom.bridgeIt.com", "grpc://localhost:9051");
-        Peer peer4 = client.newPeer("peer0.importer.bridgeIt.com", "grpc://localhost:10051");
-        Peer peer5 = client.newPeer("peer0.importerBank.bridgeIt.com", "grpc://localhost:11051");
+//        Peer peer2 = client.newPeer("peer0.exporter.bridgeIt.com", "grpc://localhost:8051");
+//        Peer peer3 = client.newPeer("peer0.custom.bridgeIt.com", "grpc://localhost:9051");
+//        Peer peer4 = client.newPeer("peer0.importer.bridgeIt.com", "grpc://localhost:10051");
+//        Peer peer5 = client.newPeer("peer0.importerBank.bridgeIt.com", "grpc://localhost:11051");
 
         // eventhub name and endpoint in fabcar network
         EventHub eventHub1 = client.newEventHub("eventhub01", "grpc://localhost:7053");
@@ -111,7 +142,7 @@ public class HfMain {
 //        EventHub eventHub5 = client.newEventHub("eventhub05", "grpc://localhost:11053");
 
         // orderer name and endpoint in fabcar network
-        Orderer orderer = client.newOrderer("orderer.example.com", "grpc://localhost:7050");
+        Orderer orderer = client.newOrderer("orderer.bridgeIt.com", "grpc://localhost:7050");
         // channel name in fabcar network
         Channel channel = client.newChannel("mychannel");
         channel.addPeer(peer1);
@@ -198,18 +229,18 @@ public class HfMain {
         }
     }
 	
-	  static AppUser tryDeserialize(String name) throws Exception {
-	        if (Files.exists(Paths.get(name + ".jso"))) {
-	            return deserialize(name);
-	        }
-	        return null;
-	    }
+  static AppUser tryDeserialize(String name) throws Exception {
+        if (Files.exists(Paths.get(name + ".jso"))) {
+            return deserialize(name);
+        }
+        return null;
+    }
 
-	    static AppUser deserialize(String name) throws Exception {
-	        try (ObjectInputStream decoder = new ObjectInputStream(
-	                Files.newInputStream(Paths.get(name + ".jso")))) {
-	            return (AppUser) decoder.readObject();
-	        }
-	    }
+    static AppUser deserialize(String name) throws Exception {
+        try (ObjectInputStream decoder = new ObjectInputStream(
+                Files.newInputStream(Paths.get(name + ".jso")))) {
+            return (AppUser) decoder.readObject();
+        }
+    }
 
 }

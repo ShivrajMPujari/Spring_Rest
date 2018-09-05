@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="org.springframework.dao.DataAccessException"/>
-<fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RestController"/>
-<fullyQualifiedTypeName name="com.bridgeIt.user.BaseResponse"/>
-<fullyQualifiedTypeName name="com.bridgeIt.user.dao.UserDao"/>
-<fullyQualifiedTypeName name="org.springframework.security.crypto.bcrypt.BCrypt"/>
 <fullyQualifiedTypeName name="io.jsonwebtoken.SignatureAlgorithm"/>
 <fullyQualifiedTypeName name="io.jsonwebtoken.JwtBuilder"/>
 <fullyQualifiedTypeName name="io.jsonwebtoken.Jwts"/>
@@ -15,7 +10,6 @@
 <fullyQualifiedTypeName name="org.springframework.amqp.core.BindingBuilder"/>
 <fullyQualifiedTypeName name="org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter"/>
 <fullyQualifiedTypeName name="com.bridgeIt.restDemo.model.Receiver"/>
-<fullyQualifiedTypeName name="java.util.concurrent.TimeUnit"/>
 <fullyQualifiedTypeName name="com.fasterxml.jackson.annotation.JsonFormat"/>
 <fullyQualifiedTypeName name="com.bridgeIt.restDemo.model.Runner"/>
 <fullyQualifiedTypeName name="com.rabbitmq.client.ConnectionFactory"/>
@@ -60,4 +54,10 @@
 <fullyQualifiedTypeName name="com.bridgeIt.user.model.UserLogin"/>
 <fullyQualifiedTypeName name="org.codehaus.jackson.annotate.JsonIgnoreProperties"/>
 <fullyQualifiedTypeName name="com.bridgeIt.user.model.UserEmail"/>
+<fullyQualifiedTypeName name="org.hyperledger.fabric.sdk.Enrollment"/>
+<fullyQualifiedTypeName name="java.util.stream.Collectors"/>
+<fullyQualifiedTypeName name="org.hyperledger.fabric.sdk.BlockEvent.TransactionEvent"/>
+<fullyQualifiedTypeName name="java.util.concurrent.CompletableFuture"/>
+<fullyQualifiedTypeName name="java.util.concurrent.TimeUnit"/>
+<fullyQualifiedTypeName name="org.hyperledger.fabric.sdk.BlockEvent"/>
 </qualifiedTypeNameHistroy>

@@ -1,12 +1,18 @@
 package com.bridgeIt.user.dao;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.sql.DataSource;
+import javax.sql.rowset.serial.SerialBlob;
+import javax.sql.rowset.serial.SerialException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.support.SqlLobValue;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Repository;
 
@@ -25,23 +31,23 @@ public class UserDao {
 		return dataSource;
 	}
 	
-	public boolean insert(User user) {
-		
-		
+	public boolean insert(User user) throws SerialException, SQLException {
+		// MapSqlParameterSource in = new MapSqlParameterSource();
+	//	 new SqlLobValue(bytes) new SerialBlob(myArray )
 //		template = new JdbcTemplate(dataSource);
 		
 		String hashPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
 		
-		Object [] args = {user.getEmail(),user.getName(),hashPassword,user.getMobileNo(),user.getCity(),user.getRole(),user.isVerified(),user.getAuthenticatedUserKey()};
+		Object [] args = {user.getEmail(),user.getName(),hashPassword,user.getMobileNo(),user.getCity(),user.getRole(),user.isVerified(),user.getAuthenticatedUserKey(),user.getAccounNumber(),user.getBalance(),user.getBank(),new SerialBlob(user.getUserAccount())};
 		System.out.println(dataSource);
 		System.out.println(hashPassword);
 		int out=0;
 		try {
 			System.out.println(user);
-			out = template.update("insert into UserLogin(email,name,password,mobileNo,city,role,verified,authenticated_user_key) values (?,?,?,?,?,?,?,?)", args);
+			out = template.update("insert into UserLogin(email,name,password,mobileNo,city,role,verified,authenticated_user_key,account_number,balance,bank,user_account) values (?,?,?,?,?,?,?,?,?,?,?,?)", args);
 			System.out.println("number rows affected "+out);
 			return true;
-		} catch (DataAccessException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("insert template not excuted..");
 			return false;
@@ -282,6 +288,24 @@ public class UserDao {
 		
 		return row;
 	}
+	
+	public boolean uniqueAccountNumber(String accountNumber) {
+		
+		Object [] args = {accountNumber};
+		String sql = "select * from UserLogin where account_number = ?";
+		
+		 List<User> users = null;
+		 
+		 users = template.query(sql, args, new UserMapper());
+		 
+		 if(users.isEmpty()) {
+			 
+			 return true;
+		 }
+		
+		return false;
+	}
+	
 	
 	
 }

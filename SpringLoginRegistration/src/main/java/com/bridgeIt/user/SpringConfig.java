@@ -2,13 +2,18 @@ package com.bridgeIt.user;
 
 import java.beans.PropertyVetoException;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.net.MalformedURLException;
 import java.util.Properties;
-
 import javax.sql.DataSource;
-
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.hyperledger.fabric.sdk.HFClient;
+import org.hyperledger.fabric.sdk.exception.CryptoException;
+import org.hyperledger.fabric.sdk.exception.InvalidArgumentException;
+import org.hyperledger.fabric.sdk.security.CryptoSuite;
+import org.hyperledger.fabric_ca.sdk.HFCAClient;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
@@ -36,7 +41,6 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
-
 import com.bridgeIt.user.service.utility.MailSender;
 import com.bridgeIt.user.service.utility.UserMail;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
@@ -79,9 +83,6 @@ public class SpringConfig extends WebMvcConfigurerAdapter {
 		
 	 }
 	
-	
-	
-
 	@Bean
 	JavaMailSender getMailSender() {
 		
@@ -226,5 +227,52 @@ public class SpringConfig extends WebMvcConfigurerAdapter {
 		
 		return new JdbcTemplate(dataSource());
 	}
+	
+	@Bean
+    public HFClient getHfClient() throws Exception {
+        // initialize default cryptosuite
+        CryptoSuite cryptoSuite = CryptoSuite.Factory.getCryptoSuite();
+        // setup the client
+        HFClient client = HFClient.createNewInstance();
+        client.setCryptoSuite(cryptoSuite);
+        return client;
+    }
+	
+	@Bean
+	HFCAClient getHFCaClient() {
+		CryptoSuite suite = null;
+		HFCAClient client = null;
+		try {
+			suite = CryptoSuite.Factory.getCryptoSuite();
+			client = HFCAClient.createNewInstance("http://localhost:7054", null);
+			client.setCryptoSuite(suite);
+		} catch (IllegalAccessException e) {
+			
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+		
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+		
+			e.printStackTrace();
+		} catch (CryptoException e) {
+		
+			e.printStackTrace();
+		} catch (InvalidArgumentException e) {
+		
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+		
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+	
+			e.printStackTrace();
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		}
+		
+		return client;
+	}
+
 	
 }

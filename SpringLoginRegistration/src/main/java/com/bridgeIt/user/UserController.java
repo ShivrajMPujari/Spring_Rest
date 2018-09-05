@@ -80,7 +80,6 @@ public class UserController {
 			return respond;
 
 		}
-	
 		 response=service.userReg(user);
 		if(response.getStatus()==HttpStatus.BAD_REQUEST) {
 			respond = new ResponseEntity<BaseResponse>(response,HttpStatus.BAD_REQUEST);
@@ -90,8 +89,7 @@ public class UserController {
 			respond = new ResponseEntity<BaseResponse>(response,HttpStatus.OK);
 			return respond;
 		}
-		
-		
+	
 	}
 	
 	@RequestMapping(value="login" , method = RequestMethod.POST, produces="application/json")

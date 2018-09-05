@@ -1,5 +1,7 @@
 package com.bridgeIt.user.model;
 
+import java.util.Arrays;
+
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -31,6 +33,16 @@ public class User {
 	private boolean verified;
 	
 	private String authenticatedUserKey;
+	
+	@NotEmpty(message="AccountNumber is required")
+	private String accounNumber;
+	
+	private int balance;
+	
+	@NotEmpty(message="Bank name  is required")
+	private String bank;
+	
+	private byte[] userAccount;
 	
 	public String getAuthenticatedUserKey() {
 		return authenticatedUserKey;
@@ -90,6 +102,39 @@ public class User {
 	public void setId(int id) {
 		this.id = id;
 	}
+	public String getAccounNumber() {
+		return accounNumber;
+	}
+	public void setAccounNumber(String accounNumber) {
+		this.accounNumber = accounNumber;
+	}
+	public int getBalance() {
+		return balance;
+	}
+	public void setBalance(int balance) {
+		this.balance = balance;
+	}
+	public String getBank() {
+		return bank;
+	}
+	public void setBank(String bank) {
+		this.bank = bank;
+	}
+	
+	public byte[] getUserAccount() {
+		return userAccount;
+	}
+	public void setUserAccount(byte[] userAccount) {
+		this.userAccount = userAccount;
+	}
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", name=" + name + ", role=" + role + ", email=" + email + ", city=" + city
+				+ ", mobileNo=" + mobileNo + ", password=" + password + ", verified=" + verified
+				+ ", authenticatedUserKey=" + authenticatedUserKey + ", accounNumber=" + accounNumber + ", balance="
+				+ balance + ", bank=" + bank + ", userAccount=" + Arrays.toString(userAccount) + "]";
+	}
+
 
 
 }

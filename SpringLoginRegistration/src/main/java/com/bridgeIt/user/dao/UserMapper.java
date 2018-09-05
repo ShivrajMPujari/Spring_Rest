@@ -19,6 +19,10 @@ public class UserMapper implements RowMapper<User>{
 		user.setPassword(rs.getString("password"));
 		user.setVerified(rs.getBoolean("verified"));
 		user.setAuthenticatedUserKey(rs.getString("authenticated_user_key"));
+		user.setBalance(rs.getInt("balance"));
+		user.setBank(rs.getString("bank"));
+		user.setAccounNumber(rs.getString("account_number"));
+		user.setUserAccount(rs.getBytes("user_account"));
 		return user;
 	}
 

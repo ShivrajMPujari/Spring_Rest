@@ -1,7 +1,10 @@
 package com.bridgeIt.restDemo.config;
 
+import java.beans.PropertyVetoException;
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
+
+import javax.sql.DataSource;
 
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
@@ -21,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -28,6 +32,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
 import com.bridgeIt.restDemo.model.Receiver;
+import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 
 @EnableWebMvc
@@ -134,6 +139,32 @@ public class SpringConfig extends WebMvcConfigurerAdapter {
 	}
 	
 	  
+	@Bean
+	public DataSource dataSource() {
+		
+		ComboPooledDataSource cpds = new ComboPooledDataSource();
+		cpds.setUser("root");
+		cpds.setPassword("shiv");
+		try {
+			cpds.setDriverClass("com.mysql.jdbc.Driver");
+			cpds.setJdbcUrl("jdbc:mysql://localhost:3306/Shiv?useSSL=false");
+			cpds.setMinPoolSize(5);                                     
+			cpds.setAcquireIncrement(5);
+			cpds.setMaxPoolSize(20);
+		
+		} catch (PropertyVetoException e) {
+			e.printStackTrace();
+		}
+		
+		return cpds;
+	}
+	
+	@Bean
+	public JdbcTemplate template() {
+		
+		return new JdbcTemplate(dataSource());
+	}
+	
 	@Override
 	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
 		
