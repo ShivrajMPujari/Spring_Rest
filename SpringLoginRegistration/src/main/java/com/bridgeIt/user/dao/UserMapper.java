@@ -1,5 +1,6 @@
 package com.bridgeIt.user.dao;
 
+import java.sql.Blob;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.springframework.jdbc.core.RowMapper;
@@ -22,7 +23,16 @@ public class UserMapper implements RowMapper<User>{
 		user.setBalance(rs.getInt("balance"));
 		user.setBank(rs.getString("bank"));
 		user.setAccounNumber(rs.getString("account_number"));
-		user.setUserAccount(rs.getBytes("user_account"));
+		Blob userBlob = rs.getBlob("user_account");
+		byte [] userByte = null;
+		try {
+			userByte =userBlob.getBytes(1, (int)userBlob.length());
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		user.setUserAccount(userByte);
+		//user.setUserAccount();
 		return user;
 	}
 

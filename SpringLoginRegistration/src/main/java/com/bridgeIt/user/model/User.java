@@ -8,7 +8,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-@JsonIgnoreProperties({"password"})
+@JsonIgnoreProperties({"password","userAccount"})
 public class User {
 
 	private int id;

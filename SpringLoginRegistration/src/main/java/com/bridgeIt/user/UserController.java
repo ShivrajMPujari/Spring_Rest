@@ -258,8 +258,22 @@ public class UserController {
 
 	}
 	
+	@RequestMapping(value="getBalance/{accountNumber}", method = RequestMethod.GET ,produces="application/json" )
+	public ResponseEntity<BalanceResponse> getBalance( @PathVariable("accountNumber") String accountNumber ){
+		
+		BalanceResponse response = new BalanceResponse();
+		int balance = service.getUserBalance(accountNumber);
+		if (balance != -1) {
+			response.setAccountNumber(accountNumber);
+			response.setBalance(balance);
+			return new ResponseEntity<BalanceResponse>(response,HttpStatus.OK);
+		}
+		
+		response.setAccountNumber(accountNumber);
+		response.setBalance(balance);
+		return new ResponseEntity<BalanceResponse>(response,HttpStatus.BAD_REQUEST);
+	}
 
 	
-
 	
 }

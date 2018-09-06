@@ -230,9 +230,7 @@ public class SpringConfig extends WebMvcConfigurerAdapter {
 	
 	@Bean
     public HFClient getHfClient() throws Exception {
-        // initialize default cryptosuite
         CryptoSuite cryptoSuite = CryptoSuite.Factory.getCryptoSuite();
-        // setup the client
         HFClient client = HFClient.createNewInstance();
         client.setCryptoSuite(cryptoSuite);
         return client;

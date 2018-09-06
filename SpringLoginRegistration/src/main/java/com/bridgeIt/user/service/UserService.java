@@ -15,6 +15,7 @@ public interface UserService {
 	boolean changePassword(String uuid, String password) ;
 	boolean sendConformationMail(String email);
 	boolean checkSessionPassword(String uuid);
+	int getUserBalance(String accountNumber);
 	
 //	TradeUser getAdmin();
 //	TradeUser tryDeserializeAdmin(String name);

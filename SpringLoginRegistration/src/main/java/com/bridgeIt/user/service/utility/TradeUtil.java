@@ -7,6 +7,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -23,6 +24,7 @@ import org.hyperledger.fabric.sdk.HFClient;
 import org.hyperledger.fabric.sdk.Orderer;
 import org.hyperledger.fabric.sdk.Peer;
 import org.hyperledger.fabric.sdk.ProposalResponse;
+import org.hyperledger.fabric.sdk.QueryByChaincodeRequest;
 import org.hyperledger.fabric.sdk.TransactionProposalRequest;
 import org.hyperledger.fabric.sdk.exception.ProposalException;
 import org.hyperledger.fabric.sdk.exception.TransactionException;
@@ -31,7 +33,6 @@ import org.hyperledger.fabric_ca.sdk.RegistrationRequest;
 import org.hyperledger.fabric_ca.sdk.exception.EnrollmentException;
 import org.hyperledger.fabric_ca.sdk.exception.InvalidArgumentException;
 import org.hyperledger.fabric_ca.sdk.exception.RegistrationException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.bridgeIt.user.model.TradeUser;
@@ -42,8 +43,12 @@ public class TradeUtil {
 
 
 	public TradeUser getAdmin(HFCAClient caClient) {
+		System.out.println("try deserialize admin");
         TradeUser admin = tryDeserializeAdmin("admin");
+        System.out.println(admin+" got admin while trydeserializing...");
+       // TradeUser admin =null;
         if (admin == null) {
+        	System.out.println(" admin is null");
             Enrollment adminEnrollment = null;
 			try {
 				adminEnrollment = caClient.enroll("admin", "adminpw");
@@ -54,11 +59,15 @@ public class TradeUtil {
             serializeAdmin(admin);
             System.out.println("admin serialized...");
         }
+        
         return admin;
     }
 
 	public static TradeUser tryDeserializeAdmin(String name) {
-        if (Files.exists(Paths.get(name + ".jso"))) {
+	//	Path path = Paths.get("//home//bridgelabz//Documents//workspace-sts-3.9.5.RELEASE//"+name + ".jso");	
+		//System.out.println(path.toString()+" is the path "+path.getRoot());
+        if (Files.exists(Paths.get("//home//bridgelabz//Documents//workspace-sts-3.9.5.RELEASE//"+name + ".jso"))) {
+        	System.out.println();
             return deSerializeAdmin(name);
         }
         return null;
@@ -67,7 +76,7 @@ public class TradeUtil {
 
 	public static TradeUser deSerializeAdmin(String name) {
         try (ObjectInputStream decoder = new ObjectInputStream(
-                Files.newInputStream(Paths.get(name + ".jso")))) {
+                Files.newInputStream(Paths.get("//home//bridgelabz//Documents//workspace-sts-3.9.5.RELEASE//"+name + ".jso")))) {
             return (TradeUser) decoder.readObject();
         } catch (Exception e) {
 			e.printStackTrace();
@@ -76,10 +85,11 @@ public class TradeUtil {
     }
 
 	public static void serializeAdmin(TradeUser tradeUser) {
+		System.out.println(tradeUser+" is serializing...");
 		try (ObjectOutputStream oos = new ObjectOutputStream(Files.newOutputStream(
-                Paths.get(tradeUser.getName() + ".jso")))) {
+                Paths.get("//home//bridgelabz//Documents//workspace-sts-3.9.5.RELEASE//"+tradeUser.getName() + ".jso")))) {
             oos.writeObject(tradeUser);
-            
+        	System.out.println(tradeUser+" is written...");
         } catch (Exception e) {
 
 			e.printStackTrace();
@@ -261,7 +271,7 @@ public class TradeUtil {
 	}
 	
 	
-	public void transactionInvokeBlockChain(HFClient client,String chaincodeFunction,User user) throws org.hyperledger.fabric.sdk.exception.InvalidArgumentException {
+	public void transactionInvokeBlockChain(HFClient client,String chaincodeFunction,String[] args) throws org.hyperledger.fabric.sdk.exception.InvalidArgumentException {
 	    	
 	    	
 	        Channel channel = client.getChannel("mychannel");
@@ -269,9 +279,7 @@ public class TradeUtil {
 	        ChaincodeID tradeFinanceCCId = ChaincodeID.newBuilder().setName("tradefinancecc").build();
 	        tqr.setChaincodeID(tradeFinanceCCId);
 	        tqr.setFcn("createAccount");
-	        int bal= user.getBalance();
-	        String balance =Integer.toString(bal);
-	        tqr.setArgs(new String[] {user.getAccounNumber(),user.getRole(),balance,user.getBank()});
+	        tqr.setArgs(args);
 	        Collection<ProposalResponse> responses = null ;
 	        try {
 	        	 responses = channel.sendTransactionProposal(tqr);
@@ -301,6 +309,39 @@ public class TradeUtil {
 	    	
 	    }
 		
+	 public List<String> queryBlockChain(HFClient client,String function,String [] args) throws ProposalException, InvalidArgumentException {
+	        // get channel instance from client
+	        Channel channel = client.getChannel("mychannel");
+	        // create chaincode request
+	        QueryByChaincodeRequest qpr = client.newQueryProposalRequest();
+	        ChaincodeID tradeFinanceCCId = ChaincodeID.newBuilder().setName("tradefinancecc").build();
+	        qpr.setChaincodeID(tradeFinanceCCId);
+	        // CC function to be called
+	        qpr.setFcn(function);
+	        qpr.setArgs(args);
+	    	List<String> list = new ArrayList<String>();
+	        Collection<ProposalResponse> res = null;
+			try {
+				res = channel.queryByChaincode(qpr);
+			} catch (org.hyperledger.fabric.sdk.exception.InvalidArgumentException e) {
+				e.printStackTrace();
+			}
 		
+	        // display response
+	        for (ProposalResponse pres : res) {
+	            String stringResponse = null;
+				try {
+					stringResponse = new String(pres.getChaincodeActionResponsePayload());
+				} catch (org.hyperledger.fabric.sdk.exception.InvalidArgumentException e) {
+					e.printStackTrace();
+				}
+	           // log.info(stringResponse);
+	            System.out.println(stringResponse);
+	            list.add(stringResponse);
+	        }
+			return list;
+	    }
 
+	 
+	 
 }

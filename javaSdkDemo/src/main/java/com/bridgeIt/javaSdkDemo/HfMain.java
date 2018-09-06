@@ -6,6 +6,7 @@ import java.io.ObjectOutputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.List;
@@ -40,6 +41,15 @@ public class HfMain {
     private static final Logger log = Logger.getLogger(HfMain.class);
     
     public static void main(String[] args) throws Exception {
+    	String name = "admin";
+		Path path = Paths.get("//home//bridgelabz//Documents//workspace-sts-3.9.5.RELEASE//"+name + ".jso");	
+		 if (Files.exists(path)) {
+	        	System.out.println(path);
+	           
+	        }
+    	System.out.println(path);
+    	System.out.println(false);
+    	
         // create fabric-ca client
         HFCAClient caClient = getHFCaClient("http://localhost:7054");
 
