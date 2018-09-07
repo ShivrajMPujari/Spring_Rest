@@ -1,27 +1,16 @@
 package com.bridgeIt.user.service;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+
 import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
 
 import org.hyperledger.fabric.sdk.Channel;
-import org.hyperledger.fabric.sdk.Enrollment;
-import org.hyperledger.fabric.sdk.EventHub;
 import org.hyperledger.fabric.sdk.HFClient;
-import org.hyperledger.fabric.sdk.Orderer;
-import org.hyperledger.fabric.sdk.Peer;
+
 import org.hyperledger.fabric.sdk.exception.ProposalException;
-import org.hyperledger.fabric.sdk.exception.TransactionException;
 import org.hyperledger.fabric_ca.sdk.HFCAClient;
-import org.hyperledger.fabric_ca.sdk.RegistrationRequest;
-import org.hyperledger.fabric_ca.sdk.exception.EnrollmentException;
+
 import org.hyperledger.fabric_ca.sdk.exception.InvalidArgumentException;
 import org.hyperledger.fabric_ca.sdk.exception.RegistrationException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,6 +60,10 @@ public class UserServiceImp implements UserService {
 	@Autowired
 	TradeUtil tradeUtil;
 	
+	@Autowired
+	Channel channel;
+	
+	
 	@Override
 	public BaseResponse userReg(User user) {
 	
@@ -94,17 +87,16 @@ public class UserServiceImp implements UserService {
 				try {
 					dao.insert(user);
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 				
-				 Channel channel = tradeUtil.getChannel(client, admin);
+				// Channel channel = tradeUtil.getChannel(client, userAcc);
 				System.out.println(channel.getName()+" is channel name");
 				  int bal= user.getBalance();
 			        String balance =Integer.toString(bal);
 				String [] args = new String[] {user.getAccounNumber(),user.getRole(),balance,user.getBank()};
 				try {
-					tradeUtil.transactionInvokeBlockChain(client, "createAccount", args);
+					tradeUtil.transactionInvokeBlockChain(client, "createAccount", args,channel);
 				} catch (org.hyperledger.fabric.sdk.exception.InvalidArgumentException e) {
 				
 					e.printStackTrace();
@@ -181,9 +173,9 @@ public class UserServiceImp implements UserService {
 	@Override
 	public String getToken(User user) {
 		
-		int userId=user.getId();
-		String id = Integer.toString(userId);
-		String jwtToken =token.createJwt(id, user.getEmail(), 720000);
+//		int userId=user.getId();
+//		String id = Integer.toString(userId);
+		String jwtToken =token.createJwt( user.getEmail(),user.getRole(), 720000);
 		
 		return jwtToken;
 	}
@@ -240,17 +232,19 @@ public class UserServiceImp implements UserService {
 		boolean result = dao.uniqueAccountNumber(accountNumber);
 
 		if (!result) {
-			TradeUser admin = tradeUtil.getAdmin(caClient);
-//			byte [] tradeUserByte =dao.getUserTradeAccount(accountNumber);
-//			TradeUser tradeUser = tradeUtil.convertByteArrayToObject(tradeUserByte);
+		//	TradeUser admin = tradeUtil.getAdmin(caClient);
+	//		byte [] tradeUserByte =dao.getUserTradeAccount(accountNumber);
+		//	TradeUser tradeUser = tradeUtil.convertByteArrayToObject(tradeUserByte);
 		//	System.out.println(tradeUser);
-			 tradeUtil.getChannel(client, admin);
+			 
+		//	tradeUtil.getChannel(client, tradeUser);
+			 
 			//tradeUtil.queryBlockChain(client, function, args);
 			 String [] args = new String[] {accountNumber};
 			// ObjectMapper mapper = new ObjectMapper();
 		//	 mapper.
 			try {
-				List<String> responses = tradeUtil.queryBlockChain(client, "getBalance", args);
+				List<String> responses = tradeUtil.queryBlockChain(client, "getBalance", args,channel);
 				String response = responses.get(0);
 				System.out.println(response +" is response for query");
 			

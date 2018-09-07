@@ -390,6 +390,77 @@ public class UserDao {
 		return false;
 	}
 	
+	public boolean deleteContract(String contractId) {
+		
+		Object [] args = {contractId};
+		
+		String sql = "delete from UserContract where contract_id =?";
+		
+		try {
+			int rows = template.update(sql, args);
+			System.out.println(rows+ " rows affected");
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+	
+	
+	public Contract getContract(String contractId) {
+		
+		
+		Object [] args = {contractId};
+		
+		String sql = "select * from UserContract where contract_id = ?";
+		
+		List<Contract> contractList = template.query(sql, args, new ContractMapper());
+		if (contractList.isEmpty()) {	
+			return null;
+		}
+		
+		Contract contract = contractList.get(0);
+		
+		return contract;
+	}
+	
+	public List<Contract> gellAllContract(String userId) {
+		
+		Object [] args = {userId};
+		
+		String sql = "select * from UserContract where exporter_id = ?";
+		
+		List<Contract> contractList = null;
+		try {
+			contractList = template.query(sql, args, new ContractMapper());
+		} catch (Exception e) {
+		
+			e.printStackTrace();
+		}
+		
+		return contractList;
+	}
+	
+	public User getUserByEmail(String email) {
+		
+		Object [] args = {email};
+		String sql = "select * from UserLogin where email = ?";
+		List<User> usersList = null;
+		try {
+			usersList  = template.query(sql, args, new UserMapper());
+		} catch (Exception e) {
+		
+			e.printStackTrace();
+		}
+		
+		User user = usersList.get(0);
+		
+		return user;
+		
+	}
+	
+	
 	
 	
 }

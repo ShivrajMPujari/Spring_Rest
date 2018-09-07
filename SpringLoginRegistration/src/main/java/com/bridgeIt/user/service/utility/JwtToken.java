@@ -40,5 +40,22 @@ public class JwtToken {
 		return claims;
 	}
 	
+	public String getJwtId(String jwt) {
+		
+		Claims claims=	Jwts.parser().setSigningKey("myKey")
+				.parseClaimsJws(jwt).getBody();
+		
+		return claims.getId();
+		
+	}
+	
+	public String getJwtSubject(String jwt) {
+		
+		Claims claims=	Jwts.parser().setSigningKey("myKey")
+				.parseClaimsJws(jwt).getBody();
+		
+		return claims.getSubject();
+		
+	}
 	
 }

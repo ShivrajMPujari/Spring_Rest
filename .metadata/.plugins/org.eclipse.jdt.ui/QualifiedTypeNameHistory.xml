@@ -1,21 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="io.jsonwebtoken.SignatureAlgorithm"/>
-<fullyQualifiedTypeName name="io.jsonwebtoken.JwtBuilder"/>
-<fullyQualifiedTypeName name="io.jsonwebtoken.Jwts"/>
-<fullyQualifiedTypeName name="java.util.concurrent.CountDownLatch"/>
-<fullyQualifiedTypeName name="org.springframework.amqp.core.Queue"/>
-<fullyQualifiedTypeName name="org.springframework.amqp.core.TopicExchange"/>
-<fullyQualifiedTypeName name="org.springframework.amqp.core.Binding"/>
-<fullyQualifiedTypeName name="org.springframework.amqp.core.BindingBuilder"/>
-<fullyQualifiedTypeName name="org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter"/>
-<fullyQualifiedTypeName name="com.bridgeIt.restDemo.model.Receiver"/>
-<fullyQualifiedTypeName name="com.fasterxml.jackson.annotation.JsonFormat"/>
-<fullyQualifiedTypeName name="com.bridgeIt.restDemo.model.Runner"/>
-<fullyQualifiedTypeName name="com.rabbitmq.client.ConnectionFactory"/>
-<fullyQualifiedTypeName name="org.springframework.amqp.rabbit.core.RabbitTemplate"/>
-<fullyQualifiedTypeName name="org.springframework.amqp.rabbit.connection.ConnectionFactory"/>
-<fullyQualifiedTypeName name="org.springframework.amqp.rabbit.connection.LocalizedQueueConnectionFactory"/>
 <fullyQualifiedTypeName name="org.springframework.amqp.rabbit.connection.CachingConnectionFactory"/>
 <fullyQualifiedTypeName name="org.springframework.context.annotation.Bean"/>
 <fullyQualifiedTypeName name="org.springframework.mail.javamail.JavaMailSenderImpl"/>
@@ -60,4 +44,20 @@
 <fullyQualifiedTypeName name="java.util.concurrent.CompletableFuture"/>
 <fullyQualifiedTypeName name="java.util.concurrent.TimeUnit"/>
 <fullyQualifiedTypeName name="org.hyperledger.fabric.sdk.BlockEvent"/>
+<fullyQualifiedTypeName name="java.nio.file.Path"/>
+<fullyQualifiedTypeName name="java.lang.Exception"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="java.sql.Blob"/>
+<fullyQualifiedTypeName name="com.fasterxml.jackson.databind.ObjectMapper"/>
+<fullyQualifiedTypeName name="com.bridgeIt.user.model.UserAccount"/>
+<fullyQualifiedTypeName name="org.springframework.http.ResponseEntity"/>
+<fullyQualifiedTypeName name="com.bridgeIt.user.BaseResponse"/>
+<fullyQualifiedTypeName name="com.bridgeIt.user.BalanceResponse"/>
+<fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RestController"/>
+<fullyQualifiedTypeName name="com.bridgeIt.user.model.Contract"/>
+<fullyQualifiedTypeName name="com.bridgeIt.user.dao.ContractMapper"/>
+<fullyQualifiedTypeName name="com.bridgeIt.user.model.TradeUser"/>
+<fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestHeader"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="com.bridgeIt.user.model.ContractLists"/>
 </qualifiedTypeNameHistroy>

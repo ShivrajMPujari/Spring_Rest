@@ -33,6 +33,7 @@ import org.hyperledger.fabric_ca.sdk.RegistrationRequest;
 import org.hyperledger.fabric_ca.sdk.exception.EnrollmentException;
 import org.hyperledger.fabric_ca.sdk.exception.InvalidArgumentException;
 import org.hyperledger.fabric_ca.sdk.exception.RegistrationException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.bridgeIt.user.model.TradeUser;
@@ -271,14 +272,14 @@ public class TradeUtil {
 	}
 	
 	
-	public void transactionInvokeBlockChain(HFClient client,String chaincodeFunction,String[] args) throws org.hyperledger.fabric.sdk.exception.InvalidArgumentException {
+	public boolean transactionInvokeBlockChain(HFClient client,String chaincodeFunction,String[] args,Channel channel) throws org.hyperledger.fabric.sdk.exception.InvalidArgumentException {
 	    	
 	    	
-	        Channel channel = client.getChannel("mychannel");
+	      //  Channel channel = client.getChannel("mychannel");
 	        TransactionProposalRequest	tqr = client.newTransactionProposalRequest();
 	        ChaincodeID tradeFinanceCCId = ChaincodeID.newBuilder().setName("tradefinancecc").build();
 	        tqr.setChaincodeID(tradeFinanceCCId);
-	        tqr.setFcn("createAccount");
+	        tqr.setFcn(chaincodeFunction);
 	        tqr.setArgs(args);
 	        Collection<ProposalResponse> responses = null ;
 	        try {
@@ -293,25 +294,30 @@ public class TradeUtil {
 	        	}
 	        } catch (ProposalException e) {
 				e.printStackTrace();
+				return false;
 			}
 	         
 	        try {
 	        	 BlockEvent.TransactionEvent event = channel.sendTransaction(responses).get(60,TimeUnit.SECONDS);
 	        	 if (event.isValid()) {
 	        		 System.out.println(event.getTransactionID()+" transaction is valid ");
+	        		 return true;
 	        	 }else {
 	        		 System.out.println(event.getTransactionID() + " transaction is invalid");
+	        		 return false;
 	        	 }
 	        } catch (InterruptedException | ExecutionException | TimeoutException e) {
 				e.printStackTrace();
+				return false;
 			}
+			
 	        
-	    	
+	    //	channel.shutdown(true);
 	    }
 		
-	 public List<String> queryBlockChain(HFClient client,String function,String [] args) throws ProposalException, InvalidArgumentException {
+	 public List<String> queryBlockChain(HFClient client,String function,String [] args,Channel channel) throws ProposalException, InvalidArgumentException {
 	        // get channel instance from client
-	        Channel channel = client.getChannel("mychannel");
+	       // Channel channel = client.getChannel("mychannel");
 	        // create chaincode request
 	        QueryByChaincodeRequest qpr = client.newQueryProposalRequest();
 	        ChaincodeID tradeFinanceCCId = ChaincodeID.newBuilder().setName("tradefinancecc").build();
@@ -323,6 +329,7 @@ public class TradeUtil {
 	        Collection<ProposalResponse> res = null;
 			try {
 				res = channel.queryByChaincode(qpr);
+				
 			} catch (org.hyperledger.fabric.sdk.exception.InvalidArgumentException e) {
 				e.printStackTrace();
 			}
@@ -339,6 +346,9 @@ public class TradeUtil {
 	            System.out.println(stringResponse);
 	            list.add(stringResponse);
 	        }
+	        
+	      //  channel.getChannelConfigurationBytes();
+	     //   channel.shutdown(true);
 			return list;
 	    }
 

@@ -2,18 +2,29 @@ package com.bridgeIt.user;
 
 import java.beans.PropertyVetoException;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Properties;
 import javax.sql.DataSource;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.hyperledger.fabric.sdk.Channel;
+import org.hyperledger.fabric.sdk.Enrollment;
+import org.hyperledger.fabric.sdk.EventHub;
 import org.hyperledger.fabric.sdk.HFClient;
+import org.hyperledger.fabric.sdk.Orderer;
+import org.hyperledger.fabric.sdk.Peer;
 import org.hyperledger.fabric.sdk.exception.CryptoException;
 import org.hyperledger.fabric.sdk.exception.InvalidArgumentException;
+import org.hyperledger.fabric.sdk.exception.TransactionException;
 import org.hyperledger.fabric.sdk.security.CryptoSuite;
 import org.hyperledger.fabric_ca.sdk.HFCAClient;
+import org.hyperledger.fabric_ca.sdk.exception.EnrollmentException;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
@@ -41,6 +52,8 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
+
+import com.bridgeIt.user.model.TradeUser;
 import com.bridgeIt.user.service.utility.MailSender;
 import com.bridgeIt.user.service.utility.UserMail;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
@@ -272,5 +285,133 @@ public class SpringConfig extends WebMvcConfigurerAdapter {
 		return client;
 	}
 
+	
+	@Bean 
+	TradeUser getAdmin(HFCAClient caClient) {
+		System.out.println("try deserialize admin");
+        TradeUser admin = tryDeserializeAdmin("admin");
+        System.out.println(admin+" got admin while trydeserializing...");
+       // TradeUser admin =null;
+        if (admin == null) {
+        	System.out.println(" admin is null");
+            Enrollment adminEnrollment = null;
+			try {
+				adminEnrollment = caClient.enroll("admin", "adminpw");
+			} catch (EnrollmentException | org.hyperledger.fabric_ca.sdk.exception.InvalidArgumentException e) {
+				e.printStackTrace();
+			}
+            admin = new TradeUser("admin", "importer", "ImporterMSP", adminEnrollment);
+            serializeAdmin(admin);
+            System.out.println("admin serialized...");
+        }
+        
+        return admin;
+    }
+	
+	TradeUser tryDeserializeAdmin(String name) {
+		//	Path path = Paths.get("//home//bridgelabz//Documents//workspace-sts-3.9.5.RELEASE//"+name + ".jso");	
+			//System.out.println(path.toString()+" is the path "+path.getRoot());
+	        if (Files.exists(Paths.get("//home//bridgelabz//Documents//workspace-sts-3.9.5.RELEASE//"+name + ".jso"))) {
+	        	System.out.println();
+	            return deSerializeAdmin(name);
+	        }
+	        return null;
+	    }
+	
+	 TradeUser deSerializeAdmin(String name) {
+	        try (ObjectInputStream decoder = new ObjectInputStream(
+	                Files.newInputStream(Paths.get("//home//bridgelabz//Documents//workspace-sts-3.9.5.RELEASE//"+name + ".jso")))) {
+	            return (TradeUser) decoder.readObject();
+	        } catch (Exception e) {
+				e.printStackTrace();
+			} 
+			return null;
+	    }
+	 
+	 void serializeAdmin(TradeUser tradeUser) {
+			System.out.println(tradeUser+" is serializing...");
+			try (ObjectOutputStream oos = new ObjectOutputStream(Files.newOutputStream(
+	                Paths.get("//home//bridgelabz//Documents//workspace-sts-3.9.5.RELEASE//"+tradeUser.getName() + ".jso")))) {
+	            oos.writeObject(tradeUser);
+	        	System.out.println(tradeUser+" is written...");
+	        } catch (Exception e) {
+
+				e.printStackTrace();
+			}
+			
+		}
+	 
+	 @Bean
+	 public Channel getChannel(HFClient client,TradeUser admin) {
+			
+		  
+		  try {
+			client.setUserContext(admin);
+		} catch (org.hyperledger.fabric.sdk.exception.InvalidArgumentException e) {
+
+			e.printStackTrace();
+		}
+		//	client.setUserContext(userContext)
+			
+		    Peer peer1 = null;
+			try {
+				peer1 = client.newPeer("peer0.importer.bridgeIt.com", "grpc://localhost:7051");
+			} catch (org.hyperledger.fabric.sdk.exception.InvalidArgumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+
+	      EventHub eventHub1 = null;
+		try {
+			eventHub1 = client.newEventHub("eventhub01", "grpc://localhost:7053");
+		} catch (org.hyperledger.fabric.sdk.exception.InvalidArgumentException e) {
+
+			e.printStackTrace();
+		}
+
+	      Orderer orderer = null;
+		try {
+			orderer = client.newOrderer("orderer.bridgeIt.com", "grpc://localhost:7050");
+		} catch (org.hyperledger.fabric.sdk.exception.InvalidArgumentException e) {
+
+			e.printStackTrace();
+		}
+
+	      Channel channel = null;
+		try {
+			channel = client.newChannel("mychannel");
+		} catch (org.hyperledger.fabric.sdk.exception.InvalidArgumentException e) {
+
+			e.printStackTrace();
+		}
+	      try {
+			channel.addPeer(peer1);
+		} catch (org.hyperledger.fabric.sdk.exception.InvalidArgumentException e) {
+
+			e.printStackTrace();
+		}
+
+	      try {
+			channel.addEventHub(eventHub1);
+		} catch (org.hyperledger.fabric.sdk.exception.InvalidArgumentException e) {
+
+			e.printStackTrace();
+		}
+
+	      try {
+			channel.addOrderer(orderer);
+		} catch (org.hyperledger.fabric.sdk.exception.InvalidArgumentException e) {
+
+			e.printStackTrace();
+		}
+	      try {
+			channel.initialize();
+		} catch (org.hyperledger.fabric.sdk.exception.InvalidArgumentException | TransactionException e) {
+
+			e.printStackTrace();
+		}
+	      return channel;
+		}
 	
 }
