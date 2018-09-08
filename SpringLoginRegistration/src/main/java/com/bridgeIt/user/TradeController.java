@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bridgeIt.user.dao.UserDao;
 import com.bridgeIt.user.model.Contract;
+import com.bridgeIt.user.model.ContractId;
 import com.bridgeIt.user.model.ContractLists;
 import com.bridgeIt.user.service.TradeService;
 import com.bridgeIt.user.service.utility.TradeUtil;
@@ -35,9 +36,10 @@ public class TradeController {
 	TradeUtil tradeUtil;
 	
 	@RequestMapping(value="/createContract" , method = RequestMethod.POST, produces="application/json")
-	public ResponseEntity<ContractResponse> createContract(@RequestBody Contract contract){
+	public ResponseEntity<ContractResponse> createContract(@RequestBody Contract contract,@RequestHeader("token") String jwtToken){
 		ContractResponse response = new ContractResponse();
-		boolean saved = tradeService.insertContract(contract);
+		
+		boolean saved = tradeService.insertContract(contract,jwtToken);
 	
 		if (saved) {
 			response.setCode(200);
@@ -77,7 +79,7 @@ public class TradeController {
 	}
 	
 	@RequestMapping(value="/getAllContract" , method = RequestMethod.POST, produces="application/json")
-	public ResponseEntity<ContractLists> getContract(@RequestHeader("token") String jwtToken){
+	public ResponseEntity<ContractLists> getAllContracts(@RequestHeader("token") String jwtToken){
 		
 	 List<Contract> usersContracts = tradeService.getAllContract(jwtToken);
 	 ContractLists contractsResponse = new ContractLists();
@@ -93,10 +95,27 @@ public class TradeController {
 	 contractsResponse.setCode(200);
 	 contractsResponse.setContracts(usersContracts);
 	 contractsResponse.setStatus(HttpStatus.OK);
-	 return new ResponseEntity<ContractLists>(contractsResponse ,HttpStatus.BAD_REQUEST);
+	 return new ResponseEntity<ContractLists>(contractsResponse ,HttpStatus.OK);
 		
 	}
 	
+	@RequestMapping(value="/getContract" , method = RequestMethod.POST, produces="application/json")
+	public ResponseEntity<ContractResponse> getContract(@RequestBody ContractId contractId ,@RequestHeader("token") String jwtToken){
+		
+		Contract contract = tradeService.getContractFromBlockChain(contractId.getContractId(), jwtToken);
+		ContractResponse response = new ContractResponse();
+		if(contract==null) {
+			response.setCode(400);
+			response.setStatus(HttpStatus.BAD_REQUEST);
+			response.setContract(null);
+			return new ResponseEntity<ContractResponse>(response,HttpStatus.BAD_REQUEST);
+		}
+		response.setContract(contract);
+		response.setCode(200);
+		response.setStatus(HttpStatus.OK);
+		
+		return new ResponseEntity<ContractResponse>(response,HttpStatus.OK);	
+	}
 	
 	
 }

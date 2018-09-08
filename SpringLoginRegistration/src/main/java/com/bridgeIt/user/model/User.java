@@ -2,13 +2,12 @@ package com.bridgeIt.user.model;
 
 import java.util.Arrays;
 
-import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
-@JsonIgnoreProperties({"password","userAccount"})
+//@JsonIgnoreProperties({"password","userAccount"})
 public class User {
 
 	private int id;
@@ -28,6 +27,8 @@ public class User {
 	
 	@NotEmpty(message="mobile no. is required")
 	private String mobileNo;
+	
+	@JsonIgnore
 	private String password;
 	
 	private boolean verified;
@@ -42,6 +43,7 @@ public class User {
 	@NotEmpty(message="Bank name  is required")
 	private String bank;
 	
+	@JsonIgnore
 	private byte[] userAccount;
 	
 	public String getAuthenticatedUserKey() {

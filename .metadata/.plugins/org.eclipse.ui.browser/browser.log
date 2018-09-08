@@ -394,3 +394,9 @@ Sep 07, 2018 19:21:26.42 Created new window in existing browser session.
 Sep 07, 2018 19:55:41.43 NEW SESSION
 Sep 07, 2018 19:55:41.43 [10672:10703:0907/195541.434913:ERROR:component_installer.cc(324)] Failed to read manifest or verify installation for CRLSet (/home/bridgelabz/.config/google-chrome/CertificateRevocation/4682).: No such file or directory (2)
 Sep 07, 2018 19:55:41.83 [10672:10705:0907/195541.527448:ERROR:component_installer.cc(324)] Failed to read manifest or verify installation for Signed Tree Heads (/home/bridgelabz/.config/google-chrome/CertificateTransparency/869).: No such file or directory (2)
+
+Sep 08, 2018 10:30:24.02 NEW SESSION
+Sep 08, 2018 10:30:24.02 Created new window in existing browser session.
+Sep 08, 2018 10:38:32.15 Created new window in existing browser session.
+Sep 08, 2018 11:31:18.93 Created new window in existing browser session.
+Sep 08, 2018 14:27:45.58 Created new window in existing browser session.

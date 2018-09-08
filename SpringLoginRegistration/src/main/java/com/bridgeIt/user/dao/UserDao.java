@@ -102,14 +102,25 @@ public class UserDao {
 	
 	String sql="select * from UserLogin where email=?";
 	
-	List<User> user=template.query(sql, args, new UserMapper());
+	List<User> user = null;
+	try {
+		user = template.query(sql, args, new UserMapper());
+	} catch (Exception e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
 	
 	if(user.isEmpty()!=true ) {
 		User user1=user.get(0);
+		System.out.println(user1);
+		
+		System.out.println(BCrypt.checkpw(password, user1.getPassword())+ " from bycrpt");
+		
 		if(BCrypt.checkpw(password, user1.getPassword()) && user1.isVerified() ) {
-			
+			System.out.println(true);
 			return true;
 		}
+		System.out.println(false);
 		return false;
 	}else {
 		return false;

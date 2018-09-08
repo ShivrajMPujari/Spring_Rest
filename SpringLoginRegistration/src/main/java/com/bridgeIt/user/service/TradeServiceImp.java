@@ -45,9 +45,16 @@ public class TradeServiceImp implements TradeService {
 	@Autowired
 	UserService userService;
 	
-	public boolean insertContract (Contract contract) {
+	public boolean insertContract (Contract contract,String jwtToken) {
 		
-		//token.parseJwt(jwtToken);
+		String email = token.getJwtId(jwtToken);
+		
+		User user = dao.getUserByEmail(email);
+		System.out.println(user);
+		if (user == null) {
+			return false;
+		}
+		
 		contract.setExporterCheck(true);;
 		boolean insertion = dao.saveContract(contract);
 		
@@ -172,6 +179,7 @@ public class TradeServiceImp implements TradeService {
 			List<String>  responses = tradeUtil.queryBlockChain(client, "getContract", args, channel);
 			String response = responses.get(0);
 			try {
+				
 			Contract contract =	mapper.readValue(response, Contract.class);
 			
 			System.out.println(contract);
@@ -241,6 +249,41 @@ public class TradeServiceImp implements TradeService {
 		
 		return contract;
 	}
+	
+	
+	public Contract getContractFromBlockChain ( String contractId ,String jwtToken ){
+		
+		String [] args = {contractId};
+		ObjectMapper mapper = new ObjectMapper();
+		Contract contract = null;
+		try {
+			List<String>  responses = tradeUtil.queryBlockChain(client, "getContract", args, channel);
+			String response = responses.get(0);
+			try {
+				
+				contract = mapper.readValue(response, Contract.class);
+			
+			} catch (JsonParseException e) {
+	
+				e.printStackTrace();
+			} catch (JsonMappingException e) {
+
+				e.printStackTrace();
+			} catch (IOException e) {
+
+				e.printStackTrace();
+			}
+		} catch (ProposalException e) {
+			e.printStackTrace();
+		} catch (org.hyperledger.fabric_ca.sdk.exception.InvalidArgumentException e) {
+			e.printStackTrace();
+		}
+		
+		
+		return contract;
+	}
+	
+	
 	
 	
 }
