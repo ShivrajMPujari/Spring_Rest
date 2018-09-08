@@ -35,7 +35,7 @@ public class User {
 	
 	private String authenticatedUserKey;
 	
-	@NotEmpty(message="AccountNumber is required")
+
 	private String accounNumber;
 	
 	private int balance;

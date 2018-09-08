@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
 
+import javax.sql.rowset.serial.SerialException;
+
 import org.hyperledger.fabric.sdk.Channel;
 import org.hyperledger.fabric.sdk.HFClient;
 
@@ -69,24 +71,35 @@ public class UserServiceImp implements UserService {
 	
 		boolean outcome=dao.presence(user);
 		if(outcome!=true) {
-			
-			boolean isUniqueAccount = dao.uniqueAccountNumber(user.getAccounNumber());
-			
-			if (isUniqueAccount) {
+
 
 				System.out.println("after presence");
 				String uuid=UUID.randomUUID().toString();
 				user.setAuthenticatedUserKey(uuid);
 				user.setVerified(true);
-				TradeUser admin = tradeUtil.getAdmin(caClient);
-				//convertUserAccountToByteArray(user.)
-				TradeUser userAcc = tradeUtil.makeTradeAccount(caClient, admin, user.getAccounNumber(), user.getRole());
-				byte [] userAccountByte =tradeUtil.convertUserAccountToByteArray(userAcc);
-				user.setUserAccount(userAccountByte);
 				
 				try {
-					dao.insert(user);
+					dao.insertBeforeAcc(user);
 				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+				User user1 = dao.getUserByEmail(user.getEmail());
+				int accountInt = user1.getId();
+				String accountStr = Integer.toString(accountInt);
+				TradeUser admin = tradeUtil.getAdmin(caClient);
+				user1.setAccounNumber(accountStr);
+				//convertUserAccountToByteArray(user.)
+				TradeUser userAcc = tradeUtil.makeTradeAccount(caClient, admin, user1.getAccounNumber(), user1.getRole());
+				byte [] userAccountByte =tradeUtil.convertUserAccountToByteArray(userAcc);
+				user1.setUserAccount(userAccountByte);
+				
+				try {
+					dao.updateUserAccountAndAccountNo(user1.getAccounNumber(), user1.getUserAccount(), user1.getEmail());
+				} catch (SerialException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 				
@@ -94,7 +107,7 @@ public class UserServiceImp implements UserService {
 				System.out.println(channel.getName()+" is channel name");
 				  int bal= user.getBalance();
 			        String balance =Integer.toString(bal);
-				String [] args = new String[] {user.getAccounNumber(),user.getRole(),balance,user.getBank()};
+				String [] args = new String[] {user1.getAccounNumber(),user1.getRole(),balance,user1.getBank()};
 				try {
 					tradeUtil.transactionInvokeBlockChain(client, "createAccount", args,channel);
 				} catch (org.hyperledger.fabric.sdk.exception.InvalidArgumentException e) {
@@ -121,17 +134,7 @@ public class UserServiceImp implements UserService {
 //				response.setErrors(null);
 				return response;
 				
-				
-			}
-			else {
-				response.setCode(400);
-				response.setStatus(HttpStatus.BAD_REQUEST);
-				response.setMessage("account number must be unique exist");
-				response.setErrors(null);	
-				
-			}
 
-			
 		}
 		response.setCode(400);
 		response.setStatus(HttpStatus.BAD_REQUEST);
@@ -147,9 +150,10 @@ public class UserServiceImp implements UserService {
 
 		boolean outcome=dao.checkUser(email, password);
 		if (outcome) {
+			System.out.println(true +" check user");
 			return true;
 		}
-		
+		System.out.println(false +" check user");
 		return false;
 	}
 

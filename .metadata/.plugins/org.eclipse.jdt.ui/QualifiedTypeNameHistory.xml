@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="org.springframework.context.annotation.Bean"/>
 <fullyQualifiedTypeName name="org.springframework.mail.javamail.JavaMailSenderImpl"/>
 <fullyQualifiedTypeName name="org.springframework.mail.javamail.JavaMailSender"/>
 <fullyQualifiedTypeName name="org.springframework.mail.SimpleMailMessage"/>
@@ -33,7 +32,6 @@
 <fullyQualifiedTypeName name="java.lang.NullPointerException"/>
 <fullyQualifiedTypeName name="java.sql.SQLDataException"/>
 <fullyQualifiedTypeName name="javax.servlet.http.HttpServletResponse"/>
-<fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestBody"/>
 <fullyQualifiedTypeName name="com.bridgeIt.user.model.UserLogin"/>
 <fullyQualifiedTypeName name="org.codehaus.jackson.annotate.JsonIgnoreProperties"/>
 <fullyQualifiedTypeName name="com.bridgeIt.user.model.UserEmail"/>
@@ -56,8 +54,10 @@
 <fullyQualifiedTypeName name="com.bridgeIt.user.model.Contract"/>
 <fullyQualifiedTypeName name="com.bridgeIt.user.dao.ContractMapper"/>
 <fullyQualifiedTypeName name="com.bridgeIt.user.model.TradeUser"/>
-<fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestHeader"/>
 <fullyQualifiedTypeName name="java.util.List"/>
 <fullyQualifiedTypeName name="com.bridgeIt.user.model.ContractLists"/>
 <fullyQualifiedTypeName name="com.fasterxml.jackson.annotation.JsonIgnore"/>
+<fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestHeader"/>
+<fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestBody"/>
+<fullyQualifiedTypeName name="com.bridgeIt.user.model.ContractId"/>
 </qualifiedTypeNameHistroy>

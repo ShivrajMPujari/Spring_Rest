@@ -30,6 +30,30 @@ public class UserDao {
 		return dataSource;
 	}
 	
+	public boolean insertBeforeAcc(User user) throws SerialException, SQLException {
+		// MapSqlParameterSource in = new MapSqlParameterSource();
+	//	 new SqlLobValue(bytes) new SerialBlob(myArray )
+//		template = new JdbcTemplate(dataSource);
+		
+		String hashPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
+		
+		Object [] args = {user.getEmail(),user.getName(),hashPassword,user.getMobileNo(),user.getCity(),user.getRole(),user.isVerified(),user.getAuthenticatedUserKey(),user.getBalance(),user.getBank()};
+		System.out.println(dataSource);
+		System.out.println(hashPassword);
+		int out=0;
+		try {
+			System.out.println(user);
+			out = template.update("insert into UserLogin(email,name,password,mobileNo,city,role,verified,authenticated_user_key,balance,bank) values (?,?,?,?,?,?,?,?,?,?)", args);
+			System.out.println("number rows affected "+out);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("insert template not excuted..");
+			return false;
+		}
+
+	}
+	
 	public boolean insert(User user) throws SerialException, SQLException {
 		// MapSqlParameterSource in = new MapSqlParameterSource();
 	//	 new SqlLobValue(bytes) new SerialBlob(myArray )
@@ -53,6 +77,26 @@ public class UserDao {
 		}
 
 	}
+	
+	public boolean updateUserAccountAndAccountNo(String accountNumber,byte [] Useraccount,String email) throws SerialException, SQLException {
+		
+		Object [] args = {accountNumber,new SerialBlob(Useraccount),email};
+		
+		String sql = "update UserLogin set account_number = ? , user_account = ? where email = ?";
+		
+		try {
+			int row = template.update(sql, args);
+			System.out.println(row+" rows affected");
+			return true;
+		} catch (Exception e) {
+	
+			e.printStackTrace();
+		}
+		
+		
+		return false;
+	}
+	
 	
 	public boolean existence (User user) {
 		
@@ -100,27 +144,19 @@ public class UserDao {
 	System.out.println(email+"---"+password);
 	Object [] args = {email};
 	
-	String sql="select * from UserLogin where email=?";
+	String sql="select * from UserLogin where email = ?";
 	
-	List<User> user = null;
-	try {
-		user = template.query(sql, args, new UserMapper());
-	} catch (Exception e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
+	List<User> user=template.query(sql, args, new UserMapper());
 	
 	if(user.isEmpty()!=true ) {
 		User user1=user.get(0);
 		System.out.println(user1);
-		
-		System.out.println(BCrypt.checkpw(password, user1.getPassword())+ " from bycrpt");
-		
+		System.out.println(BCrypt.checkpw(password, user1.getPassword()) + " bcrypt ");
+		System.out.println(user1.isVerified() + " verifed");
 		if(BCrypt.checkpw(password, user1.getPassword()) && user1.isVerified() ) {
-			System.out.println(true);
+			
 			return true;
 		}
-		System.out.println(false);
 		return false;
 	}else {
 		return false;

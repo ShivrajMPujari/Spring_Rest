@@ -24,6 +24,12 @@ public class UserMapper implements RowMapper<User>{
 		user.setBank(rs.getString("bank"));
 		user.setAccounNumber(rs.getString("account_number"));
 		Blob userBlob = rs.getBlob("user_account");
+		
+		if(userBlob == null) {
+			user.setUserAccount(null);
+			return user;
+		}
+		
 		byte [] userByte = null;
 		try {
 			userByte =userBlob.getBytes(1, (int)userBlob.length());
