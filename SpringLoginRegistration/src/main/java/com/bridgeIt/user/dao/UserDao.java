@@ -34,11 +34,11 @@ public class UserDao {
 		// MapSqlParameterSource in = new MapSqlParameterSource();
 	//	 new SqlLobValue(bytes) new SerialBlob(myArray )
 //		template = new JdbcTemplate(dataSource);
-		
+		System.out.println(user.getPassword()+" -------plain password");
 		String hashPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
 		
 		Object [] args = {user.getEmail(),user.getName(),hashPassword,user.getMobileNo(),user.getCity(),user.getRole(),user.isVerified(),user.getAuthenticatedUserKey(),user.getBalance(),user.getBank()};
-		System.out.println(dataSource);
+	//	System.out.println(dataSource);
 		System.out.println(hashPassword);
 		int out=0;
 		try {
@@ -61,7 +61,7 @@ public class UserDao {
 		
 		String hashPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
 		
-		Object [] args = {user.getEmail(),user.getName(),hashPassword,user.getMobileNo(),user.getCity(),user.getRole(),user.isVerified(),user.getAuthenticatedUserKey(),user.getAccounNumber(),user.getBalance(),user.getBank(),new SerialBlob(user.getUserAccount())};
+		Object [] args = {user.getEmail(),user.getName(),hashPassword,user.getMobileNo(),user.getCity(),user.getRole(),user.isVerified(),user.getAuthenticatedUserKey(),user.getAccountNumber(),user.getBalance(),user.getBank(),new SerialBlob(user.getUserAccount())};
 		System.out.println(dataSource);
 		System.out.println(hashPassword);
 		int out=0;
@@ -151,7 +151,7 @@ public class UserDao {
 	if(user.isEmpty()!=true ) {
 		User user1=user.get(0);
 		System.out.println(user1);
-		System.out.println(BCrypt.checkpw(password, user1.getPassword()) + " bcrypt ");
+		System.out.println(BCrypt.checkpw(password, user1.getPassword()) + " bcrypt  "+user1.getPassword()+"---"+password);
 		System.out.println(user1.isVerified() + " verifed");
 		if(BCrypt.checkpw(password, user1.getPassword()) && user1.isVerified() ) {
 			

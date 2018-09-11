@@ -88,8 +88,8 @@ public class TradeServiceImp implements TradeService {
 		User user = dao.getUserByEmail(email);
 		System.out.println(user);
 		
-		String [] args = {user.getAccounNumber(),contract.getContractId()};
-		System.out.println(user.getAccounNumber()+"---- "+contract.getContractId());
+		String [] args = {user.getAccountNumber(),contract.getContractId()};
+		System.out.println(user.getAccountNumber()+"---- "+contract.getContractId());
 		switch (user.getRole()) {
 		
 		case "custom":{
@@ -238,7 +238,7 @@ public class TradeServiceImp implements TradeService {
 		String tokenId = token.getJwtId(jwt);
 		User user = dao.fetchUserByEmail(tokenId);
 
-		List<Contract> allContract = dao.gellAllContract(user.getAccounNumber());
+		List<Contract> allContract = dao.gellAllContract(user.getAccountNumber());
 		
 		return allContract;
 	}

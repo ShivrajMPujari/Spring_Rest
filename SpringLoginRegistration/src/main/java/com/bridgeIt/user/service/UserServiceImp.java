@@ -77,7 +77,7 @@ public class UserServiceImp implements UserService {
 				String uuid=UUID.randomUUID().toString();
 				user.setAuthenticatedUserKey(uuid);
 				user.setVerified(true);
-				
+				user.setBalance(25000);
 				try {
 					dao.insertBeforeAcc(user);
 				} catch (SQLException e1) {
@@ -87,14 +87,15 @@ public class UserServiceImp implements UserService {
 				int accountInt = user1.getId();
 				String accountStr = Integer.toString(accountInt);
 				TradeUser admin = tradeUtil.getAdmin(caClient);
-				user1.setAccounNumber(accountStr);
+				user1.setAccountNumber(accountStr);
 				//convertUserAccountToByteArray(user.)
-				TradeUser userAcc = tradeUtil.makeTradeAccount(caClient, admin, user1.getAccounNumber(), user1.getRole());
+				TradeUser userAcc = tradeUtil.makeTradeAccount(caClient, admin, user1.getAccountNumber(), user1.getRole());
 				byte [] userAccountByte =tradeUtil.convertUserAccountToByteArray(userAcc);
 				user1.setUserAccount(userAccountByte);
-				
+				System.out.println("user1:---");
+				System.out.println(user1);
 				try {
-					dao.updateUserAccountAndAccountNo(user1.getAccounNumber(), user1.getUserAccount(), user1.getEmail());
+					dao.updateUserAccountAndAccountNo(user1.getAccountNumber(), user1.getUserAccount(), user1.getEmail());
 				} catch (SerialException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -107,7 +108,7 @@ public class UserServiceImp implements UserService {
 				System.out.println(channel.getName()+" is channel name");
 				  int bal= user.getBalance();
 			        String balance =Integer.toString(bal);
-				String [] args = new String[] {user1.getAccounNumber(),user1.getRole(),balance,user1.getBank()};
+				String [] args = new String[] {user1.getAccountNumber(),user1.getRole(),balance,user1.getBank()};
 				try {
 					tradeUtil.transactionInvokeBlockChain(client, "createAccount", args,channel);
 				} catch (org.hyperledger.fabric.sdk.exception.InvalidArgumentException e) {
@@ -231,8 +232,12 @@ public class UserServiceImp implements UserService {
 	}
 	
 	@Override
-	public int getUserBalance(String accountNumber) {
+	public int getUserBalance(String jwt) {
 		
+		String email =token.getJwtId(jwt);
+		User user = dao.fetchUserByEmail(email);
+		
+		String accountNumber = user.getAccountNumber();
 		boolean result = dao.uniqueAccountNumber(accountNumber);
 
 		if (!result) {

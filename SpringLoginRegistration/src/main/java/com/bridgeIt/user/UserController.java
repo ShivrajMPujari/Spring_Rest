@@ -19,6 +19,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -258,18 +259,19 @@ public class UserController {
 
 	}
 	
-	@RequestMapping(value="getBalance/{accountNumber}", method = RequestMethod.GET ,produces="application/json" )
-	public ResponseEntity<BalanceResponse> getBalance( @PathVariable("accountNumber") String accountNumber ){
+	@RequestMapping(value="getBalance", method = RequestMethod.POST ,produces="application/json" )
+	public ResponseEntity<BalanceResponse> getBalance( @RequestHeader("token") String jwtToken ){
+		
+		
 		
 		BalanceResponse response = new BalanceResponse();
-		int balance = service.getUserBalance(accountNumber);
+		int balance = service.getUserBalance(jwtToken);
 		if (balance != -1) {
-			response.setAccountNumber(accountNumber);
+		
 			response.setBalance(balance);
 			return new ResponseEntity<BalanceResponse>(response,HttpStatus.OK);
 		}
 		
-		response.setAccountNumber(accountNumber);
 		response.setBalance(balance);
 		return new ResponseEntity<BalanceResponse>(response,HttpStatus.BAD_REQUEST);
 	}

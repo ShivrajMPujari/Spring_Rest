@@ -17,6 +17,7 @@ public class Contract {
 	private boolean customCheck;
 	private boolean importerBankCheck;
 	private boolean insuranceCheck;
+	private boolean completion;
 	
 	public String getContractId() {
 		return contractId;
@@ -108,6 +109,13 @@ public class Contract {
 	public void setInsuranceCheck(boolean insuranceCheck) {
 		this.insuranceCheck = insuranceCheck;
 	}
+
+	public boolean isCompletion() {
+		return completion;
+	}
+	public void setCompletion(boolean completion) {
+		this.completion = completion;
+	}
 	@Override
 	public String toString() {
 		return "Contract [contractId=" + contractId + ", contractDescription=" + contractDescription + ", importerId="
@@ -115,7 +123,7 @@ public class Contract {
 				+ importerBankId + ", insuranceId=" + insuranceId + ", value=" + value + ", portOfLoading="
 				+ portOfLoading + ", portOfEntry=" + portOfEntry + ", importerCheck=" + importerCheck
 				+ ", exporterCheck=" + exporterCheck + ", customCheck=" + customCheck + ", importerBankCheck="
-				+ importerBankCheck + ", insuranceCheck=" + insuranceCheck + "]";
+				+ importerBankCheck + ", insuranceCheck=" + insuranceCheck + ", completion=" + completion + "]";
 	} 
 	
 	

@@ -28,7 +28,7 @@ public class User {
 	@NotEmpty(message="mobile no. is required")
 	private String mobileNo;
 	
-	@JsonIgnore
+	
 	private String password;
 	
 	private boolean verified;
@@ -36,7 +36,7 @@ public class User {
 	private String authenticatedUserKey;
 	
 
-	private String accounNumber;
+	private String accountNumber;
 	
 	private int balance;
 	
@@ -104,11 +104,11 @@ public class User {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getAccounNumber() {
-		return accounNumber;
+	public String getAccountNumber() {
+		return accountNumber;
 	}
-	public void setAccounNumber(String accounNumber) {
-		this.accounNumber = accounNumber;
+	public void setAccountNumber(String accountNumber) {
+		this.accountNumber = accountNumber;
 	}
 	public int getBalance() {
 		return balance;
@@ -133,7 +133,7 @@ public class User {
 	public String toString() {
 		return "User [id=" + id + ", name=" + name + ", role=" + role + ", email=" + email + ", city=" + city
 				+ ", mobileNo=" + mobileNo + ", password=" + password + ", verified=" + verified
-				+ ", authenticatedUserKey=" + authenticatedUserKey + ", accounNumber=" + accounNumber + ", balance="
+				+ ", authenticatedUserKey=" + authenticatedUserKey + ", accountNumber=" + accountNumber + ", balance="
 				+ balance + ", bank=" + bank + ", userAccount=" + Arrays.toString(userAccount) + "]";
 	}
 

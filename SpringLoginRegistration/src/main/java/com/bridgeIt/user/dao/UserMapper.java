@@ -22,7 +22,7 @@ public class UserMapper implements RowMapper<User>{
 		user.setAuthenticatedUserKey(rs.getString("authenticated_user_key"));
 		user.setBalance(rs.getInt("balance"));
 		user.setBank(rs.getString("bank"));
-		user.setAccounNumber(rs.getString("account_number"));
+		user.setAccountNumber(rs.getString("account_number"));
 		Blob userBlob = rs.getBlob("user_account");
 		
 		if(userBlob == null) {
