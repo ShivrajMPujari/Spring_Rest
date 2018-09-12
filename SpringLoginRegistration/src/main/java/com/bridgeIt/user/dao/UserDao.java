@@ -391,9 +391,9 @@ public class UserDao {
 	
 	public boolean saveContract (Contract contract) {
 		
-		Object [] args = {contract.getContractId(),contract.getContractDescription(),contract.getValue(),contract.getExporterId(),contract.getCustomId(),contract.getInsuranceId(),contract.getImporterId(),contract.getImporterBankId(),contract.getPortOfLoading(),contract.getPortOfEntry(),contract.isExporterCheck(),contract.isCustomCheck(),contract.isInsuranceCheck(),contract.isImporterCheck(),contract.isImporterBankCheck()};
+		Object [] args = {contract.getContractId(),contract.getContractDescription(),contract.getValue(),contract.getExporterId(),contract.getCustomId(),contract.getInsuranceId(),contract.getImporterId(),contract.getImporterBankId(),contract.getPortOfLoading(),contract.getPortOfEntry(),contract.isExporterCheck(),contract.isCustomCheck(),contract.isInsuranceCheck(),contract.isImporterCheck(),contract.isImporterBankCheck(),contract.isCompletion()};
 		
-		String sql ="insert into UserContract (contract_id,contract_description,value,exporter_id,custom_id,insurance_id,importer_id,importerBank_id,port_of_loading,port_of_entry,exporterCheck,customCheck,insuranceCheck,importerCheck,importerBankCheck) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		String sql ="insert into UserContract (contract_id,contract_description,value,exporter_id,custom_id,insurance_id,importer_id,importerBank_id,port_of_loading,port_of_entry,exporterCheck,customCheck,insuranceCheck,importerCheck,importerBankCheck,completion) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		
 		try {
 			int row = template.update(sql, args);
@@ -472,11 +472,52 @@ public class UserDao {
 		return contract;
 	}
 	
-	public List<Contract> gellAllContract(String userId) {
+	public List<Contract> gellAllContract(String userId,String role) {
 		
 		Object [] args = {userId};
+		String sql =null;
 		
-		String sql = "select * from UserContract where exporter_id = ?";
+		
+		switch (role) {
+		
+		case "exporter" :{
+			
+			sql = "select * from UserContract where exporter_id = ?";
+			break;
+		} 
+		case "custom" :{
+			sql = "select * from UserContract where custom_id = ?";
+			break;
+			
+		}
+		
+		case "insurance" :{
+			sql = "select * from UserContract where insurance_id = ?";
+			break;
+			
+		}
+		
+		case "importer" : {
+			
+			sql = "select * from UserContract where importer_id = ?";
+			break;
+			
+		}
+		
+		case "importerBank" : {
+			
+			sql = "select * from UserContract where importerBank_id = ?";
+			break;
+			
+		}
+		
+		default:{
+			
+			break;
+		}
+		
+		
+		}
 		
 		List<Contract> contractList = null;
 		try {
@@ -488,6 +529,9 @@ public class UserDao {
 		
 		return contractList;
 	}
+	
+	
+	
 	
 	public User getUserByEmail(String email) {
 		
@@ -507,6 +551,24 @@ public class UserDao {
 		
 	}
 	
+	public boolean completionOfContract(String contractId) {
+		
+		Object [] args = {true,contractId};
+		String sql = "update UserContract set completion = ? where contract_id =?";
+		
+		try {
+			int rows = template.update(sql, args);		
+			System.out.println(rows+" rows affected");
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+
+			return false;
+		}
+		
+		
+		
+	}
 	
 	
 	

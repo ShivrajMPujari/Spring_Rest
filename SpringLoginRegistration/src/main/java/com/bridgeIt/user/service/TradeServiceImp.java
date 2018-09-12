@@ -55,7 +55,8 @@ public class TradeServiceImp implements TradeService {
 			return false;
 		}
 		
-		contract.setExporterCheck(true);;
+		contract.setExporterCheck(true);
+		contract.setCompletion(false);
 		boolean insertion = dao.saveContract(contract);
 		
 		if(insertion) {
@@ -135,8 +136,13 @@ public class TradeServiceImp implements TradeService {
 				tradeUtil.transactionInvokeBlockChain(client, "importerBankAssurity", args, channel);
 				userService.getUserBalance(contract.getExporterId());
 				userService.getUserBalance(contract.getImporterId());
+				boolean result = dao.completionOfContract(contract.getContractId());
+				if(result) {
+					return true;
+				}else {
+					return false;
+				}
 				
-				return true;
 			} catch (InvalidArgumentException e) {
 			
 				e.printStackTrace();
@@ -226,6 +232,7 @@ public class TradeServiceImp implements TradeService {
 			if (updatedInDb) {
 				return true;
 			}else {
+				dao.completionOfContract(contract.getContractId());
 				return false;
 			}
 		}
@@ -238,7 +245,7 @@ public class TradeServiceImp implements TradeService {
 		String tokenId = token.getJwtId(jwt);
 		User user = dao.fetchUserByEmail(tokenId);
 
-		List<Contract> allContract = dao.gellAllContract(user.getAccountNumber());
+		List<Contract> allContract = dao.gellAllContract(user.getAccountNumber(),user.getRole());
 		
 		return allContract;
 	}
