@@ -391,9 +391,9 @@ public class UserDao {
 	
 	public boolean saveContract (Contract contract) {
 		
-		Object [] args = {contract.getContractId(),contract.getContractDescription(),contract.getValue(),contract.getExporterId(),contract.getCustomId(),contract.getInsuranceId(),contract.getImporterId(),contract.getImporterBankId(),contract.getPortOfLoading(),contract.getPortOfEntry(),contract.isExporterCheck(),contract.isCustomCheck(),contract.isInsuranceCheck(),contract.isImporterCheck(),contract.isImporterBankCheck(),contract.isCompletion()};
+		Object [] args = {contract.getContractId(),contract.getContractDescription(),contract.getValue(),contract.getExporterId(),contract.getCustomId(),contract.getInsuranceId(),contract.getImporterId(),contract.getImporterBankId(),contract.getPortOfLoading(),contract.getPortOfEntry(),contract.isExporterCheck(),contract.isCustomCheck(),contract.isInsuranceCheck(),contract.isImporterCheck(),contract.isImporterBankCheck(),contract.isCompletion(),contract.getPointer()};
 		
-		String sql ="insert into UserContract (contract_id,contract_description,value,exporter_id,custom_id,insurance_id,importer_id,importerBank_id,port_of_loading,port_of_entry,exporterCheck,customCheck,insuranceCheck,importerCheck,importerBankCheck,completion) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		String sql ="insert into UserContract (contract_id,contract_description,value,exporter_id,custom_id,insurance_id,importer_id,importerBank_id,port_of_loading,port_of_entry,exporterCheck,customCheck,insuranceCheck,importerCheck,importerBankCheck,completion,pointer) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		
 		try {
 			int row = template.update(sql, args);
@@ -422,6 +422,23 @@ public class UserDao {
 	
 	public boolean updateContract(Contract contract) {
 		
+		Object [] args = {contract.getContractDescription(),contract.getValue(),contract.getExporterId(),contract.getCustomId(),contract.getInsuranceId(),contract.getImporterId(),contract.getImporterBankId(),contract.getPortOfLoading(),contract.getPortOfEntry(),contract.isExporterCheck(),contract.isCustomCheck(),contract.isInsuranceCheck(),contract.isImporterCheck(),contract.isImporterBankCheck(),contract.getPointer(),contract.getContractId()};
+		String sql= "update UserContract set contract_description = ?,value=?,exporter_id=?,custom_id=?,insurance_id=?,importer_id=?,importerBank_id=?,port_of_loading=?,port_of_entry=?,exporterCheck=?,customCheck=?,insuranceCheck=?,importerCheck=?,importerBankCheck=?,pointer=? where contract_id =?";
+		
+		try {
+			int rows = template.update(sql, args);
+			System.out.println(rows+" rows affected..");
+			return true;
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		}
+
+		return false;
+	}
+	
+	public boolean contractUpdateFromBC(Contract contract) {
+		
 		Object [] args = {contract.getContractDescription(),contract.getValue(),contract.getExporterId(),contract.getCustomId(),contract.getInsuranceId(),contract.getImporterId(),contract.getImporterBankId(),contract.getPortOfLoading(),contract.getPortOfEntry(),contract.isExporterCheck(),contract.isCustomCheck(),contract.isInsuranceCheck(),contract.isImporterCheck(),contract.isImporterBankCheck(),contract.getContractId()};
 		String sql= "update UserContract set contract_description = ?,value=?,exporter_id=?,custom_id=?,insurance_id=?,importer_id=?,importerBank_id=?,port_of_loading=?,port_of_entry=?,exporterCheck=?,customCheck=?,insuranceCheck=?,importerCheck=?,importerBankCheck=? where contract_id =?";
 		
@@ -435,6 +452,8 @@ public class UserDao {
 		}
 
 		return false;
+		
+		
 	}
 	
 	public boolean deleteContract(String contractId) {
@@ -559,6 +578,7 @@ public class UserDao {
 		try {
 			int rows = template.update(sql, args);		
 			System.out.println(rows+" rows affected");
+			System.out.println("completion of contract");
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();

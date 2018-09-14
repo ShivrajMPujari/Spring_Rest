@@ -428,3 +428,72 @@ Sep 11, 2018 16:10:46.79 Created new window in existing browser session.
 Sep 12, 2018 10:18:52.69 NEW SESSION
 Sep 12, 2018 10:18:52.69 Created new window in existing browser session.
 Sep 12, 2018 10:19:41.64 Created new window in existing browser session.
+
+Sep 14, 2018 09:40:29.73 NEW SESSION
+Sep 14, 2018 09:40:29.73 [11427:11446:0914/094029.732731:ERROR:service_manager_context.cc(250)] Attempting to run unsupported native service: /opt/google/chrome/chrome_renderer.service
+Sep 14, 2018 09:40:29.89 [11427:11446:0914/094029.732806:ERROR:service_manager_context.cc(250)] Attempting to run unsupported native service: /opt/google/chrome/chrome_renderer.service
+Sep 14, 2018 09:40:29.89 [11427:11446:0914/094029.732845:ERROR:service_manager_context.cc(250)] Attempting to run unsupported native service: /opt/google/chrome/chrome_renderer.service
+Sep 14, 2018 09:40:29.89 [11427:11446:0914/094029.732881:ERROR:service_manager_context.cc(250)] Attempting to run unsupported native service: /opt/google/chrome/chrome_renderer.service
+Sep 14, 2018 09:40:29.89 [11427:11446:0914/094029.732912:ERROR:service_manager_context.cc(250)] Attempting to run unsupported native service: /opt/google/chrome/chrome_renderer.service
+Sep 14, 2018 09:40:29.89 [11427:11446:0914/094029.732948:ERROR:service_manager_context.cc(250)] Attempting to run unsupported native service: /opt/google/chrome/chrome_renderer.service
+Sep 14, 2018 09:40:29.89 [11427:11446:0914/094029.732983:ERROR:service_manager_context.cc(250)] Attempting to run unsupported native service: /opt/google/chrome/chrome_renderer.service
+Sep 14, 2018 09:40:29.89 [11427:11446:0914/094029.733029:ERROR:service_manager_context.cc(250)] Attempting to run unsupported native service: /opt/google/chrome/chrome_renderer.service
+Sep 14, 2018 09:40:29.89 [11427:11446:0914/094029.733069:ERROR:service_manager_context.cc(250)] Attempting to run unsupported native service: /opt/google/chrome/chrome_renderer.service
+Sep 14, 2018 09:40:29.89 [11427:11446:0914/094029.733107:ERROR:service_manager_context.cc(250)] Attempting to run unsupported native service: /opt/google/chrome/chrome_renderer.service
+Sep 14, 2018 09:40:29.89 [11427:11446:0914/094029.735572:ERROR:service_manager_context.cc(250)] Attempting to run unsupported native service: /opt/google/chrome/chrome_renderer.service
+Sep 14, 2018 09:40:29.89 [11427:11446:0914/094029.735639:ERROR:service_manager_context.cc(250)] Attempting to run unsupported native service: /opt/google/chrome/chrome_renderer.service
+Sep 14, 2018 09:40:29.89 [11427:11446:0914/094029.735696:ERROR:service_manager_context.cc(250)] Attempting to run unsupported native service: /opt/google/chrome/chrome_renderer.service
+Sep 14, 2018 09:40:29.89 [11427:11446:0914/094029.735748:ERROR:service_manager_context.cc(250)] Attempting to run unsupported native service: /opt/google/chrome/chrome_renderer.service
+Sep 14, 2018 09:40:29.89 [11427:11446:0914/094029.735810:ERROR:service_manager_context.cc(250)] Attempting to run unsupported native service: /opt/google/chrome/chrome_renderer.service
+Sep 14, 2018 09:40:29.89 [11427:11446:0914/094029.735866:ERROR:service_manager_context.cc(250)] Attempting to run unsupported native service: /opt/google/chrome/chrome_renderer.service
+Sep 14, 2018 09:40:29.89 [11427:11446:0914/094029.735918:ERROR:service_manager_context.cc(250)] Attempting to run unsupported native service: /opt/google/chrome/chrome_renderer.service
+Sep 14, 2018 09:40:29.89 [11427:11446:0914/094029.735971:ERROR:service_manager_context.cc(250)] Attempting to run unsupported native service: /opt/google/chrome/chrome_renderer.service
+Sep 14, 2018 09:40:29.89 [11427:11446:0914/094029.736023:ERROR:service_manager_context.cc(250)] Attempting to run unsupported native service: /opt/google/chrome/chrome_renderer.service
+Sep 14, 2018 09:40:29.89 [11427:11446:0914/094029.736087:ERROR:service_manager_context.cc(250)] Attempting to run unsupported native service: /opt/google/chrome/chrome_renderer.service
+Sep 14, 2018 09:40:37.68 [1:16:0914/094037.687507:ERROR:adm_helpers.cc(73)] Failed to query stereo recording.
+Sep 14, 2018 09:40:41.67 [1:17:0914/094041.673813:ERROR:adm_helpers.cc(73)] Failed to query stereo recording.
+Sep 14, 2018 09:50:08.49 [11427:11446:0914/095008.491821:ERROR:connection_factory_impl.cc(403)] Failed to connect to MCS endpoint with error -21
+Sep 14, 2018 10:59:09.00 Created new window in existing browser session.
+Sep 14, 2018 11:04:30.63 Created new window in existing browser session.
+Sep 14, 2018 11:23:12.93 Created new window in existing browser session.
+Sep 14, 2018 12:17:00.87 Created new window in existing browser session.
+Sep 14, 2018 14:12:08.34 Created new window in existing browser session.
+Sep 14, 2018 14:24:05.96 [11427:11446:0914/142405.964347:ERROR:connection_factory_impl.cc(403)] Failed to connect to MCS endpoint with error -21
+Sep 14, 2018 14:25:58.72 Created new window in existing browser session.
+Sep 14, 2018 14:48:41.52 Created new window in existing browser session.
+Sep 14, 2018 15:09:46.51 Created new window in existing browser session.
+Sep 14, 2018 16:18:52.63 Created new window in existing browser session.
+Sep 14, 2018 17:02:40.04 [11467:11467:0914/170240.008897:ERROR:gles2_cmd_decoder.cc(18008)] [.DisplayCompositor-0x17563c9000]GL ERROR :GL_INVALID_OPERATION : glCreateAndConsumeTextureCHROMIUM: invalid mailbox name
+Sep 14, 2018 17:02:40.06 [11467:11467:0914/170240.026576:ERROR:gles2_cmd_decoder.cc(10115)] [.DisplayCompositor-0x17563c9000]RENDER WARNING: texture bound to texture unit 0 is not renderable. It maybe non-power-of-2 and have incompatible texture filtering.
+Sep 14, 2018 17:04:12.71 [11467:11467:0914/170412.715565:ERROR:gles2_cmd_decoder.cc(10115)] [.DisplayCompositor-0x17563c9000]RENDER WARNING: texture bound to texture unit 0 is not renderable. It maybe non-power-of-2 and have incompatible texture filtering.
+Sep 14, 2018 17:10:16.89 [11467:11467:0914/171016.892893:ERROR:gles2_cmd_decoder.cc(18008)] [.DisplayCompositor-0x17563c9000]GL ERROR :GL_INVALID_OPERATION : glCreateAndConsumeTextureCHROMIUM: invalid mailbox name
+Sep 14, 2018 17:10:16.89 [11467:11467:0914/171016.892978:ERROR:gles2_cmd_decoder.cc(10115)] [.DisplayCompositor-0x17563c9000]RENDER WARNING: texture bound to texture unit 0 is not renderable. It maybe non-power-of-2 and have incompatible texture filtering.
+Sep 14, 2018 17:10:44.95 [11467:11467:0914/171044.956470:ERROR:gles2_cmd_decoder.cc(10115)] [.DisplayCompositor-0x17563c9000]RENDER WARNING: texture bound to texture unit 0 is not renderable. It maybe non-power-of-2 and have incompatible texture filtering.
+Sep 14, 2018 17:18:13.62 
+Sep 14, 2018 17:18:13.65 (nautilus:23293): GLib-GIO-CRITICAL **: g_dbus_interface_skeleton_unexport: assertion 'interface_->priv->connections != NULL' failed
+Sep 14, 2018 17:18:13.65 
+Sep 14, 2018 17:18:13.65 (nautilus:23293): GLib-GIO-CRITICAL **: g_dbus_interface_skeleton_unexport: assertion 'interface_->priv->connections != NULL' failed
+Sep 14, 2018 17:18:13.69 
+Sep 14, 2018 17:18:13.69 (nautilus:23293): Gtk-CRITICAL **: gtk_icon_theme_get_for_screen: assertion 'GDK_IS_SCREEN (screen)' failed
+Sep 14, 2018 17:18:13.69 
+Sep 14, 2018 17:18:13.69 (nautilus:23293): GLib-GObject-WARNING **: invalid (NULL) pointer instance
+Sep 14, 2018 17:18:13.69 
+Sep 14, 2018 17:18:13.69 (nautilus:23293): GLib-GObject-CRITICAL **: g_signal_connect_object: assertion 'G_TYPE_CHECK_INSTANCE (instance)' failed
+Sep 14, 2018 17:27:46.54 [11467:11467:0914/172746.541925:ERROR:gles2_cmd_decoder.cc(18008)] [.DisplayCompositor-0x17563c9000]GL ERROR :GL_INVALID_OPERATION : glCreateAndConsumeTextureCHROMIUM: invalid mailbox name
+Sep 14, 2018 17:27:46.55 [11467:11467:0914/172746.541973:ERROR:gles2_cmd_decoder.cc(10115)] [.DisplayCompositor-0x17563c9000]RENDER WARNING: texture bound to texture unit 0 is not renderable. It maybe non-power-of-2 and have incompatible texture filtering.
+Sep 14, 2018 17:27:46.55 [11467:11467:0914/172746.542014:ERROR:gles2_cmd_decoder.cc(18008)] [.DisplayCompositor-0x17563c9000]GL ERROR :GL_INVALID_OPERATION : glCreateAndConsumeTextureCHROMIUM: invalid mailbox name
+Sep 14, 2018 17:27:46.55 [11467:11467:0914/172746.542043:ERROR:gles2_cmd_decoder.cc(10115)] [.DisplayCompositor-0x17563c9000]RENDER WARNING: texture bound to texture unit 0 is not renderable. It maybe non-power-of-2 and have incompatible texture filtering.
+Sep 14, 2018 17:27:46.59 [11467:11467:0914/172746.597120:ERROR:gles2_cmd_decoder.cc(10115)] [.DisplayCompositor-0x17563c9000]RENDER WARNING: texture bound to texture unit 0 is not renderable. It maybe non-power-of-2 and have incompatible texture filtering.
+Sep 14, 2018 17:27:46.59 [11467:11467:0914/172746.597168:ERROR:gles2_cmd_decoder.cc(10115)] [.DisplayCompositor-0x17563c9000]RENDER WARNING: texture bound to texture unit 0 is not renderable. It maybe non-power-of-2 and have incompatible texture filtering.
+Sep 14, 2018 17:27:46.61 [11467:11467:0914/172746.617385:ERROR:gles2_cmd_decoder.cc(10115)] [.DisplayCompositor-0x17563c9000]RENDER WARNING: texture bound to texture unit 0 is not renderable. It maybe non-power-of-2 and have incompatible texture filtering.
+Sep 14, 2018 17:27:46.61 [11467:11467:0914/172746.617500:ERROR:gles2_cmd_decoder.cc(10115)] [.DisplayCompositor-0x17563c9000]RENDER WARNING: texture bound to texture unit 0 is not renderable. It maybe non-power-of-2 and have incompatible texture filtering.
+Sep 14, 2018 17:27:46.63 [11467:11467:0914/172746.631075:ERROR:gles2_cmd_decoder.cc(10115)] [.DisplayCompositor-0x17563c9000]RENDER WARNING: texture bound to texture unit 0 is not renderable. It maybe non-power-of-2 and have incompatible texture filtering.
+Sep 14, 2018 17:27:46.63 [11467:11467:0914/172746.631167:ERROR:gles2_cmd_decoder.cc(10115)] [.DisplayCompositor-0x17563c9000]RENDER WARNING: texture bound to texture unit 0 is not renderable. It maybe non-power-of-2 and have incompatible texture filtering.
+Sep 14, 2018 17:27:46.64 [11467:11467:0914/172746.648561:ERROR:gles2_cmd_decoder.cc(10115)] [.DisplayCompositor-0x17563c9000]RENDER WARNING: texture bound to texture unit 0 is not renderable. It maybe non-power-of-2 and have incompatible texture filtering.
+Sep 14, 2018 17:27:46.64 [11467:11467:0914/172746.648629:ERROR:gles2_cmd_decoder.cc(10115)] [.DisplayCompositor-0x17563c9000]RENDER WARNING: texture bound to texture unit 0 is not renderable. It maybe non-power-of-2 and have incompatible texture filtering.
+Sep 14, 2018 17:27:46.67 [11467:11467:0914/172746.679774:ERROR:gles2_cmd_decoder.cc(10115)] [.DisplayCompositor-0x17563c9000]RENDER WARNING: texture bound to texture unit 0 is not renderable. It maybe non-power-of-2 and have incompatible texture filtering.
+Sep 14, 2018 17:27:46.68 [11467:11467:0914/172746.680662:ERROR:gles2_cmd_decoder.cc(10115)] [.DisplayCompositor-0x17563c9000]RENDER WARNING: texture bound to texture unit 0 is not renderable. It maybe non-power-of-2 and have incompatible texture filtering.
+Sep 14, 2018 17:29:09.71 [1:18:0914/172909.709562:ERROR:adm_helpers.cc(73)] Failed to query stereo recording.
+Sep 14, 2018 17:34:14.55 [11427:11427:0914/173414.552171:ERROR:latency_info.cc(163)] Surface::TakeLatencyInfoFromFrame, LatencyInfo vector size 102 is too big.
+Sep 14, 2018 17:34:15.97 [11427:11427:0914/173415.973114:ERROR:latency_info.cc(163)] Surface::TakeLatencyInfoFromFrame, LatencyInfo vector size 101 is too big.
+Sep 14, 2018 17:34:16.39 [11427:11427:0914/173416.390623:ERROR:latency_info.cc(163)] Surface::TakeLatencyInfoFromFrame, LatencyInfo vector size 102 is too big.

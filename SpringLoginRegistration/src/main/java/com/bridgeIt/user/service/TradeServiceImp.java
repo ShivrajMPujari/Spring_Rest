@@ -57,6 +57,7 @@ public class TradeServiceImp implements TradeService {
 		
 		contract.setExporterCheck(true);
 		contract.setCompletion(false);
+		contract.setPointer(contract.getCustomId());
 		boolean insertion = dao.saveContract(contract);
 		
 		if(insertion) {
@@ -84,8 +85,14 @@ public class TradeServiceImp implements TradeService {
 	
 	public boolean updateContractInBlockChain(String jwtToken, Contract contract) {
 		
-		String email = token.getJwtId(jwtToken);
-		System.out.println(email);
+		String email = null;
+		try {
+			System.out.println("token is "+jwtToken);
+			email = token.getJwtId(jwtToken);
+			System.out.println(email);
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
 		User user = dao.getUserByEmail(email);
 		System.out.println(user);
 		
@@ -96,6 +103,7 @@ public class TradeServiceImp implements TradeService {
 		case "custom":{
 			
 			try {
+				System.out.println("calling custom assurity");
 				tradeUtil.transactionInvokeBlockChain(client, "customAssurity", args, channel);
 				return true;
 			} catch (InvalidArgumentException e) {
@@ -106,11 +114,11 @@ public class TradeServiceImp implements TradeService {
 			
 		}
 		case "insurance":{
-				
+			System.out.println("calling insurance assurity");
 				try {
 					tradeUtil.transactionInvokeBlockChain(client, "insuranceAssurity", args, channel);
 					return true;
-				} catch (InvalidArgumentException e) {
+				} catch (Exception e) {
 				
 					e.printStackTrace();
 					return false;
@@ -119,23 +127,26 @@ public class TradeServiceImp implements TradeService {
 			}
 		
 		case "importer":{
-			
+			System.out.println("calling importer assurity");
+
 			try {
 				tradeUtil.transactionInvokeBlockChain(client, "importerAssurity", args, channel);
 				return true;
 			} catch (InvalidArgumentException e) {
-			
+				
 				e.printStackTrace();
 				return false;
 			}
 			
 		}
 		case "importerBank":{
-			
+			System.out.println("calling importerBank assurity");
+
 			try {
+				System.out.println("calling importerBank assurity");
 				tradeUtil.transactionInvokeBlockChain(client, "importerBankAssurity", args, channel);
-				userService.getUserBalance(contract.getExporterId());
-				userService.getUserBalance(contract.getImporterId());
+				updateBalanceByAcccountNo(contract.getExporterId());
+				updateBalanceByAcccountNo(contract.getImporterId());
 				boolean result = dao.completionOfContract(contract.getContractId());
 				if(result) {
 					return true;
@@ -143,7 +154,7 @@ public class TradeServiceImp implements TradeService {
 					return false;
 				}
 				
-			} catch (InvalidArgumentException e) {
+			} catch (Exception e) {
 			
 				e.printStackTrace();
 				return false;
@@ -235,9 +246,13 @@ public class TradeServiceImp implements TradeService {
 				dao.completionOfContract(contract.getContractId());
 				return false;
 			}
+		}else {
+			
+			dao.completionOfContract(contract.getContractId());
+			return false;
 		}
 		
-		return false;
+		
 	}
 	
 	public List<Contract>  getAllContract(String jwt) {
@@ -290,7 +305,36 @@ public class TradeServiceImp implements TradeService {
 		return contract;
 	}
 	
-	
+	public void updateBalanceByAcccountNo(String accountNumber) {
+		
+		boolean result = dao.uniqueAccountNumber(accountNumber);
+
+		if (!result) {
+
+			 String [] args = new String[] {accountNumber};
+
+			try {
+				List<String> responses = tradeUtil.queryBlockChain(client, "getBalance", args,channel);
+				String response = responses.get(0);
+				System.out.println(response +" is response for query");
+			
+				int balance = Integer.parseInt(response);
+
+				dao.updateBalance(accountNumber, balance);
+				
+			
+			} catch (ProposalException e) {
+			
+				e.printStackTrace();
+			} catch (org.hyperledger.fabric_ca.sdk.exception.InvalidArgumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		
+		
+	}
 	
 	
 }

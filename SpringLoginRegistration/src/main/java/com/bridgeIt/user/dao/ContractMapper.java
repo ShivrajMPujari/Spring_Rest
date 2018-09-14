@@ -29,9 +29,9 @@ public class ContractMapper implements  RowMapper<Contract>{
 		contract.setInsuranceCheck(rs.getBoolean("insuranceCheck"));
 		contract.setImporterCheck(rs.getBoolean("importerCheck"));
 		contract.setImporterBankCheck(rs.getBoolean("importerBankCheck"));
-		
+		contract.setPointer(rs.getString("pointer"));
 		//contract.setImporterCheck(rs.getBoolean("")));
-		
+		contract.setCompletion(rs.getBoolean("completion"));
 		
 		
 		return contract;

@@ -8,6 +8,7 @@ public class Contract {
 	private String exporterId;
 	private String customId;
 	private String importerBankId;
+
 	private String insuranceId;
 	private int value;
 	private String portOfLoading;
@@ -18,6 +19,7 @@ public class Contract {
 	private boolean importerBankCheck;
 	private boolean insuranceCheck;
 	private boolean completion;
+	private String pointer;
 	
 	public String getContractId() {
 		return contractId;
@@ -116,6 +118,13 @@ public class Contract {
 	public void setCompletion(boolean completion) {
 		this.completion = completion;
 	}
+	public String getPointer() {
+		return pointer;
+	}
+	public void setPointer(String pointer) {
+		this.pointer = pointer;
+	} 
+	
 	@Override
 	public String toString() {
 		return "Contract [contractId=" + contractId + ", contractDescription=" + contractDescription + ", importerId="
@@ -123,8 +132,9 @@ public class Contract {
 				+ importerBankId + ", insuranceId=" + insuranceId + ", value=" + value + ", portOfLoading="
 				+ portOfLoading + ", portOfEntry=" + portOfEntry + ", importerCheck=" + importerCheck
 				+ ", exporterCheck=" + exporterCheck + ", customCheck=" + customCheck + ", importerBankCheck="
-				+ importerBankCheck + ", insuranceCheck=" + insuranceCheck + ", completion=" + completion + "]";
-	} 
+				+ importerBankCheck + ", insuranceCheck=" + insuranceCheck + ", completion=" + completion + ", pointer="
+				+ pointer + "]";
+	}
 	
 	
 }
