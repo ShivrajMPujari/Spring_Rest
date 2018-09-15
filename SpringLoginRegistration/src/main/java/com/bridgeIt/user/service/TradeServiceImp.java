@@ -104,7 +104,13 @@ public class TradeServiceImp implements TradeService {
 			
 			try {
 				System.out.println("calling custom assurity");
-				tradeUtil.transactionInvokeBlockChain(client, "customAssurity", args, channel);
+				boolean result = tradeUtil.transactionInvokeBlockChain(client, "customAssurity", args, channel);
+				
+				if(!result) {
+					dao.completionOfContract(contract.getContractId());
+					return false;
+				}
+				
 				return true;
 			} catch (InvalidArgumentException e) {
 			
@@ -116,7 +122,11 @@ public class TradeServiceImp implements TradeService {
 		case "insurance":{
 			System.out.println("calling insurance assurity");
 				try {
-					tradeUtil.transactionInvokeBlockChain(client, "insuranceAssurity", args, channel);
+					boolean result = 	tradeUtil.transactionInvokeBlockChain(client, "insuranceAssurity", args, channel);
+					if(!result) {
+						dao.completionOfContract(contract.getContractId());
+						return false;
+					}
 					return true;
 				} catch (Exception e) {
 				
@@ -130,7 +140,11 @@ public class TradeServiceImp implements TradeService {
 			System.out.println("calling importer assurity");
 
 			try {
-				tradeUtil.transactionInvokeBlockChain(client, "importerAssurity", args, channel);
+				boolean result = 	tradeUtil.transactionInvokeBlockChain(client, "importerAssurity", args, channel);
+				if(!result) {
+					dao.completionOfContract(contract.getContractId());
+					return false;
+				}
 				return true;
 			} catch (InvalidArgumentException e) {
 				
@@ -144,11 +158,16 @@ public class TradeServiceImp implements TradeService {
 
 			try {
 				System.out.println("calling importerBank assurity");
-				tradeUtil.transactionInvokeBlockChain(client, "importerBankAssurity", args, channel);
+				boolean result = tradeUtil.transactionInvokeBlockChain(client, "importerBankAssurity", args, channel);
+				if(!result) {
+					dao.completionOfContract(contract.getContractId());
+					return false;
+				}
+				
 				updateBalanceByAcccountNo(contract.getExporterId());
 				updateBalanceByAcccountNo(contract.getImporterId());
-				boolean result = dao.completionOfContract(contract.getContractId());
-				if(result) {
+				boolean result1 = dao.completionOfContract(contract.getContractId());
+				if(result1) {
 					return true;
 				}else {
 					return false;

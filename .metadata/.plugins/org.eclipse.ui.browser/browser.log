@@ -497,3 +497,40 @@ Sep 14, 2018 17:29:09.71 [1:18:0914/172909.709562:ERROR:adm_helpers.cc(73)] Fail
 Sep 14, 2018 17:34:14.55 [11427:11427:0914/173414.552171:ERROR:latency_info.cc(163)] Surface::TakeLatencyInfoFromFrame, LatencyInfo vector size 102 is too big.
 Sep 14, 2018 17:34:15.97 [11427:11427:0914/173415.973114:ERROR:latency_info.cc(163)] Surface::TakeLatencyInfoFromFrame, LatencyInfo vector size 101 is too big.
 Sep 14, 2018 17:34:16.39 [11427:11427:0914/173416.390623:ERROR:latency_info.cc(163)] Surface::TakeLatencyInfoFromFrame, LatencyInfo vector size 102 is too big.
+
+Sep 15, 2018 11:53:07.29 NEW SESSION
+Sep 15, 2018 11:53:07.29 Created new window in existing browser session.
+
+Sep 15, 2018 12:40:14.22 NEW SESSION
+Sep 15, 2018 12:40:14.22 Created new window in existing browser session.
+Sep 15, 2018 12:41:24.09 Created new window in existing browser session.
+
+Sep 15, 2018 12:47:35.04 NEW SESSION
+Sep 15, 2018 12:47:35.04 Created new window in existing browser session.
+
+Sep 15, 2018 19:05:04.19 NEW SESSION
+Sep 15, 2018 19:05:04.19 [12809:12828:0915/190504.192296:ERROR:service_manager_context.cc(250)] Attempting to run unsupported native service: /opt/google/chrome/chrome_renderer.service
+Sep 15, 2018 19:05:04.24 [12809:12828:0915/190504.192355:ERROR:service_manager_context.cc(250)] Attempting to run unsupported native service: /opt/google/chrome/chrome_renderer.service
+Sep 15, 2018 19:05:04.24 [12809:12828:0915/190504.192390:ERROR:service_manager_context.cc(250)] Attempting to run unsupported native service: /opt/google/chrome/chrome_renderer.service
+Sep 15, 2018 19:05:04.24 [12809:12828:0915/190504.192427:ERROR:service_manager_context.cc(250)] Attempting to run unsupported native service: /opt/google/chrome/chrome_renderer.service
+Sep 15, 2018 19:05:04.24 [12809:12828:0915/190504.192470:ERROR:service_manager_context.cc(250)] Attempting to run unsupported native service: /opt/google/chrome/chrome_renderer.service
+Sep 15, 2018 19:05:04.24 [12809:12828:0915/190504.192503:ERROR:service_manager_context.cc(250)] Attempting to run unsupported native service: /opt/google/chrome/chrome_renderer.service
+Sep 15, 2018 19:05:04.24 [12809:12828:0915/190504.192538:ERROR:service_manager_context.cc(250)] Attempting to run unsupported native service: /opt/google/chrome/chrome_renderer.service
+Sep 15, 2018 19:05:04.24 [12809:12828:0915/190504.192576:ERROR:service_manager_context.cc(250)] Attempting to run unsupported native service: /opt/google/chrome/chrome_renderer.service
+Sep 15, 2018 19:05:04.24 [12809:12828:0915/190504.193272:ERROR:service_manager_context.cc(250)] Attempting to run unsupported native service: /opt/google/chrome/chrome_renderer.service
+Sep 15, 2018 19:05:04.24 [12809:12828:0915/190504.193383:ERROR:service_manager_context.cc(250)] Attempting to run unsupported native service: /opt/google/chrome/chrome_renderer.service
+Sep 15, 2018 19:05:04.24 [12809:12828:0915/190504.193493:ERROR:service_manager_context.cc(250)] Attempting to run unsupported native service: /opt/google/chrome/chrome_renderer.service
+Sep 15, 2018 19:05:04.24 [12809:12828:0915/190504.193602:ERROR:service_manager_context.cc(250)] Attempting to run unsupported native service: /opt/google/chrome/chrome_renderer.service
+Sep 15, 2018 19:05:04.24 [12809:12828:0915/190504.193711:ERROR:service_manager_context.cc(250)] Attempting to run unsupported native service: /opt/google/chrome/chrome_renderer.service
+Sep 15, 2018 19:05:04.24 [12809:12828:0915/190504.193817:ERROR:service_manager_context.cc(250)] Attempting to run unsupported native service: /opt/google/chrome/chrome_renderer.service
+Sep 15, 2018 19:05:04.24 [12809:12828:0915/190504.193927:ERROR:service_manager_context.cc(250)] Attempting to run unsupported native service: /opt/google/chrome/chrome_renderer.service
+Sep 15, 2018 19:05:04.24 [12809:12828:0915/190504.194035:ERROR:service_manager_context.cc(250)] Attempting to run unsupported native service: /opt/google/chrome/chrome_renderer.service
+Sep 15, 2018 19:05:52.33 Created new window in existing browser session.
+Sep 15, 2018 19:08:14.23 [12809:12828:0915/190814.235187:ERROR:connection_factory_impl.cc(403)] Failed to connect to MCS endpoint with error -21
+Sep 15, 2018 19:51:02.18 [12809:18997:0915/195102.169534:ERROR:cert_verify_proc_nss.cc(981)] CERT_PKIXVerifyCert for grey.erne.co failed err=-8181
+Sep 15, 2018 20:07:15.16 Created new window in existing browser session.
+Sep 15, 2018 20:26:24.15 [12853:12853:0915/202624.150022:ERROR:buffer_manager.cc(461)] [.DisplayCompositor-0x3a90901fc800]GL ERROR :GL_INVALID_OPERATION : glBufferData: <- error from previous GL command
+Sep 15, 2018 20:26:25.36 [12853:12853:0915/202625.369417:ERROR:buffer_manager.cc(461)] [.DisplayCompositor-0x3a9093162400]GL ERROR :GL_INVALID_OPERATION : glBufferData: <- error from previous GL command
+Sep 15, 2018 20:38:54.69 [12809:12809:0915/203854.692562:ERROR:CONSOLE(0)] "Slow network is detected. See https://www.chromestatus.com/feature/5636954674692096 for more details. Fallback font will be used while loading: chrome://resources/roboto/roboto-regular.woff2", source:  (0)
+Sep 15, 2018 20:41:26.71 [12809:12809:0915/204126.717986:ERROR:media_internals.cc(103)] Cannot get RenderProcessHost
+Sep 15, 2018 20:51:29.75 [12809:12820:0915/205129.758418:ERROR:sandbox_ipc_linux.cc(411)] sendmsg: Broken pipe (32)
