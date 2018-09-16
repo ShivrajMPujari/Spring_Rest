@@ -534,3 +534,6 @@ Sep 15, 2018 20:26:25.36 [12853:12853:0915/202625.369417:ERROR:buffer_manager.cc
 Sep 15, 2018 20:38:54.69 [12809:12809:0915/203854.692562:ERROR:CONSOLE(0)] "Slow network is detected. See https://www.chromestatus.com/feature/5636954674692096 for more details. Fallback font will be used while loading: chrome://resources/roboto/roboto-regular.woff2", source:  (0)
 Sep 15, 2018 20:41:26.71 [12809:12809:0915/204126.717986:ERROR:media_internals.cc(103)] Cannot get RenderProcessHost
 Sep 15, 2018 20:51:29.75 [12809:12820:0915/205129.758418:ERROR:sandbox_ipc_linux.cc(411)] sendmsg: Broken pipe (32)
+
+Sep 16, 2018 10:41:12.16 NEW SESSION
+Sep 16, 2018 10:41:12.16 Created new window in existing browser session.
