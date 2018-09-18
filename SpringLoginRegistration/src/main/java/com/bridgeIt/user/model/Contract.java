@@ -8,7 +8,6 @@ public class Contract {
 	private String exporterId;
 	private String customId;
 	private String importerBankId;
-
 	private String insuranceId;
 	private int value;
 	private String portOfLoading;
@@ -20,6 +19,8 @@ public class Contract {
 	private boolean insuranceCheck;
 	private boolean completion;
 	private String pointer;
+	private String billOfLading;
+	private String letterOfCredit;
 	
 	public String getContractId() {
 		return contractId;
@@ -125,6 +126,19 @@ public class Contract {
 		this.pointer = pointer;
 	} 
 	
+	public String getBillOfLading() {
+		return billOfLading;
+	}
+	public void setBillOfLading(String billOfLading) {
+		this.billOfLading = billOfLading;
+	}
+	public String getLetterOfCredit() {
+		return letterOfCredit;
+	}
+	public void setLetterOfCredit(String letterOfCredit) {
+		this.letterOfCredit = letterOfCredit;
+	}
+	
 	@Override
 	public String toString() {
 		return "Contract [contractId=" + contractId + ", contractDescription=" + contractDescription + ", importerId="
@@ -135,6 +149,4 @@ public class Contract {
 				+ importerBankCheck + ", insuranceCheck=" + insuranceCheck + ", completion=" + completion + ", pointer="
 				+ pointer + "]";
 	}
-	
-	
 }

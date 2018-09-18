@@ -1,7 +1,10 @@
 package com.bridgeIt.user.service;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
+
+import javax.sql.rowset.serial.SerialException;
 
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
@@ -58,7 +61,16 @@ public class TradeServiceImp implements TradeService {
 		contract.setExporterCheck(true);
 		contract.setCompletion(false);
 		contract.setPointer(contract.getCustomId());
-		boolean insertion = dao.saveContract(contract);
+		boolean insertion = false;
+		try {
+			insertion = dao.saveContract(contract);
+		} catch (SerialException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		if(insertion) {
 			//TradeUser admin = tradeUtil.getAdmin(caClient);

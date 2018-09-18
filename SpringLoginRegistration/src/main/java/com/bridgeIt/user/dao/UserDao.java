@@ -2,6 +2,7 @@ package com.bridgeIt.user.dao;
 
 import java.sql.Blob;
 import java.sql.SQLException;
+import java.util.Base64;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -389,11 +390,15 @@ public class UserDao {
 	}
 	
 	
-	public boolean saveContract (Contract contract) {
+	public boolean saveContract (Contract contract) throws SerialException, SQLException {
 		
-		Object [] args = {contract.getContractId(),contract.getContractDescription(),contract.getValue(),contract.getExporterId(),contract.getCustomId(),contract.getInsuranceId(),contract.getImporterId(),contract.getImporterBankId(),contract.getPortOfLoading(),contract.getPortOfEntry(),contract.isExporterCheck(),contract.isCustomCheck(),contract.isInsuranceCheck(),contract.isImporterCheck(),contract.isImporterBankCheck(),contract.isCompletion(),contract.getPointer()};
 		
-		String sql ="insert into UserContract (contract_id,contract_description,value,exporter_id,custom_id,insurance_id,importer_id,importerBank_id,port_of_loading,port_of_entry,exporterCheck,customCheck,insuranceCheck,importerCheck,importerBankCheck,completion,pointer) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		
+		byte[] byteBillOfLading = Base64.getDecoder().decode(contract.getBillOfLading());
+		byte[] byteLetterOfCredit = Base64.getDecoder().decode(contract.getLetterOfCredit());
+		Object [] args = {contract.getContractId(),contract.getContractDescription(),contract.getValue(),contract.getExporterId(),contract.getCustomId(),contract.getInsuranceId(),contract.getImporterId(),contract.getImporterBankId(),contract.getPortOfLoading(),contract.getPortOfEntry(),contract.isExporterCheck(),contract.isCustomCheck(),contract.isInsuranceCheck(),contract.isImporterCheck(),contract.isImporterBankCheck(),contract.isCompletion(),contract.getPointer(),new SerialBlob(byteLetterOfCredit),new SerialBlob(byteBillOfLading)};
+		
+		String sql ="insert into UserContract (contract_id,contract_description,value,exporter_id,custom_id,insurance_id,importer_id,importerBank_id,port_of_loading,port_of_entry,exporterCheck,customCheck,insuranceCheck,importerCheck,importerBankCheck,completion,pointer,letter_of_credit,bill_of_lading) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		
 		try {
 			int row = template.update(sql, args);

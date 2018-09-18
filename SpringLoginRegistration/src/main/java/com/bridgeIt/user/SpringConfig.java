@@ -357,7 +357,6 @@ public class SpringConfig extends WebMvcConfigurerAdapter {
 			try {
 				peer1 = client.newPeer("peer0.importer.bridgeIt.com", "grpc://localhost:7051");
 			} catch (org.hyperledger.fabric.sdk.exception.InvalidArgumentException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 

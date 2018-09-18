@@ -8,7 +8,6 @@
 <h1>
 it's working
 </h1>
-
 <P>  The time on the server is ${serverTime}. </P>
 </body>
 </html>

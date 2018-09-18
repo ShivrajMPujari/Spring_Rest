@@ -1,7 +1,9 @@
 package com.bridgeIt.user.dao;
 
+import java.sql.Blob;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Base64;
 
 import org.springframework.jdbc.core.RowMapper;
 
@@ -32,7 +34,32 @@ public class ContractMapper implements  RowMapper<Contract>{
 		contract.setPointer(rs.getString("pointer"));
 		//contract.setImporterCheck(rs.getBoolean("")));
 		contract.setCompletion(rs.getBoolean("completion"));
+		//contract.setBillOfLading(billOfLading);
 		
+		Blob letterOfCredit =rs.getBlob("letter_of_credit");
+		Blob billOfLading = rs.getBlob("bill_of_lading");
+		
+		
+		if(letterOfCredit==null) {
+			
+			contract.setLetterOfCredit(null);
+		}
+		byte[] byteLoc = letterOfCredit.getBytes(1, (int)letterOfCredit.length());
+		String strLoc = Base64.getEncoder().encodeToString(byteLoc);
+		contract.setLetterOfCredit(strLoc);
+		
+		
+		
+		
+		if(billOfLading==null) {
+					
+					contract.setBillOfLading(null);;
+				}
+		byte[] byteBol = letterOfCredit.getBytes(1, (int)letterOfCredit.length());
+		String strBol = Base64.getEncoder().encodeToString(byteBol);
+		contract.setLetterOfCredit(strBol);
+		
+		           
 		
 		return contract;
 	}

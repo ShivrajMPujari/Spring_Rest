@@ -13,15 +13,22 @@
 <table>
 
 <tr>
-<td> ID </td><td> <input type="text" name="id"> </td>
-<td> Name </td><td> <input type="text" name="name"> </td>
-<td>Location</td><td> <input type="text" name="Address.location"> </td>
-<td>City</td><td> <input type="text" name="Address.city"> </td>
+<td> ID </td><td> <input type="text" name="id"> </td> 
+<td> Name </td><td> <input type="text" name="name"> </td> 
+<td>Location</td><td> <input type="text" name="Address.location"> </td> 
+<td>City</td><td> <input type="text" name="Address.city"> </td> 
 <td>State</td><td> <input type="text" name="Address.state"> </td>
 </tr>
+
+<tr> 
+<td> File to upload </td> 
+<td colspan="4"> <input type="file" name="file"> </td> 
+</tr>
+
 <tr>
 <td colspan="2"><input type="submit" value="login"></td>
 </tr>
+
 
 </table>
 
