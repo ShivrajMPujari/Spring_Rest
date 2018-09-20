@@ -31,33 +31,33 @@ public class ContractMapper implements  RowMapper<Contract>{
 		contract.setInsuranceCheck(rs.getBoolean("insuranceCheck"));
 		contract.setImporterCheck(rs.getBoolean("importerCheck"));
 		contract.setImporterBankCheck(rs.getBoolean("importerBankCheck"));
-		contract.setPointer(rs.getString("pointer"));
-		//contract.setImporterCheck(rs.getBoolean("")));
+		contract.setPointer(rs.getString("pointer"));	
 		contract.setCompletion(rs.getBoolean("completion"));
-		//contract.setBillOfLading(billOfLading);
+		contract.setBillOfLading(rs.getString("bill_of_lading"));
+		contract.setLetterOfCredit(rs.getString("letter_of_credit"));
 		
-		Blob letterOfCredit =rs.getBlob("letter_of_credit");
-		Blob billOfLading = rs.getBlob("bill_of_lading");
-		
-		
-		if(letterOfCredit==null) {
-			
-			contract.setLetterOfCredit(null);
-		}
-		byte[] byteLoc = letterOfCredit.getBytes(1, (int)letterOfCredit.length());
-		String strLoc = Base64.getEncoder().encodeToString(byteLoc);
-		contract.setLetterOfCredit(strLoc);
-		
-		
-		
-		
-		if(billOfLading==null) {
-					
-					contract.setBillOfLading(null);;
-				}
-		byte[] byteBol = letterOfCredit.getBytes(1, (int)letterOfCredit.length());
-		String strBol = Base64.getEncoder().encodeToString(byteBol);
-		contract.setLetterOfCredit(strBol);
+//		Blob letterOfCredit =rs.getBlob("letter_of_credit");
+//		Blob billOfLading = rs.getBlob("bill_of_lading");
+//		
+//		
+//		if(letterOfCredit==null) {
+//			
+//			contract.setLetterOfCredit(null);
+//		}
+//		byte[] byteLoc = letterOfCredit.getBytes(1, (int)letterOfCredit.length());
+//		String strLoc = Base64.getEncoder().encodeToString(byteLoc);
+//		contract.setLetterOfCredit(strLoc);
+//		
+//		
+//		
+//		
+//		if(billOfLading==null) {
+//					
+//					contract.setBillOfLading(null);;
+//				}
+//		byte[] byteBol = letterOfCredit.getBytes(1, (int)letterOfCredit.length());
+//		String strBol = Base64.getEncoder().encodeToString(byteBol);
+//		contract.setLetterOfCredit(strBol);
 		
 		           
 		

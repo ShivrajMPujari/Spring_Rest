@@ -394,11 +394,11 @@ public class UserDao {
 		
 		
 		
-		byte[] byteBillOfLading = Base64.getDecoder().decode(contract.getBillOfLading());
-		byte[] byteLetterOfCredit = Base64.getDecoder().decode(contract.getLetterOfCredit());
-		Object [] args = {contract.getContractId(),contract.getContractDescription(),contract.getValue(),contract.getExporterId(),contract.getCustomId(),contract.getInsuranceId(),contract.getImporterId(),contract.getImporterBankId(),contract.getPortOfLoading(),contract.getPortOfEntry(),contract.isExporterCheck(),contract.isCustomCheck(),contract.isInsuranceCheck(),contract.isImporterCheck(),contract.isImporterBankCheck(),contract.isCompletion(),contract.getPointer(),new SerialBlob(byteLetterOfCredit),new SerialBlob(byteBillOfLading)};
+//		byte[] byteBillOfLading = Base64.getDecoder().decode(contract.getBillOfLading());
+//		byte[] byteLetterOfCredit = Base64.getDecoder().decode(contract.getLetterOfCredit());
+		Object [] args = {contract.getContractId(),contract.getContractDescription(),contract.getValue(),contract.getExporterId(),contract.getCustomId(),contract.getInsuranceId(),contract.getImporterId(),contract.getImporterBankId(),contract.getPortOfLoading(),contract.getPortOfEntry(),contract.isExporterCheck(),contract.isCustomCheck(),contract.isInsuranceCheck(),contract.isImporterCheck(),contract.isImporterBankCheck(),contract.isCompletion(),contract.getPointer(),contract.getBillOfLading(),contract.getLetterOfCredit()};
 		
-		String sql ="insert into UserContract (contract_id,contract_description,value,exporter_id,custom_id,insurance_id,importer_id,importerBank_id,port_of_loading,port_of_entry,exporterCheck,customCheck,insuranceCheck,importerCheck,importerBankCheck,completion,pointer,letter_of_credit,bill_of_lading) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		String sql ="insert into UserContract (contract_id,contract_description,value,exporter_id,custom_id,insurance_id,importer_id,importerBank_id,port_of_loading,port_of_entry,exporterCheck,customCheck,insuranceCheck,importerCheck,importerBankCheck,completion,pointer,bill_of_lading,letter_of_credit) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		
 		try {
 			int row = template.update(sql, args);

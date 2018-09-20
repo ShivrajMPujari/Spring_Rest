@@ -1,11 +1,20 @@
 package com.bridgeIt.user;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Base64;
 import java.util.List;
 
 import org.hyperledger.fabric.sdk.Channel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -115,6 +124,35 @@ public class TradeController {
 		response.setStatus(HttpStatus.OK);
 		
 		return new ResponseEntity<ContractResponse>(response,HttpStatus.OK);	
+	}
+	
+	
+	@RequestMapping(value="/download/{contractId}/{fileName}" , method = RequestMethod.GET)
+	public ResponseEntity<String> download(@PathVariable("contractId") String contractId ,@PathVariable("fileName") String filename,@RequestHeader("token") String jwtToken ){
+		
+		System.out.println(contractId);
+		System.out.println(jwtToken);
+		Path downloadPath =	Paths.get("//home//bridgelabz//Documents//contracts//"+contractId+"//"+filename+".jpg");
+		byte[] fileByte = null;
+//		ByteArrayResource resource = null;
+		try {
+			fileByte = Files.readAllBytes(downloadPath);
+		
+//		 resource = new ByteArrayResource(fileByte);
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+		}
+		String fileBase64	= Base64.getEncoder().encodeToString(fileByte);
+//		//http://localhost:8080/user/download/017/billOfLading.jpg
+//		return ResponseEntity.ok()
+//				.header(HttpHeaders.CONTENT_DISPOSITION,
+//		                  "attachment;filename=" + downloadPath.getFileName().toString())
+//				.contentType(MediaType.IMAGE_JPEG).contentLength(fileByte.length)
+//				.body(resource);
+				
+		return new ResponseEntity<String>(fileBase64,HttpStatus.OK);
+	
 	}
 	
 	

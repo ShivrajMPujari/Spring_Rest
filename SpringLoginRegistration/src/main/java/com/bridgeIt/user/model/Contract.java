@@ -124,8 +124,7 @@ public class Contract {
 	}
 	public void setPointer(String pointer) {
 		this.pointer = pointer;
-	} 
-	
+	}
 	public String getBillOfLading() {
 		return billOfLading;
 	}
@@ -138,7 +137,6 @@ public class Contract {
 	public void setLetterOfCredit(String letterOfCredit) {
 		this.letterOfCredit = letterOfCredit;
 	}
-	
 	@Override
 	public String toString() {
 		return "Contract [contractId=" + contractId + ", contractDescription=" + contractDescription + ", importerId="
@@ -147,6 +145,8 @@ public class Contract {
 				+ portOfLoading + ", portOfEntry=" + portOfEntry + ", importerCheck=" + importerCheck
 				+ ", exporterCheck=" + exporterCheck + ", customCheck=" + customCheck + ", importerBankCheck="
 				+ importerBankCheck + ", insuranceCheck=" + insuranceCheck + ", completion=" + completion + ", pointer="
-				+ pointer + "]";
-	}
+				+ pointer + ", billOfLading=" + billOfLading + ", letterOfCredit=" + letterOfCredit + "]";
+	} 
+	
+
 }

@@ -1,7 +1,11 @@
 package com.bridgeIt.user.service;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.SQLException;
+import java.util.Base64;
 import java.util.List;
 
 import javax.sql.rowset.serial.SerialException;
@@ -51,7 +55,6 @@ public class TradeServiceImp implements TradeService {
 	public boolean insertContract (Contract contract,String jwtToken) {
 		
 		String email = token.getJwtId(jwtToken);
-		
 		User user = dao.getUserByEmail(email);
 		System.out.println(user);
 		if (user == null) {
@@ -61,14 +64,35 @@ public class TradeServiceImp implements TradeService {
 		contract.setExporterCheck(true);
 		contract.setCompletion(false);
 		contract.setPointer(contract.getCustomId());
+		
+		byte[] imgBillOfLading = Base64.getDecoder().decode(contract.getBillOfLading());
+		byte[] imgLetterOfCredit = Base64.getDecoder().decode(contract.getLetterOfCredit());
+		//file upload 
+		Path path = Paths.get("//home//bridgelabz//Documents//contracts//"+contract.getContractId());
+		
+		try {
+			Files.createDirectory(path);
+			Path path1 =Paths.get("//home//bridgelabz//Documents//contracts//"+contract.getContractId()+"//billOfLading.jpg");
+			Files.write(path1, imgBillOfLading);
+			Path path2 =Paths.get("//home//bridgelabz//Documents//contracts//"+contract.getContractId()+"//letterOfCredit.jpg");
+			Files.write(path2, imgLetterOfCredit);
+			String urlBillOfLading = "http://localhost:8080/user/download/"+contract.getContractId()+"/billOfLading.jpg";
+			contract.setBillOfLading(urlBillOfLading);	
+			String urlLetterOfCredit = "http://localhost:8080/user/download/"+contract.getContractId()+"/letterOfCredit.jpg";;
+			contract.setLetterOfCredit(urlLetterOfCredit);
+		} catch (IOException e2) {
+			e2.printStackTrace();
+			return false;
+		}
+		
+		
+		
 		boolean insertion = false;
 		try {
 			insertion = dao.saveContract(contract);
 		} catch (SerialException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		
@@ -76,15 +100,14 @@ public class TradeServiceImp implements TradeService {
 			//TradeUser admin = tradeUtil.getAdmin(caClient);
 			String value =  Integer.toString(contract.getValue());
 		//	var contract = Contract{ContractID: args[0], ContentDescription: args[1], Value: contractValue, ExporterID: args[3], CustomID: args[4], InsuranceID: args[5], ImporterID: args[6], ImporterBankID: args[7], PortOfLoading: args[8], PortOfEntry: args[9], ImporterCheck: false, ExporterCheck: true, CustomCheck: false, ImporterBankCheck: false, InsuranceCheck: false}
-
-			String [] args = {contract.getContractId(),contract.getContractDescription(),value,contract.getExporterId(),contract.getCustomId(),contract.getInsuranceId(),contract.getImporterId(),contract.getImporterBankId(),contract.getPortOfLoading(),contract.getPortOfEntry()};
+			
+			String [] args = {contract.getContractId(),contract.getContractDescription(),value,contract.getExporterId(),contract.getCustomId(),contract.getInsuranceId(),contract.getImporterId(),contract.getImporterBankId(),contract.getPortOfLoading(),contract.getPortOfEntry(),contract.getLetterOfCredit(),contract.getBillOfLading()};
 			try {
 				
 				tradeUtil.transactionInvokeBlockChain(client, "createContract", args, channel);
 				
 				return true;
 			} catch (InvalidArgumentException e) {
-			
 				e.printStackTrace();
 				return false;
 			}
@@ -212,9 +235,6 @@ public class TradeServiceImp implements TradeService {
 //			}
 //			
 //		}
-		
-		
-		
 		
 		return false;
 	}
@@ -363,9 +383,12 @@ public class TradeServiceImp implements TradeService {
 			}
 		}
 		
-		
-		
 	}
+	
+	
+	
+	
+	
 	
 	
 }

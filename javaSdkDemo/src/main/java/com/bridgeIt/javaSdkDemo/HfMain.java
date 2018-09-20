@@ -13,10 +13,12 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import org.apache.log4j.Logger;
 import org.hyperledger.fabric.sdk.BlockEvent;
+import org.hyperledger.fabric.sdk.ChaincodeEventListener;
 import org.hyperledger.fabric.sdk.ChaincodeID;
 import org.hyperledger.fabric.sdk.Channel;
 import org.hyperledger.fabric.sdk.Enrollment;
@@ -34,6 +36,9 @@ import org.hyperledger.fabric.sdk.exception.TransactionException;
 import org.hyperledger.fabric.sdk.security.CryptoSuite;
 import org.hyperledger.fabric_ca.sdk.HFCAClient;
 import org.hyperledger.fabric_ca.sdk.RegistrationRequest;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 public class HfMain {
@@ -58,25 +63,24 @@ public class HfMain {
        // log.info(admin);
         System.out.println(admin);
         // register and enroll new user
-        AppUser appUser = getUser(caClient, admin, "hfuser");
+        AppUser appUser = getUser(caClient, admin, "hfuserbfghfx");
      //   log.info(appUser);
         System.out.println(appUser);
         // get HFC client instance
         HFClient client = getHfClient();
         // set user context
-        client.setUserContext(admin);
-
+        client.setUserContext(admin);     
         // get HFC channel using the client
         Channel channel = getChannel(client);
        // log.info("Channel: " + channel.getName());
         System.out.println("Channel: " + channel.getName());
         System.out.println("querying.....");
         // call query blockchain example
-        queryBlockChain(client);
+        //queryBlockChain(client);
         transactionInvokeBlockChain(client);
     }
     
-    static void transactionInvokeBlockChain(HFClient client) {
+    static void transactionInvokeBlockChain(HFClient client) throws JsonProcessingException, InvalidArgumentException {
     	
     	
         Channel channel = client.getChannel("mychannel");
@@ -85,6 +89,13 @@ public class HfMain {
         tqr.setChaincodeID(tradeFinanceCCId);
         tqr.setFcn("createAccount");
         tqr.setArgs(new String[] {"102","custom","20000","SBI BANK"});
+        ChaincodeEventListener chaincodeEventListener = new ChaincodeEvent();
+        //System.out.println("________________________________________________--"
+        		//+ "\n___________________"+new ObjectMapper().writeValueAsString(tradeFinanceCCId));
+        Pattern pattern = Pattern.compile(".*");
+        Pattern pattern2 = Pattern.compile(".*");
+        channel.registerChaincodeEventListener(pattern, pattern2, chaincodeEventListener);
+       
         Collection<ProposalResponse> responses = null ;
         try {
         	 responses = channel.sendTransactionProposal(tqr);
@@ -101,6 +112,7 @@ public class HfMain {
 		}
          
         try {
+        	
         	 BlockEvent.TransactionEvent event = channel.sendTransaction(responses).get(60,TimeUnit.SECONDS);
         	 if (event.isValid()) {
         		 System.out.println(event.getTransactionID()+" transaction is valid ");
@@ -166,6 +178,8 @@ public class HfMain {
 //        channel.addEventHub(eventHub4);
 //        channel.addEventHub(eventHub5);
         channel.addOrderer(orderer);
+       
+        //channel.registerBlockListener(chaincodeEventListener);
         channel.initialize();
         return channel;
     }
