@@ -89,13 +89,13 @@ public class HfMain {
         tqr.setChaincodeID(tradeFinanceCCId);
         tqr.setFcn("createAccount");
         tqr.setArgs(new String[] {"102","custom","20000","SBI BANK"});
-        ChaincodeEventListener chaincodeEventListener = new ChaincodeEvent();
-        //System.out.println("________________________________________________--"
-        		//+ "\n___________________"+new ObjectMapper().writeValueAsString(tradeFinanceCCId));
-        Pattern pattern = Pattern.compile(".*");
-        Pattern pattern2 = Pattern.compile(".*");
-        channel.registerChaincodeEventListener(pattern, pattern2, chaincodeEventListener);
-       
+//        ChaincodeEventListener chaincodeEventListener = new ChaincodeEvent();
+//        //System.out.println("________________________________________________--"
+//        		//+ "\n___________________"+new ObjectMapper().writeValueAsString(tradeFinanceCCId));
+//        Pattern pattern = Pattern.compile(".*");
+//        Pattern pattern2 = Pattern.compile("event1");
+//        String data = channel.registerChaincodeEventListener(pattern, Pattern.compile(Pattern.quote("event1")), chaincodeEventListener);
+//     //  System.out.println(data);
         Collection<ProposalResponse> responses = null ;
         try {
         	 responses = channel.sendTransactionProposal(tqr);
@@ -104,6 +104,7 @@ public class HfMain {
         		
         		invalid.forEach(response -> {
         			System.out.println(response.getMessage());
+        			System.out.println("--------");
         		});
         		
         	}
@@ -112,6 +113,7 @@ public class HfMain {
 		}
          
         try {
+        	org.hyperledger.fabric.sdk.ChaincodeEvent cevent  ;
         	
         	 BlockEvent.TransactionEvent event = channel.sendTransaction(responses).get(60,TimeUnit.SECONDS);
         	 if (event.isValid()) {
@@ -178,7 +180,16 @@ public class HfMain {
 //        channel.addEventHub(eventHub4);
 //        channel.addEventHub(eventHub5);
         channel.addOrderer(orderer);
-       
+        ChaincodeEventListener chaincodeEventListener = new ChaincodeEvent();
+        Pattern pattern = Pattern.compile(".*");
+       // Pattern pattern2 = Pattern.compile("event1");
+        String data = channel.registerChaincodeEventListener(pattern, Pattern.compile(Pattern.quote("event1")), chaincodeEventListener);
+        System.out.println(data);
+        String data1 = channel.registerChaincodeEventListener(pattern, Pattern.compile(Pattern.quote("event01")), chaincodeEventListener);
+      System.out.println(data1);
+        //  ChaincodeEvent listener = new ChaincodeEvent();
+//        channel.registerChaincodeEventListener(Pattern.compile(".*"),
+//                Pattern.compile(Pattern.quote("event1")),listener );
         //channel.registerBlockListener(chaincodeEventListener);
         channel.initialize();
         return channel;

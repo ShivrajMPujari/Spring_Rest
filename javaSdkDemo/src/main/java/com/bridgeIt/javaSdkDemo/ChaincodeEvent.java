@@ -8,7 +8,9 @@ public class ChaincodeEvent implements ChaincodeEventListener{
 	@Override
 	public void received(String handle, BlockEvent blockEvent,
 			org.hyperledger.fabric.sdk.ChaincodeEvent chaincodeEvent) {
-		System.out.println(chaincodeEvent.getEventName());
+		String payload = new String(chaincodeEvent.getPayload());
+		System.out.println(payload);
+		System.out.println("your chaincode event name is "+chaincodeEvent.getEventName());
 		
 	}
 
