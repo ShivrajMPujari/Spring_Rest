@@ -49,6 +49,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
@@ -58,7 +59,14 @@ import com.bridgeIt.user.service.utility.MailSender;
 import com.bridgeIt.user.service.utility.UserMail;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
+import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
 @EnableWebMvc
+@EnableSwagger2
 @ComponentScan("com.bridgeIt.user")
 @Configuration
 public class SpringConfig extends WebMvcConfigurerAdapter {
@@ -71,6 +79,26 @@ public class SpringConfig extends WebMvcConfigurerAdapter {
 		registry.addMapping("/**").allowedMethods("GET","POST").allowedOrigins("*").allowedHeaders("*");
 		
 	}
+	
+	
+	@Bean
+	public Docket api() {
+		
+		return new Docket(DocumentationType.SWAGGER_2).select()
+				.apis(RequestHandlerSelectors.any())
+				.paths(PathSelectors.any()).build() ;
+		
+	}
+	
+	@Override
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+	
+		registry.addResourceHandler("swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/");
+		
+		registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
+	
+	}
+	
 	
 	
 	@Bean

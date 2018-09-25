@@ -3,6 +3,7 @@ package com.bridgeIt.user.service;
 
 import java.util.List;
 
+import com.bridgeIt.user.ContractResponse;
 import com.bridgeIt.user.model.Contract;
 
 public interface TradeService {
@@ -12,4 +13,5 @@ public interface TradeService {
 	Contract getContractResponse (String contractId);
 	public List<Contract>  getAllContract(String jwt);
 	public Contract getContractFromBlockChain ( String contractId ,String jwtToken );
+	public ContractResponse exporterConsensus(String jwtToken, Contract contract);
 }

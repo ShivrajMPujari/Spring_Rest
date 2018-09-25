@@ -185,7 +185,7 @@ public class HfMain {
        // Pattern pattern2 = Pattern.compile("event1");
         String data = channel.registerChaincodeEventListener(pattern, Pattern.compile(Pattern.quote("event1")), chaincodeEventListener);
         System.out.println(data);
-        String data1 = channel.registerChaincodeEventListener(pattern, Pattern.compile(Pattern.quote("event01")), chaincodeEventListener);
+        String data1 = channel.registerChaincodeEventListener(pattern, Pattern.compile(Pattern.quote("event2")), chaincodeEventListener);
       System.out.println(data1);
         //  ChaincodeEvent listener = new ChaincodeEvent();
 //        channel.registerChaincodeEventListener(Pattern.compile(".*"),

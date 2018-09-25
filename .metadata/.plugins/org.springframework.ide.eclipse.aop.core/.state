@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <aop-reference-model>
-<aop-project name="SpringLoginRegistration"/>
 <aop-project name="RestDemo"/>
 <aop-project name="SpringJavaAnnotate"/>
+<aop-project name="SpringLoginRegistration"/>
 <aop-project name="RedisDemo"/>
 <aop-project name="SpringMVCdemo"/>
 </aop-reference-model>

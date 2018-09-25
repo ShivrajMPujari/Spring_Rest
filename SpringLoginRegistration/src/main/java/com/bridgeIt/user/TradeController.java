@@ -155,5 +155,20 @@ public class TradeController {
 	
 	}
 	
+	@RequestMapping(value="/consensus" , method = RequestMethod.POST, produces="application/json")
+	public ResponseEntity<ContractResponse> consensus(@RequestHeader("token") String jwtToken,@RequestBody Contract contract){
+		
+		
+		ContractResponse contractResponse = tradeService.exporterConsensus(jwtToken, contract);
+		
+		
+		
+		return new ResponseEntity<ContractResponse>(contractResponse, contractResponse.getStatus());
+	}
+	
+	
+	
+	
+	
 	
 }

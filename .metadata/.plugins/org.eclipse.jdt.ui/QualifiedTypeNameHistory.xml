@@ -1,13 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="com.bridgeIt.user.service.utility.RabbitMsgSender"/>
-<fullyQualifiedTypeName name="com.bridgeIt.user.service.utility.GenerateToken"/>
-<fullyQualifiedTypeName name="com.bridgeIt.user.service.utility.JwtToken"/>
-<fullyQualifiedTypeName name="org.springframework.web.bind.annotation.PathVariable"/>
-<fullyQualifiedTypeName name="io.jsonwebtoken.Claims"/>
-<fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestMapping"/>
-<fullyQualifiedTypeName name="java.util.UUID"/>
-<fullyQualifiedTypeName name="com.bridgeIt.user.model.User"/>
 <fullyQualifiedTypeName name="com.bridgeIt.user.service.utility.MailSender"/>
 <fullyQualifiedTypeName name="java.util.Properties"/>
 <fullyQualifiedTypeName name="javax.mail.Session"/>
@@ -37,7 +29,6 @@
 <fullyQualifiedTypeName name="java.util.concurrent.TimeUnit"/>
 <fullyQualifiedTypeName name="org.hyperledger.fabric.sdk.BlockEvent"/>
 <fullyQualifiedTypeName name="java.lang.Exception"/>
-<fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="java.sql.Blob"/>
 <fullyQualifiedTypeName name="com.fasterxml.jackson.databind.ObjectMapper"/>
 <fullyQualifiedTypeName name="com.bridgeIt.user.model.UserAccount"/>
@@ -48,7 +39,6 @@
 <fullyQualifiedTypeName name="com.bridgeIt.user.model.Contract"/>
 <fullyQualifiedTypeName name="com.bridgeIt.user.dao.ContractMapper"/>
 <fullyQualifiedTypeName name="com.bridgeIt.user.model.TradeUser"/>
-<fullyQualifiedTypeName name="java.util.List"/>
 <fullyQualifiedTypeName name="com.bridgeIt.user.model.ContractLists"/>
 <fullyQualifiedTypeName name="com.fasterxml.jackson.annotation.JsonIgnore"/>
 <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestHeader"/>
@@ -60,4 +50,14 @@
 <fullyQualifiedTypeName name="java.nio.file.Paths"/>
 <fullyQualifiedTypeName name="java.nio.file.Path"/>
 <fullyQualifiedTypeName name="java.nio.file.Files"/>
+<fullyQualifiedTypeName name="com.bridgeIt.javaSdkDemo.ChaincodeEvent"/>
+<fullyQualifiedTypeName name="org.hyperledger.fabric.protos.peer.ChaincodeEventOuterClass.ChaincodeEvent"/>
+<fullyQualifiedTypeName name="org.hyperledger.fabric.sdk.ChaincodeEvent"/>
+<fullyQualifiedTypeName name="springfox.documentation.swagger2.annotations.EnableSwagger2"/>
+<fullyQualifiedTypeName name="springfox.documentation.spring.web.plugins.Docket"/>
+<fullyQualifiedTypeName name="springfox.documentation.spi.DocumentationType"/>
+<fullyQualifiedTypeName name="springfox.documentation.builders.RequestHandlerSelectors"/>
+<fullyQualifiedTypeName name="springfox.documentation.builders.PathSelectors"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="java.util.List"/>
 </qualifiedTypeNameHistroy>

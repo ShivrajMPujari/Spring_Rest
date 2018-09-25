@@ -10,6 +10,7 @@ public class ContractResponse {
 	private HttpStatus status;
 	private int code;
 	private Contract contract;
+	private String message;
 	
 	public HttpStatus getStatus() {
 		return status;
@@ -29,6 +30,12 @@ public class ContractResponse {
 	}
 	public void setContract(Contract contract) {
 		this.contract = contract;
+	}
+	public String getMessage() {
+		return message;
+	}
+	public void setMessage(String message) {
+		this.message = message;
 	}
 	
 }

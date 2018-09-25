@@ -19,8 +19,10 @@ import org.hyperledger.fabric.sdk.exception.InvalidArgumentException;
 import org.hyperledger.fabric.sdk.exception.ProposalException;
 import org.hyperledger.fabric_ca.sdk.HFCAClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
+import com.bridgeIt.user.ContractResponse;
 import com.bridgeIt.user.dao.UserDao;
 import com.bridgeIt.user.model.Contract;
 import com.bridgeIt.user.model.User;
@@ -76,9 +78,9 @@ public class TradeServiceImp implements TradeService {
 			Files.write(path1, imgBillOfLading);
 			Path path2 =Paths.get("//home//bridgelabz//Documents//contracts//"+contract.getContractId()+"//letterOfCredit.jpg");
 			Files.write(path2, imgLetterOfCredit);
-			String urlBillOfLading = "http://localhost:8080/user/download/"+contract.getContractId()+"/billOfLading.jpg";
+			String urlBillOfLading = "http://localhost:8081/user/download/"+contract.getContractId()+"/billOfLading.jpg";
 			contract.setBillOfLading(urlBillOfLading);	
-			String urlLetterOfCredit = "http://localhost:8080/user/download/"+contract.getContractId()+"/letterOfCredit.jpg";;
+			String urlLetterOfCredit = "http://localhost:8081/user/download/"+contract.getContractId()+"/letterOfCredit.jpg";;
 			contract.setLetterOfCredit(urlLetterOfCredit);
 		} catch (IOException e2) {
 			e2.printStackTrace();
@@ -378,12 +380,136 @@ public class TradeServiceImp implements TradeService {
 			
 				e.printStackTrace();
 			} catch (org.hyperledger.fabric_ca.sdk.exception.InvalidArgumentException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 		
 	}
+	
+	
+	
+	
+	
+	
+	public ContractResponse exporterConsensus(String jwtToken, Contract contract) {
+		ContractResponse contractResponse = new ContractResponse();
+		boolean isUnique = dao.uniqueContract(contract.getContractId());
+		
+		if (isUnique) {
+			
+			boolean contractCreated = insertContract(contract, jwtToken);
+			
+			if(contractCreated) {
+				
+			performConsensus(contract);
+				
+			boolean updatedContract = updateContractInDB(contract.getContractId());
+				if(updatedContract == false) {
+					
+					contractResponse.setCode(500);
+					contractResponse.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+					contractResponse.setMessage("Contract upadtion failed");
+					contractResponse.setContract(null);
+					return contractResponse;
+					
+				}
+				
+			dao.completionOfContract(contract.getContractId());
+				
+			}
+			
+			
+			
+			
+		}else {
+			
+			contractResponse.setCode(400);
+			contractResponse.setStatus(HttpStatus.BAD_REQUEST);
+			contractResponse.setMessage("Contract already exist");
+			contractResponse.setContract(null);
+			return contractResponse;
+		}
+		
+		
+		contractResponse.setCode(200);
+		contractResponse.setStatus(HttpStatus.OK);
+		contractResponse.setMessage("success");
+		Contract updatedContract = dao.getContract(contract.getContractId());
+		contractResponse.setContract(updatedContract);
+		return contractResponse;
+	} 
+	
+	
+	public boolean performConsensus(Contract contract) {
+		
+		String [] customArgs = {contract.getCustomId(),contract.getContractId()};
+		String [] insuranceArgs = {contract.getInsuranceId(),contract.getContractId()};
+		String [] importerArgs = {contract.getImporterId(),contract.getContractId()};
+		String [] importerBankArgs = {contract.getImporterBankId(),contract.getContractId()};
+		
+		try {
+			boolean customTransaction = tradeUtil.transactionInvokeBlockChain(client, "customAssurity", customArgs, channel);
+			if (customTransaction == false) {
+				dao.completionOfContract(contract.getCustomId());
+				return false;
+			}
+			System.out.println("Transaction Accepted  by Custom");
+		} catch (InvalidArgumentException e) {
+			
+			e.printStackTrace();
+			return false;
+		}
+		
+		try {
+			boolean insuranceTransaction =	tradeUtil.transactionInvokeBlockChain(client, "insuranceAssurity", insuranceArgs, channel);
+			if(insuranceTransaction == false) {	
+				dao.completionOfContract(contract.getCustomId());
+				return false;
+			}
+			System.out.println("Transaction Accepted  by Insurance");
+		} catch (InvalidArgumentException e) {
+		
+			e.printStackTrace();
+			return false;
+		}
+		
+		try {
+			boolean importerTransaction = tradeUtil.transactionInvokeBlockChain(client, "importerAssurity", importerArgs, channel);
+			if(importerTransaction==false) {
+				dao.completionOfContract(contract.getCustomId());
+				return false;
+			}
+			System.out.println("Transaction Accepted  by Importer");
+		} catch (InvalidArgumentException e) {
+		
+			e.printStackTrace();
+			return false;
+		}
+		
+		try {
+			boolean importerBankTransaction = tradeUtil.transactionInvokeBlockChain(client, "importerBankAssurity", importerBankArgs, channel);
+			if (importerBankTransaction == false) {
+				dao.completionOfContract(contract.getCustomId());
+				return false;
+			}
+			System.out.println("Transaction Accepted by ImporterBank");
+		} catch (InvalidArgumentException e) {
+			e.printStackTrace();
+			return false;
+		}
+		
+		
+		dao.completionOfContract(contract.getCustomId());
+		return true;
+		
+	}
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
