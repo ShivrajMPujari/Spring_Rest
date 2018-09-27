@@ -1,20 +1,21 @@
 package com.bridgeIt.javaFeatures;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
-/**
- * Hello world!
- *
- */
 public class App 
 {
     public static void main( String[] args )
     {
-        System.out.println( "Hello World!" );
-        List<Integer> list = new ArrayList<Integer>();
-        list.add(1);
-      
+      Path path = Paths.get("/home/bridgelabz/Downloads/Sample.wav");
+      try {
+	byte[] fileByte =	Files.readAllBytes(path);
+	
+	} catch (IOException e) {
+		e.printStackTrace();
+	}
       
     }
 }

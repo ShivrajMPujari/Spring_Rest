@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
+	<list key="org.eclipse.ui.internal.wizards.datatransfer.SmartImportRootWizardPage.knownSources">
+		<item value="/home/bridgelabz/Downloads/bootDemo"/>
+	</list>
 	<list key="installedFeatures">
 		<item value="com.ianbrandt.tools.m2e.mdp.feature:0.0.4.201409291703"/>
 		<item value="org.aspectj:1.9.0.201805281636"/>
@@ -37,8 +40,6 @@
 		<item value="org.eclipse.jst.common.fproj.enablement.jdt:3.10.0.v201803201710"/>
 		<item value="org.eclipse.jst.enterprise_ui.feature:3.9.100.v201804120404"/>
 		<item value="org.eclipse.jst.ws.axis2tools.feature:1.1.301.v201802222200"/>
-		<item value="org.eclipse.jst.ws.cxf.feature:1.1.301.v201802222200"/>
-		<item value="org.eclipse.jst.ws.jaxws.feature:1.2.400.v201806042237"/>
 		<item value="org.eclipse.m2e.feature:1.9.0.20180606-2036"/>
 		<item value="org.eclipse.m2e.logback.feature:1.9.0.20180606-2036"/>
 		<item value="org.eclipse.m2e.wtp.feature:1.4.0.20180606-2005"/>
