@@ -107,17 +107,18 @@ public class HfMain {
         // call query blockchain example
         //queryBlockChain(client);
         
-        
-        
-//        transactionInvokeBlockChain(client,"Sample.mp3");
-//        transactionInvokeBlockChain(client,"letterOfCredit.jpg");
-       // transactionInvokeBlockChain(client,"billOfLading.jpg");
-     //   transactionInvokeBlockChain(client,"picblock.jpg");
+        transactionInvokeBlockChain(client,"letterOfCredit.jpg");
+        queryBlockChain(client,"letterOfCredit.jpg");
+        /*
+        transactionInvokeBlockChain(client,"Sample.mp3");
+        transactionInvokeBlockChain(client,"letterOfCredit.jpg");
+        transactionInvokeBlockChain(client,"billOfLading.jpg");
+        transactionInvokeBlockChain(client,"picblock.jpg");
         System.out.println("querying.....");
-//        queryBlockChain(client,"Sample.mp3");
-//        queryBlockChain(client,"letterOfCredit.jpg");
-    //    queryBlockChain(client,"billOfLading.jpg");
-   //     queryBlockChain(client,"picblock.jpg");
+        queryBlockChain(client,"Sample.mp3");
+       queryBlockChain(client,"letterOfCredit.jpg");
+        queryBlockChain(client,"billOfLading.jpg");
+        queryBlockChain(client,"picblock.jpg");
         
         
         List<byte[]> list = splitFile("Sample640.mp4");
@@ -130,12 +131,31 @@ public class HfMain {
 		
 		transactionSplitBC(client,arr1,"split1");
 		
-	transactionSplitBC(client,arr2,"split2");
+		transactionSplitBC(client,arr2,"split2");
 		
 		String base1 = querySplitsInBlockChain(client,"split1");
 		String base2 = querySplitsInBlockChain(client,"split2");
 		
-		mergeBase64(base1, base2);
+		mergeBase64(base1, base2);*/
+  
+    /*    
+    
+        List<byte[]> list = splitFile("Sample.wav");
+        byte [] arr1 = list.get(0);
+		byte [] arr2 = list.get(1);
+		
+	//	System.out.println(Arrays.toString(arr2));
+		
+		System.out.println(arr2.length);
+		
+		transactionSplitBC(client,arr1,"split3");
+		
+		transactionSplitBC(client,arr2,"split4");
+    */
+    
+    
+    
+    
     }
     
     
